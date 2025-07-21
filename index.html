@@ -526,9 +526,9 @@
         const workoutExercises = {
             segunda: [
                 {
-                    name: "Barbell Bench Press", 
-                    sets: "4x6-8", 
-                    currentWeight: "35-40kg",
+                    name: "Barbell Bench Press",
+                    sets: "4x6-8",
+                    currentWeight: "35-40kg (Prog. 42-47kg)",
                     painTypes: {
                         good: [
                             { title: "Tensão no peitoral", desc: "Sensação de trabalho muscular no peito", feedback: "Perfeito! Esta tensão indica que está a ativar corretamente o peitoral. Continue com a técnica atual." },
@@ -542,9 +542,9 @@
                     }
                 },
                 {
-                    name: "Dumbbell Incline Press", 
-                    sets: "4x8-10", 
-                    currentWeight: "15-17.5kg",
+                    name: "Dumbbell Incline Press",
+                    sets: "4x8-10",
+                    currentWeight: "15kg (Prog. 17.5-20kg)",
                     painTypes: {
                         good: [
                             { title: "Tensão na parte superior do peito", desc: "Sensação de trabalho no peitoral superior", feedback: "Perfeito! O incline press está a trabalhar corretamente o peitoral superior." },
@@ -557,64 +557,517 @@
                     }
                 },
                 {
-                    name: "Machine Bench Press", 
-                    sets: "4x10-12", 
+                    name: "Machine Bench Press",
+                    sets: "4x10-12",
                     currentWeight: "32kg",
                     painTypes: {
-                        good: [
-                            { title: "Tensão uniforme no peitoral", desc: "Trabalho equilibrado em todo o peito", feedback: "Ótimo! A máquina proporciona um trabalho seguro e eficaz." }
-                        ],
-                        bad: [
-                            { title: "Dor na articulação do ombro", desc: "Desconforto articular durante o movimento", feedback: "Verifique o posicionamento!", correction: "• Ajuste altura do assento\n• Mantenha omoplatas encostadas\n• Não estenda completamente os braços" }
-                        ]
+                        good: [{ title: "Tensão uniforme no peitoral", desc: "Trabalho equilibrado em todo o peito", feedback: "Ótimo! A máquina proporciona um trabalho seguro e eficaz." }],
+                        bad: [{ title: "Dor na articulação do ombro", desc: "Desconforto articular durante o movimento", feedback: "Verifique o posicionamento!", correction: "• Ajuste altura do assento\n• Mantenha omoplatas encostadas\n• Não estenda completamente os braços" }]
                     }
                 },
                 {
-                    name: "Dips", 
-                    sets: "3x8-12", 
+                    name: "Dips",
+                    sets: "3x8-12",
                     currentWeight: "Bodyweight",
                     painTypes: {
-                        good: [
-                            { title: "Tensão no peitoral e tríceps", desc: "Trabalho muscular em peito e tríceps", feedback: "Perfeito! Os dips são excelentes para desenvolver força funcional." }
-                        ],
-                        bad: [
-                            { title: "Dor aguda no ombro", desc: "Dor intensa na articulação do ombro", feedback: "PARE! Pode estar a descer demasiado.", correction: "• Desça apenas até 90° nos cotovelos\n• Mantenha corpo ligeiramente inclinado\n• Use assistência se necessário" },
-                            { title: "Dor no esterno", desc: "Desconforto no centro do peito/esterno", feedback: "Atenção à amplitude!", correction: "• Reduza a descida\n• Foque no controle do movimento\n• Mantenha tensão constante" }
-                        ]
+                        good: [{ title: "Tensão no peitoral e tríceps", desc: "Trabalho muscular em peito e tríceps", feedback: "Perfeito! Os dips são excelentes para desenvolver força funcional." }],
+                        bad: [{ title: "Dor aguda no ombro", desc: "Dor intensa na articulação do ombro", feedback: "PARE! Pode estar a descer demasiado.", correction: "• Desça apenas até 90° nos cotovelos\n• Mantenha corpo ligeiramente inclinado\n• Use assistência se necessário" }]
+                    }
+                },
+                {
+                    name: "Dumbbell Fly",
+                    sets: "3x12-15",
+                    currentWeight: "12.5kg",
+                     painTypes: {
+                        good: [{ title: "Squeeze no peito", desc: "Contração máxima no topo do movimento", feedback: "Excelente! Foco na contração é fundamental para o Fly." }],
+                        bad: [{ title: "Dor no ombro/articulação", desc: "Desconforto na articulação durante o alongamento", feedback: "Cuidado com a amplitude!", correction: "• Não desça os halteres demasiado\n• Mantenha cotovelos ligeiramente flexionados" }]
+                    }
+                },
+                {
+                    name: "Close-Grip Bench Press",
+                    sets: "3x8-10",
+                    currentWeight: "Varia (compound tríceps)",
+                    painTypes: {
+                        good: [{ title: "Tensão forte no tríceps", desc: "Foco na ativação do tríceps", feedback: "Ótimo! Excelente para isolar o tríceps." }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações do braço", feedback: "Ajuste a pegada/amplitude!", correction: "• Mantenha punhos neutros\n• Não tranque os cotovelos no topo\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "Cable Tricep Pushdown",
+                    sets: "3x10-12",
+                    currentWeight: "14kg (base)",
+                    painTypes: {
+                        good: [{ title: "Pump no tríceps", desc: "Sensação de inchaço muscular", feedback: "Perfeito! Indicativo de bom volume de trabalho." }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Pode estar a usar demasiado peso ou técnica incorreta.", correction: "• Reduza o peso\n• Mantenha cotovelos fixos\n• Não estenda completamente os braços" }]
+                    }
+                },
+                {
+                    name: "Cable Rope Overhead Extension",
+                    sets: "3x10-12 (12kgx12, 14kgx10, 16kgx8)",
+                    currentWeight: "12kg (prog.)",
+                    painTypes: {
+                        good: [{ title: "Queimação no tríceps", desc: "Fadiga progressiva no tríceps", feedback: "Ótimo para o desenvolvimento da cabeça longa do tríceps." }],
+                        bad: [{ title: "Dor no ombro (elevação)", desc: "Desconforto ao levantar o braço", feedback: "Cuidado com a posição do cotovelo!", correction: "• Mantenha os cotovelos mais próximos da cabeça\n• Use um peso que permita controle total" }]
+                    }
+                },
+                {
+                    name: "Machine Ab Crunch",
+                    sets: "3x15-20",
+                    currentWeight: "30kg",
+                    painTypes: {
+                        good: [{ title: "Queimação abdominal", desc: "Sensação de trabalho no core", feedback: "Excelente! Continue a focar na contração." }],
+                        bad: [{ title: "Dor no pescoço/lombar", desc: "Tensão ou dor fora dos abdominais", feedback: "Ajuste a postura!", correction: "• Mantenha o pescoço neutro\n• Concentre a força no abdómen\n• Não force a flexão da coluna" }]
+                    }
+                },
+                {
+                    name: "Plank",
+                    sets: "3x60s",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Tensão abdominal", desc: "Contração sustentada no core", feedback: "Perfeito! Sinal de boa ativação do core." }],
+                        bad: [{ title: "Dor lombar", desc: "Curvatura excessiva da lombar", feedback: "Ajuste a posição!", correction: "• Mantenha o corpo reto\n• Contraia glúteos e abdominais\n• Não deixe o quadril cair" }]
                     }
                 }
             ],
             terca: [
                 {
-                    name: "Deadlifts", 
-                    sets: "4x6-8", 
-                    currentWeight: "40-60kg",
+                    name: "Deadlifts",
+                    sets: "4x6-8",
+                    currentWeight: "40kg (Prog. 50-60kg)",
                     painTypes: {
-                        good: [
-                            { title: "Tensão nos isquiotibiais e glúteos", desc: "Trabalho muscular na cadeia posterior", feedback: "Perfeito! O deadlift está a ativar corretamente a cadeia posterior." }
-                        ],
-                        bad: [
-                            { title: "Dor aguda na zona lombar", desc: "Dor intensa na parte baixa das costas", feedback: "PARE IMEDIATAMENTE! Postura incorreta!", correction: "• Mantenha costas neutras\n• Peito para fora\n• Inicie o movimento com os quadris\n• Reduza o peso" }
-                        ]
+                        good: [{ title: "Tensão nos isquiotibiais e glúteos", desc: "Trabalho muscular na cadeia posterior", feedback: "Perfeito! O deadlift está a ativar corretamente a cadeia posterior." }],
+                        bad: [{ title: "Dor aguda na zona lombar", desc: "Dor intensa na parte baixa das costas", feedback: "PARE IMEDIATAMENTE! Postura incorreta!", correction: "• Mantenha costas neutras\n• Peito para fora\n• Inicie o movimento com os quadris\n• Reduza o peso" }]
                     }
                 },
                 {
-                    name: "Pull-ups", 
-                    sets: "3x6-10", 
+                    name: "Pull-ups/Assisted",
+                    sets: "4x máximo (Obj: 6-10 reps)",
                     currentWeight: "Bodyweight",
                     painTypes: {
-                        good: [
-                            { title: "Tensão nas costas", desc: "Trabalho muscular no latíssimo", feedback: "Excelente! Pull-ups são fundamentais para desenvolvimento das costas." }
-                        ],
-                        bad: [
-                            { title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Verifique a técnica!", correction: "• Não balance o corpo\n• Desça controladamente\n• Use assistência se necessário" }
-                        ]
+                        good: [{ title: "Tensão nas costas", desc: "Trabalho muscular no latíssimo", feedback: "Excelente! Pull-ups são fundamentais para desenvolvimento das costas." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Verifique a técnica!", correction: "• Não balance o corpo\n• Desça controladamente\n• Use assistência se necessário" }]
+                    }
+                },
+                {
+                    name: "Barbell Bent-Over Row",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Contração nas costas", desc: "Trabalho muscular no meio das costas", feedback: "Ótimo! Foco na retração escapular." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão excessiva na lombar", feedback: "Ajuste a postura!", correction: "• Mantenha as costas retas\n• Não arqueie demasiado\n• Use um peso que permita boa forma" }]
+                    }
+                },
+                {
+                    name: "Cable Lat Pulldown",
+                    sets: "4x10-12",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão nos latíssimos", desc: "Sentir o trabalho nas 'asas'", feedback: "Perfeito! Bom para isolar os latíssimos." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto no ombro ao puxar", feedback: "Ajuste a pegada e amplitude!", correction: "• Não puxe a barra demasiado para baixo\n• Mantenha ombros para baixo e para trás" }]
+                    }
+                },
+                {
+                    name: "Cable Seated Row",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Squeeze entre as omoplatas", desc: "Contração no meio das costas", feedback: "Excelente! Foco na contração no final do movimento." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte inferior das costas", feedback: "Verifique a postura!", correction: "• Mantenha as costas retas\n• Não balance o corpo para puxar" }]
+                    }
+                },
+                {
+                    name: "Machine Reverse Fly",
+                    sets: "3x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no deltóide posterior", desc: "Foco na parte de trás dos ombros", feedback: "Ótimo para isolar os deltóides posteriores." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso e o movimento!", correction: "• Use um peso leve\n• Mantenha os cotovelos ligeiramente flexionados\n• Não force a amplitude" }]
+                    }
+                },
+                {
+                    name: "Barbell Bicep Curl",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump nos bíceps", desc: "Sensação de inchaço nos braços", feedback: "Excelente! Ótimo para hipertrofia dos bíceps." }],
+                        bad: [{ title: "Dor no cotovelo/punho", desc: "Desconforto nas articulações", feedback: "Ajuste a forma!", correction: "• Não balance o corpo\n• Mantenha os cotovelos fixos\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "Cable Bicep Curl",
+                    sets: "3x10-12",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Contração constante nos bíceps", desc: "Tensão contínua durante o movimento", feedback: "Ótimo para manter a tensão muscular." }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Verifique a pegada!", correction: "• Mantenha os punhos neutros\n• Não force a extensão completa" }]
+                    }
+                },
+                {
+                    name: "Hammer Curls",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão no braquial/antebraço", desc: "Trabalho nos músculos do braço e antebraço", feedback: "Excelente para a largura do braço." }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste o peso!", correction: "• Mantenha os punhos firmes\n• Não balance o corpo" }]
+                    }
+                }
+            ],
+            quarta: [
+                { name: "Recumbent Bike", sets: "20min (5min warm-up, 10min intervals, 5min cool-down)", currentWeight: "N/A", painTypes: {good: [{title: "Fadiga muscular leve", desc: "Indicativo de queima calórica e melhoria cardiovascular", feedback: "Ótimo para o coração e recuperação ativa!"}], bad: []}},
+                { name: "Cat-Cow", sets: "2x10", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade da coluna", desc: "Melhora na flexibilidade da coluna", feedback: "Fundamental para a saúde da coluna!"}], bad: []}},
+                { name: "Hip Circles", sets: "2x8 cada direção", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade do quadril", desc: "Melhora na amplitude de movimento do quadril", feedback: "Essencial para agachamentos e movimentos das pernas!"}], bad: []}},
+                { name: "Shoulder Dislocations", sets: "2x12", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade do ombro", desc: "Aumento da flexibilidade e rotação do ombro", feedback: "Importante para prevenir lesões nos ombros!"}], bad: []}},
+                { name: "Walking Lunges", sets: "2x12 (mobilidade)", currentWeight: "Bodyweight", painTypes: {good: [{title: "Alongamento das pernas", desc: "Sentir o alongamento dos flexores do quadril e isquiotibiais", feedback: "Bom para a mobilidade da anca e pernas!"}], bad: []}},
+                { name: "Leg Swings", sets: "2x10 cada perna", currentWeight: "Bodyweight", painTypes: {good: [{title: "Aquecimento dinâmico das pernas", desc: "Preparação dos músculos das pernas para o movimento", feedback: "Ótimo para flexibilidade dinâmica!"}], bad: []}},
+                { name: "Bodyweight Squats", sets: "1x15", currentWeight: "Bodyweight", painTypes: {good: [{title: "Ativação muscular geral", desc: "Sentir os músculos das pernas a trabalhar", feedback: "Excelente para manutenção da força base!"}], bad: []}},
+                { name: "Dead Bug", sets: "3x12 cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Estabilidade do core", desc: "Sentir o abdómen a trabalhar para estabilizar", feedback: "Fundamental para a saúde da lombar!"}], bad: []}},
+                { name: "Bird Dog", sets: "3x12 cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Equilíbrio e coordenação", desc: "Sentir a ativação dos músculos do core e glúteos", feedback: "Melhora a conexão mente-músculo!"}], bad: []}},
+                { name: "Side Plank", sets: "3x30s cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Força oblíqua", desc: "Sentir os músculos laterais do abdómen a trabalhar", feedback: "Ótimo para estabilidade lateral do core!"}], bad: []}}
+            ],
+            quinta: [
+                {
+                    name: "Barbell Back Squats",
+                    sets: "4x6-8",
+                    currentWeight: "30kg (Prog. 35-40kg)",
+                    painTypes: {
+                        good: [{ title: "Tensão nas pernas e glúteos", desc: "Sentir o trabalho nos membros inferiores", feedback: "Perfeito! A base para pernas fortes." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão ou dor na parte baixa das costas", feedback: "Verifique a forma!", correction: "• Mantenha o core contraído\n• Desça com o quadril\n• Não arredonde as costas" }]
+                    }
+                },
+                {
+                    name: "Romanian Deadlifts",
+                    sets: "4x8-10",
+                    currentWeight: "25kg (Prog. 35kg)",
+                    painTypes: {
+                        good: [{ title: "Alongamento nos isquiotibiais", desc: "Sensação de estiramento na parte posterior da coxa", feedback: "Excelente para isquiotibiais e glúteos." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte inferior das costas", feedback: "Atenção ao movimento!", correction: "• Mantenha as costas retas\n• Não desça demasiado a barra\n• Foco nos quadris" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Press",
+                    sets: "4x12-15",
+                    currentWeight: "50kg (Prog. 60-70kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação nas coxas", desc: "Fadiga muscular nas pernas", feedback: "Ótimo para construir volume nas pernas." }],
+                        bad: [{ title: "Dor nos joelhos/quadris", desc: "Desconforto articular", feedback: "Ajuste a posição!", correction: "• Não tranque os joelhos no topo\n• Mantenha os pés na plataforma\n• Reduza a amplitude se sentir dor" }]
+                    }
+                },
+                {
+                    name: "Bulgarian Split Squats",
+                    sets: "3x10 cada perna",
+                    currentWeight: "Bodyweight (prog. halteres)",
+                    painTypes: {
+                        good: [{ title: "Estabilidade e tensão unilateral", desc: "Trabalho equilibrado em cada perna", feedback: "Excelente para simetria e força unilateral." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na articulação do joelho", feedback: "Verifique a amplitude!", correction: "• Não deixe o joelho ir muito à frente\n• Mantenha o tronco reto\n• Use um suporte estável" }]
+                    }
+                },
+                {
+                    name: "Walking Lunges",
+                    sets: "3x16 passos",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Alongamento e ativação dos glúteos", desc: "Sentir o trabalho em cada passo", feedback: "Ótimo para funcionalidade e glúteos." }],
+                        bad: [{ title: "Instabilidade/dor no joelho", desc: "Perda de equilíbrio ou dor no joelho", feedback: "Reduza a amplitude e foque no controle!", correction: "• Dê passos mais curtos\n• Mantenha o tronco reto\n• Desça de forma controlada" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Extension",
+                    sets: "3x12-15",
+                    currentWeight: "45kg (Prog. 50kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação no quadríceps", desc: "Fadiga na parte da frente da coxa", feedback: "Excelente para isolar o quadríceps." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na rótula", feedback: "Ajuste o peso e a amplitude!", correction: "• Não force a extensão completa\n• Use um peso controlado\n• Ajuste a máquina corretamente" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Curl",
+                    sets: "4x12",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Contração nos isquiotibiais", desc: "Sentir o trabalho na parte de trás da coxa", feedback: "Ótimo para isolar os isquiotibiais." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na parte de trás do joelho", feedback: "Ajuste o peso e a amplitude!", correction: "• Não estenda completamente as pernas\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "Machine Seated Calf Raise",
+                    sets: "4x15-20",
+                    currentWeight: "35kg",
+                    painTypes: {
+                        good: [{ title: "Queimação nas panturrilhas", desc: "Fadiga nos músculos da panturrilha", feedback: "Perfeito para o desenvolvimento das panturrilhas." }],
+                        bad: [{ title: "Dor no tornozelo/tendão", desc: "Desconforto na articulação ou tendão", feedback: "Ajuste o peso e o alongamento!", correction: "• Não alongue demasiado no fundo\n• Use um peso que permita controle" }]
+                    }
+                },
+                {
+                    name: "Jump Squats",
+                    sets: "3x8",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Explosão e fadiga muscular", desc: "Sentir a ativação rápida dos músculos", feedback: "Excelente para potência e condicionamento." }],
+                        bad: [{ title: "Impacto no joelho/lombar", desc: "Dor no impacto ou ao aterrissar", feedback: "Aterrisse suavemente!", correction: "• Aterrisse com os joelhos flexionados\n• Mantenha o core ativado\n• Controle o movimento" }]
+                    }
+                },
+                {
+                    name: "Wall Sit",
+                    sets: "2x45s",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Queimação isométrica nas coxas", desc: "Tensão sustentada nos quadríceps", feedback: "Ótimo para resistência muscular." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na articulação do joelho", feedback: "Ajuste a posição!", correction: "• Mantenha os joelhos a 90 graus\n• Pés firmes no chão\n• Costas retas contra a parede" }]
+                    }
+                }
+            ],
+            sexta: [
+                {
+                    name: "Military Press",
+                    sets: "4x6-8",
+                    currentWeight: "25kg (Prog. 30-35kg)",
+                    painTypes: {
+                        good: [{ title: "Tensão nos ombros", desc: "Sentir o trabalho nos deltóides", feedback: "Perfeito! Movimento base para ombros fortes." }],
+                        bad: [{ title: "Dor lombar/pescoço", desc: "Tensão na parte inferior das costas ou pescoço", feedback: "Ajuste a postura!", correction: "• Mantenha o core ativado\n• Não arqueie demasiado as costas\n• Mantenha o pescoço neutro" }]
+                    }
+                },
+                {
+                    name: "Dumbbell Shoulder Press",
+                    sets: "4x8-10",
+                    currentWeight: "10kg (Prog. 12.5-15kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação nos ombros", desc: "Fadiga nos deltóides", feedback: "Excelente para volume nos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Cuidado com a amplitude!", correction: "• Não desça os halteres demasiado\n• Mantenha cotovelos ligeiramente para dentro" }]
+                    }
+                },
+                {
+                    name: "Lateral Raises",
+                    sets: "4x12-15",
+                    currentWeight: "7.5kg (Prog. 10kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação no deltóide lateral", desc: "Foco na parte lateral dos ombros", feedback: "Ótimo para a largura dos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso e a forma!", correction: "• Use um peso leve e controlado\n• Eleve os braços apenas até a altura dos ombros\n• Não use impulso" }]
+                    }
+                },
+                {
+                    name: "Cable Lateral Raises",
+                    sets: "3x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão constante no deltóide lateral", desc: "Manter a tensão durante todo o movimento", feedback: "Excelente para isolamento e volume." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a polia e o peso!", correction: "• Posicione-se corretamente em relação à polia\n• Use um peso que permita controle total" }]
+                    }
+                },
+                {
+                    name: "Upright Rows",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Ativação de ombros e trapézios", desc: "Sentir o trabalho conjunto", feedback: "Bom para desenvolver a parte superior dos ombros." }],
+                        bad: [{ title: "Dor no ombro/punho", desc: "Desconforto nas articulações", feedback: "Cuidado com a pegada!", correction: "• Use uma pegada mais larga\n• Não eleve a barra acima do peito\n• Evite forçar os punhos" }]
+                    }
+                },
+                {
+                    name: "Rear Delt Flyes",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no deltóide posterior", desc: "Foco na parte de trás dos ombros", feedback: "Crucial para a postura e equilíbrio dos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Mantenha os cotovelos ligeiramente flexionados\n• Não balance o corpo\n• Foque na contração da parte de trás do ombro" }]
+                    }
+                },
+                {
+                    name: "Face Pulls",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Ativação do deltóide posterior e manguito", desc: "Sentir o trabalho na parte de trás dos ombros", feedback: "Excelente para a saúde e postura do ombro." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto ao puxar", feedback: "Ajuste a altura da polia!", correction: "• Mantenha os cotovelos altos\n• Puxe em direção ao rosto\n• Não use peso excessivo" }]
+                    }
+                },
+                {
+                    name: "Machine Reverse Fly",
+                    sets: "3x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Isolamento do deltóide posterior", desc: "Foco exclusivo na parte de trás dos ombros", feedback: "Muito eficaz para detalhar os ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a máquina!", correction: "• Ajuste o assento para alinhar com os ombros\n• Não force a amplitude máxima" }]
+                    }
+                },
+                {
+                    name: "Barbell Shrugs",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação nos trapézios", desc: "Sentir a contração nos músculos do pescoço/ombros", feedback: "Ótimo para desenvolver a massa do trapézio." }],
+                        bad: [{ title: "Dor no pescoço", desc: "Tensão ou dor no pescoço", feedback: "Ajuste o movimento!", correction: "• Não encolha os ombros em excesso\n• Mantenha o pescoço neutro\n• Use um peso que permita controle total" }]
+                    }
+                }
+            ],
+            sabado: [
+                {
+                    name: "A1. Cable Bicep Curl (Pre-Exhaustion)",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump nos bíceps", desc: "Sensação de inchaço muscular", feedback: "Ótimo para pré-exaustão!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso controlado\n• Mantenha a forma perfeita" }]
+                    }
+                },
+                {
+                    name: "A2. Cable Tricep Pushdown (Pre-Exhaustion)",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump no tríceps", desc: "Sensação de inchaço muscular", feedback: "Ótimo para pré-exaustão!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso controlado\n• Mantenha a forma perfeita" }]
+                    }
+                },
+                {
+                    name: "B1. Close-Grip Bench Press (Compound Power)",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão forte no tríceps e peito", desc: "Foco na ativação do tríceps e peito", feedback: "Poderoso para força nos braços!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações do braço", feedback: "Ajuste a pegada/amplitude!", correction: "• Mantenha punhos neutros\n• Não tranque os cotovelos no topo\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "B2. Barbell Bicep Curl (Compound Power)",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump intenso nos bíceps", desc: "Sensação de inchaço e fadiga", feedback: "Ótimo para volume e hipertrofia dos bíceps!" }],
+                        bad: [{ title: "Dor no cotovelo/punho", desc: "Desconforto nas articulações", feedback: "Ajuste a forma!", correction: "• Não balance o corpo\n• Mantenha os cotovelos fixos\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "C1. Hammer Curls (Volume Pump)",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no braquial/antebraço", desc: "Fadiga nos músculos do braço", feedback: "Excelente para a largura do braço!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste o peso!", correction: "• Mantenha os punhos firmes\n• Não balance o corpo" }]
+                    }
+                },
+                {
+                    name: "C2. Overhead Tricep Extension (Volume Pump)",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no tríceps", desc: "Fadiga progressiva no tríceps", feedback: "Ótimo para a parte superior do tríceps!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto ao levantar o braço", feedback: "Cuidado com a posição do cotovelo!", correction: "• Mantenha os cotovelos mais próximos da cabeça\n• Use um peso que permita controle total" }]
+                    }
+                },
+                {
+                    name: "21s Bicep Curls (Finisher)",
+                    sets: "2x",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação intensa nos bíceps", desc: "Fadiga extrema nos bíceps", feedback: "Excelente para um pump final!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso muito leve\n• Mantenha a forma controlada" }]
+                    }
+                },
+                {
+                    name: "Diamond Push-ups (Finisher)",
+                    sets: "3x máximo",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Queimação no tríceps e peito", desc: "Fadiga muscular nos braços e peito", feedback: "Ótimo para terminar o treino com força!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste a posição das mãos!", correction: "• Mantenha punhos neutros\n• Use uma superfície elevada se precisar de assistência" }]
+                    }
+                },
+                {
+                    name: "Cable Hammer Curls (Finisher)",
+                    sets: "2x20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump final no braquial", desc: "Fadiga total nos braços", feedback: "Perfeito para esgotar os músculos dos braços!" }],
+                        bad: [{ title: "Dor no punho", desc: "Desconforto na articulação do punho", feedback: "Ajuste a pegada!", correction: "• Mantenha os punhos firmes\n• Use um peso leve" }]
+                    }
+                }
+            ],
+            domingo: [
+                {
+                    name: "Push-ups Explosivos (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga muscular rápida", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para potência e resistência!" }],
+                        bad: [{ title: "Dor no punho/ombro", desc: "Desconforto articular", feedback: "Ajuste a forma!", correction: "• Mantenha punhos neutros\n• Controle o movimento\n• Use inclinação se precisar de assistência" }]
+                    }
+                },
+                {
+                    name: "Pull-ups/Lat Pulldown (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight/Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nas costas e bíceps", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para força e resistência de puxada!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Mantenha o movimento controlado\n• Use assistência se necessário\n• Não force a amplitude" }]
+                    }
+                },
+                {
+                    name: "Mountain Climbers (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga cardiovascular e abdominal", desc: "Aumento da frequência cardíaca e ativação do core", feedback: "Ótimo para condicionamento e core!" }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte baixa das costas", feedback: "Ajuste a forma!", correction: "• Mantenha o corpo reto\n• Core ativado\n• Não levante demasiado o quadril" }]
+                    }
+                },
+                {
+                    name: "Dumbbell Chest Press (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga no peito e ombros", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para resistência do peito!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso!", correction: "• Use um peso leve e controlado\n• Não force a amplitude" }]
+                    }
+                },
+                {
+                    name: "Bent-Over Rows (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nas costas", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para resistência de puxada!" }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte baixa das costas", feedback: "Ajuste a forma!", correction: "• Mantenha as costas retas\n• Core ativado\n• Use um peso leve e controlado" }]
+                    }
+                },
+                {
+                    name: "Burpees (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga cardiovascular e corporal total", desc: "Aumento da frequência cardíaca e fadiga geral", feedback: "Desafiador e eficaz para o condicionamento!" }],
+                        bad: [{ title: "Dor no joelho/lombar", desc: "Impacto ou desconforto articular", feedback: "Faça movimentos controlados!", correction: "• Faça adaptações se necessário (ex: sem salto)\n• Mantenha a forma" }]
+                    }
+                },
+                {
+                    name: "Dips (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga no peito e tríceps", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para resistência de empurrada!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Reduza a amplitude\n• Use assistência se necessário\n• Mantenha o controle" }]
+                    }
+                },
+                {
+                    name: "Face Pulls (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nos ombros e costas", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para a saúde do ombro e postura!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso!", correction: "• Use um peso leve\n• Mantenha a forma controlada" }]
+                    }
+                },
+                {
+                    name: "Plank to Push-up (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga no core e corpo total", desc: "Aumento da frequência cardíaca e ativação do core/parte superior", feedback: "Desafiador para core e força!" }],
+                        bad: [{ title: "Dor lombar/punho", desc: "Tensão na lombar ou dor no punho", feedback: "Ajuste a forma!", correction: "• Mantenha o core ativado\n• Punhos neutros\n• Faça adaptações se necessário" }]
                     }
                 }
             ]
         };
 
-        // Obter nome do dia da semana (ESTA FUNÇÃO FOI MOVIDA PARA CÁ)
+        // Obter nome do dia da semana
         function getDayName(dayKey) {
             switch (dayKey) {
                 case 'segunda': return 'Segunda-feira';
@@ -675,7 +1128,6 @@
             }
 
             const exercises = workoutExercises[selectedDay];
-            // Agora getDayName está definida e acessível!
             let html = `<div class="workout-day">Treino de ${getDayName(selectedDay)}</div>`; 
             
             exercises.forEach((exercise, index) => {
@@ -692,12 +1144,22 @@
             const reps = setsArray[1];
             
             let setsHtml = '';
-            for (let i = 1; i <= numSets; i++) {
+            // Handle cases where 'sets' might not be a simple 'NxM' format (e.g., '20min', '3x60s')
+            if (!isNaN(numSets) && reps) { // Standard sets x reps
+                for (let i = 1; i <= numSets; i++) {
+                    setsHtml += `
+                        <div class="set-input-group">
+                            <div class="set-label">Série ${i}</div>
+                            <input type="number" class="set-input" placeholder="Peso" name="exercise_${index}_set_${i}_weight">
+                            <input type="number" class="set-input" placeholder="Reps" name="exercise_${index}_set_${i}_reps">
+                        </div>
+                    `;
+                }
+            } else { // For descriptive sets like "20min", "45s work / 15s rest"
                 setsHtml += `
-                    <div class="set-input-group">
-                        <div class="set-label">Série ${i}</div>
-                        <input type="number" class="set-input" placeholder="Peso" name="exercise_${index}_set_${i}_weight">
-                        <input type="number" class="set-input" placeholder="Reps" name="exercise_${index}_set_${i}_reps">
+                    <div class="set-input-group" style="grid-column: span 2;">
+                        <div class="set-label">${exercise.sets}</div>
+                        <input type="text" class="set-input" placeholder="Notas" name="exercise_${index}_set_1_notes">
                     </div>
                 `;
             }
@@ -832,13 +1294,21 @@
                 };
 
                 const numSets = parseInt(exercise.sets.split('x')[0]);
-                for (let i = 1; i <= numSets; i++) {
-                    const weight = formData.get(`exercise_${index}_set_${i}_weight`);
-                    const reps = formData.get(`exercise_${index}_set_${i}_reps`);
-                    exerciseBlockData.sets.push({
-                        set: i,
-                        weight: weight ? parseFloat(weight) : null,
-                        reps: reps ? parseInt(reps) : null
+                if (!isNaN(numSets)) { // Standard sets x reps
+                    for (let i = 1; i <= numSets; i++) {
+                        const weight = formData.get(`exercise_${index}_set_${i}_weight`);
+                        const reps = formData.get(`exercise_${index}_set_${i}_reps`);
+                        exerciseBlockData.sets.push({
+                            set: i,
+                            weight: weight ? parseFloat(weight) : null,
+                            reps: reps ? parseInt(reps) : null
+                        });
+                    }
+                } else { // For descriptive sets, just store notes
+                     const notes = formData.get(`exercise_${index}_set_1_notes`);
+                     exerciseBlockData.sets.push({
+                        set: 1, // Treat as one descriptive set
+                        notes: notes
                     });
                 }
                 workoutData.exercises.push(exerciseBlockData);
