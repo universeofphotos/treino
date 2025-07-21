@@ -432,8 +432,8 @@
                                 <button type="button" class="rating-btn" data-rating="energy" data-value="6">6</button>
                                 <button type="button" class="rating-btn" data-rating="energy" data-value="7">7</button>
                                 <button type="button" class="rating-btn" data-rating="energy" data-value="8">8</button>
-                                <button type="button" class="rating-btn" data-value="9">9</button>
-                                <button type="button" class="rating-btn" data-value="10">10</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="10">10</button>
                             </div>
                             <input type="hidden" name="energyLevel" id="energyLevel">
                         </div>
@@ -519,9 +519,8 @@
 
     <script>
         // Variáveis globais
-        let currentExercise = null; // Armazena o exercício atual para o modal de dor
-        let currentExerciseIndex = -1; // Armazena o índice do exercício atual
-        let workoutData = {}; // Objeto para armazenar os dados do treino
+        let currentExercise = null;
+        let workoutData = {};
 
         // Dados completos dos exercícios por dia
         const workoutExercises = {
@@ -612,13 +611,22 @@
                         ]
                     }
                 }
-            ],
-            quarta: [], // Adicione exercícios para Quarta se desejar
-            quinta: [], // Adicione exercícios para Quinta se desejar
-            sexta: [], // Adicione exercícios para Sexta se desejar
-            sabado: [], // Adicione exercícios para Sábado se desejar
-            domingo: [] // Adicione exercícios para Domingo se desejar
+            ]
         };
+
+        // Obter nome do dia da semana (ESTA FUNÇÃO FOI MOVIDA PARA CÁ)
+        function getDayName(dayKey) {
+            switch (dayKey) {
+                case 'segunda': return 'Segunda-feira';
+                case 'terca': return 'Terça-feira';
+                case 'quarta': return 'Quarta-feira';
+                case 'quinta': return 'Quinta-feira';
+                case 'sexta': return 'Sexta-feira';
+                case 'sabado': return 'Sábado';
+                case 'domingo': return 'Domingo';
+                default: return '';
+            }
+        }
 
         // Inicialização quando a página carrega
         document.addEventListener('DOMContentLoaded', function() {
@@ -656,20 +664,6 @@
             });
         }
 
-        // Função auxiliar para obter o nome do dia em português
-        function getDayName(dayKey) {
-            const days = {
-                segunda: "Segunda-feira",
-                terca: "Terça-feira",
-                quarta: "Quarta-feira",
-                quinta: "Quinta-feira",
-                sexta: "Sexta-feira",
-                sabado: "Sábado",
-                domingo: "Domingo"
-            };
-            return days[dayKey] || "";
-        }
-
         // Carregar exercícios baseado no dia selecionado
         function loadExercises() {
             const selectedDay = document.getElementById('workoutDay').value;
@@ -681,15 +675,14 @@
             }
 
             const exercises = workoutExercises[selectedDay];
-            let html = `<div class="workout-day">Treino de ${getDayName(selectedDay)}</div>`;
+            // Agora getDayName está definida e acessível!
+            let html = `<div class="workout-day">Treino de ${getDayName(selectedDay)}</div>`; 
             
             exercises.forEach((exercise, index) => {
                 html += createExerciseBlock(exercise, index);
             });
             
             container.innerHTML = html;
-            // Adicionar event listeners para os botões após carregar os exercícios
-            attachExerciseButtonListeners();
         }
 
         // Criar bloco de exercício
@@ -703,7 +696,7 @@
                 setsHtml += `
                     <div class="set-input-group">
                         <div class="set-label">Série ${i}</div>
-                        <input type="number" class="set-input" placeholder="Peso (kg)" name="exercise_${index}_set_${i}_weight">
+                        <input type="number" class="set-input" placeholder="Peso" name="exercise_${index}_set_${i}_weight">
                         <input type="number" class="set-input" placeholder="Reps" name="exercise_${index}_set_${i}_reps">
                     </div>
                 `;
@@ -712,150 +705,107 @@
             return `
                 <div class="exercise-block" id="exercise_${index}">
                     <div class="exercise-name">
-                        <span>${exercise.name} <span style="font-size:0.9em; font-weight: normal; color: #6c757d;">(${exercise.sets} @ ${exercise.currentWeight})</span></span>
+                        <span>${exercise.name} (${exercise.sets} @ ${exercise.currentWeight})</span>
                         <span class="exercise-status status-pending" id="status_${index}">Pendente</span>
                     </div>
                     <div class="sets-grid">
                         ${setsHtml}
                     </div>
                     <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" data-index="${index}" onclick="startExercise(this)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" data-index="${index}" onclick="openPainModal(this)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" data-index="${index}" onclick="completeExercise(this)">Concluir Exercício</button>
+                        <button type="button" class="btn btn-start" onclick="startExercise(${index})">Iniciar</button>
+                        <button type="button" class="btn btn-pain" onclick="openPainModal(${index})">Dor/Desconforto</button>
+                        <button type="button" class="btn btn-complete" onclick="completeExercise(${index})">Concluir Exercício</button>
                     </div>
-                    <div id="exerciseFeedback_${index}" class="feedback-panel" style="display:none;"></div>
                 </div>
             `;
         }
 
-        // Anexar event listeners aos botões dos exercícios
-        function attachExerciseButtonListeners() {
-            // Este passo é crucial para que os botões funcionem após o carregamento dinâmico
-            // A lógica de `onclick` diretamente no HTML já faz isso, mas se os eventos fossem anexados via JS, seria aqui.
+        // Funções para controle de exercícios (start, complete, pain)
+        function startExercise(exerciseIndex) {
+            document.getElementById(`status_${exerciseIndex}`).innerText = 'Ativo';
+            document.getElementById(`status_${exerciseIndex}`).className = 'exercise-status status-active';
         }
 
-        // Funções de controlo dos exercícios
-        function startExercise(button) {
-            const index = button.getAttribute('data-index');
-            document.getElementById(`status_${index}`).innerText = 'Ativo';
-            document.getElementById(`status_${index}`).classList.remove('status-pending');
-            document.getElementById(`status_${index}`).classList.add('status-active');
-            // Pode adicionar lógica para desabilitar o botão 'Iniciar' e habilitar outros
-            button.disabled = true;
+        function completeExercise(exerciseIndex) {
+            document.getElementById(`status_${exerciseIndex}`).innerText = 'Concluído';
+            document.getElementById(`status_${exerciseIndex}`).className = 'exercise-status status-completed';
+            alert(`Exercício ${workoutExercises[document.getElementById('workoutDay').value][exerciseIndex].name} concluído!`);
         }
 
-        function completeExercise(button) {
-            const index = button.getAttribute('data-index');
-            document.getElementById(`status_${index}`).innerText = 'Concluído';
-            document.getElementById(`status_${index}`).classList.remove('status-active');
-            document.getElementById(`status_${index}`).classList.add('status-completed');
-            // Desabilitar todos os botões para este exercício
-            const exerciseBlock = document.getElementById(`exercise_${index}`);
-            exerciseBlock.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
-            exerciseBlock.querySelectorAll('.set-input').forEach(input => input.readOnly = true);
-        }
+        function openPainModal(exerciseIndex) {
+            currentExercise = exerciseIndex;
+            const exercise = workoutExercises[document.getElementById('workoutDay').value][currentExercise];
+            
+            document.getElementById('modalTitle').innerText = `🩺 Avaliação de Desconforto - ${exercise.name}`;
+            document.getElementById('modalExercise').innerText = `( ${exercise.sets} @ ${exercise.currentWeight} )`;
 
-        // Funções para o modal de dor
-        function openPainModal(button) {
-            const index = button.getAttribute('data-index');
-            currentExerciseIndex = index;
-            const selectedDay = document.getElementById('workoutDay').value;
-            currentExercise = workoutExercises[selectedDay][index];
-
-            document.getElementById('modalExercise').innerText = `Exercício: ${currentExercise.name}`;
             const painOptionsContainer = document.getElementById('painOptions');
-            painOptionsContainer.innerHTML = ''; // Limpar opções anteriores
+            painOptionsContainer.innerHTML = '';
+            
+            // Adicionar opções de dor 'boa'
+            exercise.painTypes.good.forEach(pain => {
+                painOptionsContainer.innerHTML += `
+                    <div class="pain-option good-pain" onclick="selectPainType('good', this)">
+                        <div class="pain-title">${pain.title}</div>
+                        <div class="pain-description">${pain.desc}</div>
+                    </div>
+                `;
+            });
+
+            // Adicionar opções de dor 'ruim'
+            exercise.painTypes.bad.forEach(pain => {
+                painOptionsContainer.innerHTML += `
+                    <div class="pain-option bad-pain" onclick="selectPainType('bad', this)">
+                        <div class="pain-title">${pain.title}</div>
+                        <div class="pain-description">${pain.desc}</div>
+                    </div>
+                `;
+            });
+            
             document.getElementById('feedbackPanel').style.display = 'none'; // Esconder feedback anterior
-
-            // Adicionar opções de "dor boa"
-            if (currentExercise.painTypes && currentExercise.painTypes.good) {
-                currentExercise.painTypes.good.forEach((pain, pIndex) => {
-                    const div = document.createElement('div');
-                    div.classList.add('pain-option', 'good-pain');
-                    div.innerHTML = `
-                        <div class="pain-title">${pain.title}</div>
-                        <div class="pain-description">${pain.desc}</div>
-                    `;
-                    div.onclick = () => selectPainOption(pain, 'good');
-                    painOptionsContainer.appendChild(div);
-                });
-            }
-
-            // Adicionar opções de "dor ruim"
-            if (currentExercise.painTypes && currentExercise.painTypes.bad) {
-                currentExercise.painTypes.bad.forEach((pain, pIndex) => {
-                    const div = document.createElement('div');
-                    div.classList.add('pain-option', 'bad-pain');
-                    div.innerHTML = `
-                        <div class="pain-title">${pain.title}</div>
-                        <div class="pain-description">${pain.desc}</div>
-                    `;
-                    div.onclick = () => selectPainOption(pain, 'bad');
-                    painOptionsContainer.appendChild(div);
-                });
-            }
-
             document.getElementById('painModal').style.display = 'flex';
         }
 
         function closePainModal() {
             document.getElementById('painModal').style.display = 'none';
-            document.getElementById('feedbackPanel').style.display = 'none'; // Esconder painel ao fechar
         }
 
-        function selectPainOption(pain, type) {
+        function selectPainType(type, element) {
+            const exercise = workoutExercises[document.getElementById('workoutDay').value][currentExercise];
             const feedbackPanel = document.getElementById('feedbackPanel');
             const feedbackTitle = document.getElementById('feedbackTitle');
             const feedbackMessage = document.getElementById('feedbackMessage');
             const feedbackActions = document.getElementById('feedbackActions');
-            const exerciseFeedbackPanel = document.getElementById(`exerciseFeedback_${currentExerciseIndex}`);
-
-            // Limpar classes e conteúdo anteriores
-            feedbackPanel.classList.remove('feedback-good', 'feedback-bad');
-            exerciseFeedbackPanel.classList.remove('feedback-good', 'feedback-bad');
-            feedbackActions.innerHTML = '';
-            exerciseFeedbackPanel.innerHTML = '';
-
-            if (type === 'good') {
-                feedbackPanel.classList.add('feedback-good');
-                exerciseFeedbackPanel.classList.add('feedback-good');
-                feedbackTitle.innerText = '💪 Ótimo Progresso!';
-                feedbackMessage.innerText = pain.feedback;
-                exerciseFeedbackPanel.innerHTML = `
-                    <h4>Feedback: ${pain.title}</h4>
-                    <p>${pain.feedback}</p>
-                `;
-            } else if (type === 'bad') {
-                feedbackPanel.classList.add('feedback-bad');
-                exerciseFeedbackPanel.classList.add('feedback-bad');
-                feedbackTitle.innerText = '🚨 Atenção: Possível Ajuste Necessário!';
-                feedbackMessage.innerText = pain.feedback;
-                if (pain.correction) {
-                    feedbackActions.innerHTML = `
-                        <div class="correction-text">
-                            <strong>Sugestões de Correção:</strong><br>${pain.correction}
-                        </div>
-                    `;
-                    exerciseFeedbackPanel.innerHTML = `
-                        <h4>Feedback: ${pain.title}</h4>
-                        <p>${pain.feedback}</p>
-                        <div class="correction-text">
-                            <strong>Sugestões de Correção:</strong><br>${pain.correction}
-                        </div>
-                    `;
-                }
-            }
             
-            feedbackPanel.style.display = 'block';
-            exerciseFeedbackPanel.style.display = 'block'; // Mostrar feedback no próprio bloco do exercício
+            // Remover seleção anterior
+            document.querySelectorAll('.pain-option').forEach(el => el.style.backgroundColor = '');
+
+            // Destacar seleção atual
+            element.style.backgroundColor = type === 'good' ? '#e0ffe8' : '#ffe0e0';
+
+            const painSelected = exercise.painTypes[type].find(p => p.title === element.querySelector('.pain-title').innerText);
+
+            if (painSelected) {
+                feedbackTitle.innerText = type === 'good' ? '✅ Bom Sinal!' : '⚠️ Atenção Necessária!';
+                feedbackMessage.innerText = painSelected.feedback;
+                feedbackActions.innerHTML = ''; // Limpar ações anteriores
+
+                if (painSelected.correction) {
+                    feedbackActions.innerHTML = `<div class="correction-text">**Correções Sugeridas:**\n${painSelected.correction}</div>`;
+                    feedbackPanel.classList.remove('feedback-good');
+                    feedbackPanel.classList.add('feedback-bad');
+                } else {
+                    feedbackPanel.classList.remove('feedback-bad');
+                    feedbackPanel.classList.add('feedback-good');
+                }
+                feedbackPanel.style.display = 'block';
+            }
         }
 
-        // Salvar treino completo
+        // Salvar todos os dados do formulário
         function saveWorkout() {
-            const form = document.getElementById('workoutForm');
-            const formData = new FormData(form);
+            const formData = new FormData(document.getElementById('workoutForm'));
             
-            // Coletar dados gerais
             workoutData.general = {
                 date: formData.get('date'),
                 workoutDay: formData.get('workoutDay'),
@@ -863,7 +813,6 @@
                 endTime: formData.get('endTime')
             };
 
-            // Coletar dados pré-treino
             workoutData.preWorkout = {
                 energyLevel: formData.get('energyLevel'),
                 sleep: formData.get('sleep')
@@ -872,9 +821,10 @@
             // Coletar dados dos exercícios
             workoutData.exercises = [];
             const selectedDay = document.getElementById('workoutDay').value;
-            const exercisesInPlan = workoutExercises[selectedDay] || [];
+            const exercisesInDOM = document.querySelectorAll('.exercise-block');
 
-            exercisesInPlan.forEach((exercise, index) => {
+            exercisesInDOM.forEach((block, index) => {
+                const exercise = workoutExercises[selectedDay][index];
                 const exerciseBlockData = {
                     name: exercise.name,
                     status: document.getElementById(`status_${index}`).innerText,
