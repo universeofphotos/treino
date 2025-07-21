@@ -45,41 +45,6 @@
             opacity: 0.9;
         }
         
-        .tab-container {
-            display: flex;
-            justify-content: center;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .tab-button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 1.1rem;
-            color: #555;
-            font-weight: 600;
-        }
-
-        .tab-button:hover {
-            background-color: #ddd;
-        }
-
-        .tab-button.active {
-            background-color: #667eea;
-            color: white;
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 40px;
-            border-top: none;
-        }
-
         .form-content {
             padding: 40px;
         }
@@ -388,23 +353,6 @@
             white-space: pre-line;
         }
 
-        #summaryOutput {
-            background: #f9f9f9;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #eee;
-            margin-top: 20px;
-            white-space: pre-wrap; /* Preserve formatting for summary */
-            font-family: monospace;
-            font-size: 0.95rem;
-            color: #333;
-        }
-
-        .summary-actions {
-            text-align: center;
-            margin-top: 30px;
-        }
-        
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -436,134 +384,115 @@
             <p>Plano de Treino Otimizado V2.0 - Monitoramento em Tempo Real</p>
         </div>
         
-        <div class="tab-container">
-            <button class="tab-button active" onclick="openTab(event, 'WorkoutForm')">Preencher Treino</button>
-            <button class="tab-button" onclick="openTab(event, 'WorkoutSummary')">Resumo do Treino</button>
-        </div>
-
-        <div id="WorkoutForm" class="tab-content" style="display: block;">
-            <div class="form-content">
-                <form id="workoutForm">
-                    
-                    <div class="section">
-                        <div class="section-title">📊 Informações Gerais da Sessão</div>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="date">Data do Treino:</label>
-                                <input type="date" id="date" name="date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="workoutDay">Dia de Treino:</label>
-                                <select id="workoutDay" name="workoutDay" required>
-                                    <option value="">Selecione...</option>
-                                    <option value="segunda">Segunda - Peito/Tríceps</option>
-                                    <option value="terca">Terça - Costas/Bíceps</option>
-                                    <option value="quarta">Quarta - Recovery Ativo</option>
-                                    <option value="quinta">Quinta - Pernas Completas</option>
-                                    <option value="sexta">Sexta - Ombros/Trapézios</option>
-                                    <option value="sabado">Sábado - Braços Especialização</option>
-                                    <option value="domingo">Domingo - Conditioning</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="startTime">Hora de Início:</label>
-                                <input type="time" id="startTime" name="startTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="endTime">Hora de Término:</label>
-                                <input type="time" id="endTime" name="endTime">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">⚡ Estado Pré-Treino</div>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Nível de Energia (1-10):</label>
-                                <div class="rating-scale" id="energyRating">
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="1">1</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="2">2</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="3">3</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="4">4</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="5">5</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="6">6</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="7">7</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="8">8</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="9">9</button>
-                                    <button type="button" class="rating-btn" data-rating="energy" data-value="10">10</button>
-                                </div>
-                                <input type="hidden" name="energyLevel" id="energyLevel">
-                            </div>
-                            <div class="form-group">
-                                <label for="sleep">Horas de Sono:</label>
-                                <input type="number" id="sleep" name="sleep" min="0" max="12" step="0.5" placeholder="Ex: 7.5">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section" id="exerciseSection">
-                        <div class="section-title">💪 Exercícios - Monitoramento em Tempo Real</div>
-                        <div id="exerciseContainer">
-                            <p style="color: #6c757d; text-align: center; padding: 20px;">
-                                <em>Selecione o dia de treino acima para carregar os exercícios</em>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">📈 Avaliação Final</div>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Satisfação com Performance (1-10):</label>
-                                <div class="rating-scale" id="satisfactionRating">
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="1">1</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="2">2</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="3">3</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="4">4</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="5">5</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="6">6</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="7">7</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="8">8</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="9">9</button>
-                                    <button type="button" class="rating-btn" data-rating="satisfaction" data-value="10">10</button>
-                                </div>
-                                <input type="hidden" name="satisfactionLevel" id="satisfactionLevel">
-                            </div>
-                            <div class="form-group">
-                                <label for="progressions">Progressões Alcançadas:</label>
-                                <textarea id="progressions" name="progressions" rows="3" 
-                                            placeholder="Ex: Aumentei 2.5kg no supino, consegui fazer 8 reps..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <div class="section-title">📝 Observações Gerais</div>
-                        <div class="form-group">
-                            <label for="generalNotes">Notas Adicionais:</label>
-                            <textarea id="generalNotes" name="generalNotes" rows="4" 
-                                            placeholder="Qualquer observação adicional sobre o treino..."></textarea>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 40px;">
-                        <button type="button" class="btn btn-complete" onclick="saveWorkout()">💾 Salvar Treino Completo</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div id="WorkoutSummary" class="tab-content">
-            <div class="form-content">
+        <div class="form-content">
+            <form id="workoutForm">
+                
                 <div class="section">
-                    <div class="section-title">📄 Resumo Detalhado do Treino</div>
-                    <pre id="summaryOutput">Nenhum treino salvo ainda. Por favor, preencha o formulário e salve.</pre>
-                    <div class="summary-actions">
-                        <button type="button" class="btn btn-start" onclick="downloadPDF()">⬇️ Baixar como PDF</button>
+                    <div class="section-title">📊 Informações Gerais da Sessão</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="date">Data do Treino:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workoutDay">Dia de Treino:</label>
+                            <select id="workoutDay" name="workoutDay" required>
+                                <option value="">Selecione...</option>
+                                <option value="segunda">Segunda - Peito/Tríceps</option>
+                                <option value="terca">Terça - Costas/Bíceps</option>
+                                <option value="quarta">Quarta - Recovery Ativo</option>
+                                <option value="quinta">Quinta - Pernas Completas</option>
+                                <option value="sexta">Sexta - Ombros/Trapézios</option>
+                                <option value="sabado">Sábado - Braços Especialização</option>
+                                <option value="domingo">Domingo - Conditioning</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="startTime">Hora de Início:</label>
+                            <input type="time" id="startTime" name="startTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime">Hora de Término:</label>
+                            <input type="time" id="endTime" name="endTime">
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="section">
+                    <div class="section-title">⚡ Estado Pré-Treino</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nível de Energia (1-10):</label>
+                            <div class="rating-scale" id="energyRating">
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="4">4</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="10">10</button>
+                            </div>
+                            <input type="hidden" name="energyLevel" id="energyLevel">
+                        </div>
+                        <div class="form-group">
+                            <label for="sleep">Horas de Sono:</label>
+                            <input type="number" id="sleep" name="sleep" min="0" max="12" step="0.5" placeholder="Ex: 7.5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="exerciseSection">
+                    <div class="section-title">💪 Exercícios - Monitoramento em Tempo Real</div>
+                    <div id="exerciseContainer">
+                        <p style="color: #6c757d; text-align: center; padding: 20px;">
+                            <em>Selecione o dia de treino acima para carregar os exercícios</em>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📈 Avaliação Final</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Satisfação com Performance (1-10):</label>
+                            <div class="rating-scale" id="satisfactionRating">
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="4">4</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="10">10</button>
+                            </div>
+                            <input type="hidden" name="satisfactionLevel" id="satisfactionLevel">
+                        </div>
+                        <div class="form-group">
+                            <label for="progressions">Progressões Alcançadas:</label>
+                            <textarea id="progressions" name="progressions" rows="3" 
+                                      placeholder="Ex: Aumentei 2.5kg no supino, consegui fazer 8 reps..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📝 Observações Gerais</div>
+                    <div class="form-group">
+                        <label for="generalNotes">Notas Adicionais:</label>
+                        <textarea id="generalNotes" name="generalNotes" rows="4" 
+                                  placeholder="Qualquer observação adicional sobre o treino..."></textarea>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="button" class="btn btn-complete" onclick="saveWorkout()">💾 Salvar Treino Completo</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -770,48 +699,436 @@
                     currentWeight: "Varia",
                     painTypes: {
                         good: [{ title: "Contração constante nos bíceps", desc: "Tensão contínua durante o movimento", feedback: "Ótimo para manter a tensão muscular." }],
-                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Verifique a pegada!", correction: "• Reduza o peso\n• Mantenha os cotovelos fixos\n• Não estenda completamente os braços" }]
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Verifique a pegada!", correction: "• Mantenha os punhos neutros\n• Não force a extensão completa" }]
+                    }
+                },
+                {
+                    name: "Hammer Curls",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão no braquial/antebraço", desc: "Trabalho nos músculos do braço e antebraço", feedback: "Excelente para a largura do braço." }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste o peso!", correction: "• Mantenha os punhos firmes\n• Não balance o corpo" }]
+                    }
+                }
+            ],
+            quarta: [
+                { name: "Recumbent Bike", sets: "20min (5min warm-up, 10min intervals, 5min cool-down)", currentWeight: "N/A", painTypes: {good: [{title: "Fadiga muscular leve", desc: "Indicativo de queima calórica e melhoria cardiovascular", feedback: "Ótimo para o coração e recuperação ativa!"}], bad: []}},
+                { name: "Cat-Cow", sets: "2x10", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade da coluna", desc: "Melhora na flexibilidade da coluna", feedback: "Fundamental para a saúde da coluna!"}], bad: []}},
+                { name: "Hip Circles", sets: "2x8 cada direção", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade do quadril", desc: "Melhora na amplitude de movimento do quadril", feedback: "Essencial para agachamentos e movimentos das pernas!"}], bad: []}},
+                { name: "Shoulder Dislocations", sets: "2x12", currentWeight: "Bodyweight", painTypes: {good: [{title: "Mobilidade do ombro", desc: "Aumento da flexibilidade e rotação do ombro", feedback: "Importante para prevenir lesões nos ombros!"}], bad: []}},
+                { name: "Walking Lunges", sets: "2x12 (mobilidade)", currentWeight: "Bodyweight", painTypes: {good: [{title: "Alongamento das pernas", desc: "Sentir o alongamento dos flexores do quadril e isquiotibiais", feedback: "Bom para a mobilidade da anca e pernas!"}], bad: []}},
+                { name: "Leg Swings", sets: "2x10 cada perna", currentWeight: "Bodyweight", painTypes: {good: [{title: "Aquecimento dinâmico das pernas", desc: "Preparação dos músculos das pernas para o movimento", feedback: "Ótimo para flexibilidade dinâmica!"}], bad: []}},
+                { name: "Bodyweight Squats", sets: "1x15", currentWeight: "Bodyweight", painTypes: {good: [{title: "Ativação muscular geral", desc: "Sentir os músculos das pernas a trabalhar", feedback: "Excelente para manutenção da força base!"}], bad: []}},
+                { name: "Dead Bug", sets: "3x12 cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Estabilidade do core", desc: "Sentir o abdómen a trabalhar para estabilizar", feedback: "Fundamental para a saúde da lombar!"}], bad: []}},
+                { name: "Bird Dog", sets: "3x12 cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Equilíbrio e coordenação", desc: "Sentir a ativação dos músculos do core e glúteos", feedback: "Melhora a conexão mente-músculo!"}], bad: []}},
+                { name: "Side Plank", sets: "3x30s cada lado", currentWeight: "Bodyweight", painTypes: {good: [{title: "Força oblíqua", desc: "Sentir os músculos laterais do abdómen a trabalhar", feedback: "Ótimo para estabilidade lateral do core!"}], bad: []}}
+            ],
+            quinta: [
+                {
+                    name: "Barbell Back Squats",
+                    sets: "4x6-8",
+                    currentWeight: "30kg (Prog. 35-40kg)",
+                    painTypes: {
+                        good: [{ title: "Tensão nas pernas e glúteos", desc: "Sentir o trabalho nos membros inferiores", feedback: "Perfeito! A base para pernas fortes." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão ou dor na parte baixa das costas", feedback: "Verifique a forma!", correction: "• Mantenha o core contraído\n• Desça com o quadril\n• Não arredonde as costas" }]
+                    }
+                },
+                {
+                    name: "Romanian Deadlifts",
+                    sets: "4x8-10",
+                    currentWeight: "25kg (Prog. 35kg)",
+                    painTypes: {
+                        good: [{ title: "Alongamento nos isquiotibiais", desc: "Sensação de estiramento na parte posterior da coxa", feedback: "Excelente para isquiotibiais e glúteos." }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte inferior das costas", feedback: "Atenção ao movimento!", correction: "• Mantenha as costas retas\n• Não desça demasiado a barra\n• Foco nos quadris" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Press",
+                    sets: "4x12-15",
+                    currentWeight: "50kg (Prog. 60-70kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação nas coxas", desc: "Fadiga muscular nas pernas", feedback: "Ótimo para construir volume nas pernas." }],
+                        bad: [{ title: "Dor nos joelhos/quadris", desc: "Desconforto articular", feedback: "Ajuste a posição!", correction: "• Não tranque os joelhos no topo\n• Mantenha os pés na plataforma\n• Reduza a amplitude se sentir dor" }]
+                    }
+                },
+                {
+                    name: "Bulgarian Split Squats",
+                    sets: "3x10 cada perna",
+                    currentWeight: "Bodyweight (prog. halteres)",
+                    painTypes: {
+                        good: [{ title: "Estabilidade e tensão unilateral", desc: "Trabalho equilibrado em cada perna", feedback: "Excelente para simetria e força unilateral." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na articulação do joelho", feedback: "Verifique a amplitude!", correction: "• Não deixe o joelho ir muito à frente\n• Mantenha o tronco reto\n• Use um suporte estável" }]
+                    }
+                },
+                {
+                    name: "Walking Lunges",
+                    sets: "3x16 passos",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Alongamento e ativação dos glúteos", desc: "Sentir o trabalho em cada passo", feedback: "Ótimo para funcionalidade e glúteos." }],
+                        bad: [{ title: "Instabilidade/dor no joelho", desc: "Perda de equilíbrio ou dor no joelho", feedback: "Reduza a amplitude e foque no controle!", correction: "• Dê passos mais curtos\n• Mantenha o tronco reto\n• Desça de forma controlada" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Extension",
+                    sets: "3x12-15",
+                    currentWeight: "45kg (Prog. 50kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação no quadríceps", desc: "Fadiga na parte da frente da coxa", feedback: "Excelente para isolar o quadríceps." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na rótula", feedback: "Ajuste o peso e a amplitude!", correction: "• Não force a extensão completa\n• Use um peso controlado\n• Ajuste a máquina corretamente" }]
+                    }
+                },
+                {
+                    name: "Machine Leg Curl",
+                    sets: "4x12",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Contração nos isquiotibiais", desc: "Sentir o trabalho na parte de trás da coxa", feedback: "Ótimo para isolar os isquiotibiais." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na parte de trás do joelho", feedback: "Ajuste o peso e a amplitude!", correction: "• Não estenda completamente as pernas\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "Machine Seated Calf Raise",
+                    sets: "4x15-20",
+                    currentWeight: "35kg",
+                    painTypes: {
+                        good: [{ title: "Queimação nas panturrilhas", desc: "Fadiga nos músculos da panturrilha", feedback: "Perfeito para o desenvolvimento das panturrilhas." }],
+                        bad: [{ title: "Dor no tornozelo/tendão", desc: "Desconforto na articulação ou tendão", feedback: "Ajuste o peso e o alongamento!", correction: "• Não alongue demasiado no fundo\n• Use um peso que permita controle" }]
+                    }
+                },
+                {
+                    name: "Jump Squats",
+                    sets: "3x8",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Explosão e fadiga muscular", desc: "Sentir a ativação rápida dos músculos", feedback: "Excelente para potência e condicionamento." }],
+                        bad: [{ title: "Impacto no joelho/lombar", desc: "Dor no impacto ou ao aterrissar", feedback: "Aterrisse suavemente!", correction: "• Aterrisse com os joelhos flexionados\n• Mantenha o core ativado\n• Controle o movimento" }]
+                    }
+                },
+                {
+                    name: "Wall Sit",
+                    sets: "2x45s",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Queimação isométrica nas coxas", desc: "Tensão sustentada nos quadríceps", feedback: "Ótimo para resistência muscular." }],
+                        bad: [{ title: "Dor no joelho", desc: "Desconforto na articulação do joelho", feedback: "Ajuste a posição!", correction: "• Mantenha os joelhos a 90 graus\n• Pés firmes no chão\n• Costas retas contra a parede" }]
+                    }
+                }
+            ],
+            sexta: [
+                {
+                    name: "Military Press",
+                    sets: "4x6-8",
+                    currentWeight: "25kg (Prog. 30-35kg)",
+                    painTypes: {
+                        good: [{ title: "Tensão nos ombros", desc: "Sentir o trabalho nos deltóides", feedback: "Perfeito! Movimento base para ombros fortes." }],
+                        bad: [{ title: "Dor lombar/pescoço", desc: "Tensão na parte inferior das costas ou pescoço", feedback: "Ajuste a postura!", correction: "• Mantenha o core ativado\n• Não arqueie demasiado as costas\n• Mantenha o pescoço neutro" }]
+                    }
+                },
+                {
+                    name: "Dumbbell Shoulder Press",
+                    sets: "4x8-10",
+                    currentWeight: "10kg (Prog. 12.5-15kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação nos ombros", desc: "Fadiga nos deltóides", feedback: "Excelente para volume nos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Cuidado com a amplitude!", correction: "• Não desça os halteres demasiado\n• Mantenha cotovelos ligeiramente para dentro" }]
+                    }
+                },
+                {
+                    name: "Lateral Raises",
+                    sets: "4x12-15",
+                    currentWeight: "7.5kg (Prog. 10kg)",
+                    painTypes: {
+                        good: [{ title: "Queimação no deltóide lateral", desc: "Foco na parte lateral dos ombros", feedback: "Ótimo para a largura dos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso e a forma!", correction: "• Use um peso leve e controlado\n• Eleve os braços apenas até a altura dos ombros\n• Não use impulso" }]
+                    }
+                },
+                {
+                    name: "Cable Lateral Raises",
+                    sets: "3x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão constante no deltóide lateral", desc: "Manter a tensão durante todo o movimento", feedback: "Excelente para isolamento e volume." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a polia e o peso!", correction: "• Posicione-se corretamente em relação à polia\n• Use um peso que permita controle total" }]
+                    }
+                },
+                {
+                    name: "Upright Rows",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Ativação de ombros e trapézios", desc: "Sentir o trabalho conjunto", feedback: "Bom para desenvolver a parte superior dos ombros." }],
+                        bad: [{ title: "Dor no ombro/punho", desc: "Desconforto nas articulações", feedback: "Cuidado com a pegada!", correction: "• Use uma pegada mais larga\n• Não eleve a barra acima do peito\n• Evite forçar os punhos" }]
+                    }
+                },
+                {
+                    name: "Rear Delt Flyes",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no deltóide posterior", desc: "Foco na parte de trás dos ombros", feedback: "Crucial para a postura e equilíbrio dos ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Mantenha os cotovelos ligeiramente flexionados\n• Não balance o corpo\n• Foque na contração da parte de trás do ombro" }]
+                    }
+                },
+                {
+                    name: "Face Pulls",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Ativação do deltóide posterior e manguito", desc: "Sentir o trabalho na parte de trás dos ombros", feedback: "Excelente para a saúde e postura do ombro." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto ao puxar", feedback: "Ajuste a altura da polia!", correction: "• Mantenha os cotovelos altos\n• Puxe em direção ao rosto\n• Não use peso excessivo" }]
+                    }
+                },
+                {
+                    name: "Machine Reverse Fly",
+                    sets: "3x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Isolamento do deltóide posterior", desc: "Foco exclusivo na parte de trás dos ombros", feedback: "Muito eficaz para detalhar os ombros." }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a máquina!", correction: "• Ajuste o assento para alinhar com os ombros\n• Não force a amplitude máxima" }]
+                    }
+                },
+                {
+                    name: "Barbell Shrugs",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação nos trapézios", desc: "Sentir a contração nos músculos do pescoço/ombros", feedback: "Ótimo para desenvolver a massa do trapézio." }],
+                        bad: [{ title: "Dor no pescoço", desc: "Tensão ou dor no pescoço", feedback: "Ajuste o movimento!", correction: "• Não encolha os ombros em excesso\n• Mantenha o pescoço neutro\n• Use um peso que permita controle total" }]
+                    }
+                }
+            ],
+            sabado: [
+                {
+                    name: "A1. Cable Bicep Curl (Pre-Exhaustion)",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump nos bíceps", desc: "Sensação de inchaço muscular", feedback: "Ótimo para pré-exaustão!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso controlado\n• Mantenha a forma perfeita" }]
+                    }
+                },
+                {
+                    name: "A2. Cable Tricep Pushdown (Pre-Exhaustion)",
+                    sets: "4x15-20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump no tríceps", desc: "Sensação de inchaço muscular", feedback: "Ótimo para pré-exaustão!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso controlado\n• Mantenha a forma perfeita" }]
+                    }
+                },
+                {
+                    name: "B1. Close-Grip Bench Press (Compound Power)",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Tensão forte no tríceps e peito", desc: "Foco na ativação do tríceps e peito", feedback: "Poderoso para força nos braços!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações do braço", feedback: "Ajuste a pegada/amplitude!", correction: "• Mantenha punhos neutros\n• Não tranque os cotovelos no topo\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "B2. Barbell Bicep Curl (Compound Power)",
+                    sets: "4x8-10",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump intenso nos bíceps", desc: "Sensação de inchaço e fadiga", feedback: "Ótimo para volume e hipertrofia dos bíceps!" }],
+                        bad: [{ title: "Dor no cotovelo/punho", desc: "Desconforto nas articulações", feedback: "Ajuste a forma!", correction: "• Não balance o corpo\n• Mantenha os cotovelos fixos\n• Use um peso controlado" }]
+                    }
+                },
+                {
+                    name: "C1. Hammer Curls (Volume Pump)",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no braquial/antebraço", desc: "Fadiga nos músculos do braço", feedback: "Excelente para a largura do braço!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste o peso!", correction: "• Mantenha os punhos firmes\n• Não balance o corpo" }]
+                    }
+                },
+                {
+                    name: "C2. Overhead Tricep Extension (Volume Pump)",
+                    sets: "3x12-15",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação no tríceps", desc: "Fadiga progressiva no tríceps", feedback: "Ótimo para a parte superior do tríceps!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto ao levantar o braço", feedback: "Cuidado com a posição do cotovelo!", correction: "• Mantenha os cotovelos mais próximos da cabeça\n• Use um peso que permita controle total" }]
+                    }
+                },
+                {
+                    name: "21s Bicep Curls (Finisher)",
+                    sets: "2x",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Queimação intensa nos bíceps", desc: "Fadiga extrema nos bíceps", feedback: "Excelente para um pump final!" }],
+                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Ajuste o peso!", correction: "• Use um peso muito leve\n• Mantenha a forma controlada" }]
+                    }
+                },
+                {
+                    name: "Diamond Push-ups (Finisher)",
+                    sets: "3x máximo",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Queimação no tríceps e peito", desc: "Fadiga muscular nos braços e peito", feedback: "Ótimo para terminar o treino com força!" }],
+                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações", feedback: "Ajuste a posição das mãos!", correction: "• Mantenha punhos neutros\n• Use uma superfície elevada se precisar de assistência" }]
+                    }
+                },
+                {
+                    name: "Cable Hammer Curls (Finisher)",
+                    sets: "2x20",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Pump final no braquial", desc: "Fadiga total nos braços", feedback: "Perfeito para esgotar os músculos dos braços!" }],
+                        bad: [{ title: "Dor no punho", desc: "Desconforto na articulação do punho", feedback: "Ajuste a pegada!", correction: "• Mantenha os punhos firmes\n• Use um peso leve" }]
+                    }
+                }
+            ],
+            domingo: [
+                {
+                    name: "Push-ups Explosivos (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga muscular rápida", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para potência e resistência!" }],
+                        bad: [{ title: "Dor no punho/ombro", desc: "Desconforto articular", feedback: "Ajuste a forma!", correction: "• Mantenha punhos neutros\n• Controle o movimento\n• Use inclinação se precisar de assistência" }]
+                    }
+                },
+                {
+                    name: "Pull-ups/Lat Pulldown (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight/Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nas costas e bíceps", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para força e resistência de puxada!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Mantenha o movimento controlado\n• Use assistência se necessário\n• Não force a amplitude" }]
+                    }
+                },
+                {
+                    name: "Mountain Climbers (Circuit A)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga cardiovascular e abdominal", desc: "Aumento da frequência cardíaca e ativação do core", feedback: "Ótimo para condicionamento e core!" }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte baixa das costas", feedback: "Ajuste a forma!", correction: "• Mantenha o corpo reto\n• Core ativado\n• Não levante demasiado o quadril" }]
+                    }
+                },
+                {
+                    name: "Dumbbell Chest Press (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga no peito e ombros", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para resistência do peito!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso!", correction: "• Use um peso leve e controlado\n• Não force a amplitude" }]
+                    }
+                },
+                {
+                    name: "Bent-Over Rows (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nas costas", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para resistência de puxada!" }],
+                        bad: [{ title: "Dor lombar", desc: "Tensão na parte baixa das costas", feedback: "Ajuste a forma!", correction: "• Mantenha as costas retas\n• Core ativado\n• Use um peso leve e controlado" }]
+                    }
+                },
+                {
+                    name: "Burpees (Circuit B)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga cardiovascular e corporal total", desc: "Aumento da frequência cardíaca e fadiga geral", feedback: "Desafiador e eficaz para o condicionamento!" }],
+                        bad: [{ title: "Dor no joelho/lombar", desc: "Impacto ou desconforto articular", feedback: "Faça movimentos controlados!", correction: "• Faça adaptações se necessário (ex: sem salto)\n• Mantenha a forma" }]
+                    }
+                },
+                {
+                    name: "Dips (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga no peito e tríceps", desc: "Aumento da frequência cardíaca e queimação", feedback: "Ótimo para resistência de empurrada!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste a forma!", correction: "• Reduza a amplitude\n• Use assistência se necessário\n• Mantenha o controle" }]
+                    }
+                },
+                {
+                    name: "Face Pulls (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Varia",
+                    painTypes: {
+                        good: [{ title: "Fadiga nos ombros e costas", desc: "Aumento da frequência cardíaca e queimação", feedback: "Excelente para a saúde do ombro e postura!" }],
+                        bad: [{ title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Ajuste o peso!", correction: "• Use um peso leve\n• Mantenha a forma controlada" }]
+                    }
+                },
+                {
+                    name: "Plank to Push-up (Circuit C)",
+                    sets: "45s trabalho / 15s descanso",
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [{ title: "Fadiga no core e corpo total", desc: "Aumento da frequência cardíaca e ativação do core/parte superior", feedback: "Desafiador para core e força!" }],
+                        bad: [{ title: "Dor lombar/punho", desc: "Tensão na lombar ou dor no punho", feedback: "Ajuste a forma!", correction: "• Mantenha o core ativado\n• Punhos neutros\n• Faça adaptações se necessário" }]
                     }
                 }
             ]
-            // Add more days as needed
         };
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            document.getElementById('date').value = `${year}-${month}-${day}`;
-        });
-
+        // Obter nome do dia da semana
         function getDayName(dayKey) {
-            const days = {
-                segunda: "Segunda-feira",
-                terca: "Terça-feira",
-                quarta: "Quarta-feira",
-                quinta: "Quinta-feira",
-                sexta: "Sexta-feira",
-                sabado: "Sábado",
-                domingo: "Domingo"
-            };
-            return days[dayKey] || dayKey;
+            switch (dayKey) {
+                case 'segunda': return 'Segunda-feira';
+                case 'terca': return 'Terça-feira';
+                case 'quarta': return 'Quarta-feira';
+                case 'quinta': return 'Quinta-feira';
+                case 'sexta': return 'Sexta-feira';
+                case 'sabado': return 'Sábado';
+                case 'domingo': return 'Domingo';
+                default: return '';
+            }
         }
 
-        document.getElementById('workoutDay').addEventListener('change', function() {
-            loadExercises(this.value);
+        // Inicialização quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            // Definir data atual
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+            document.getElementById('date').value = dateString;
+
+            // Configurar event listeners para ratings
+            setupRatingButtons();
+            
+            // Configurar event listener para mudança de dia de treino
+            document.getElementById('workoutDay').addEventListener('change', loadExercises);
         });
 
-        // Função para carregar exercícios com base no dia selecionado
-        function loadExercises(selectedDay) {
+        // Configurar botões de rating
+        function setupRatingButtons() {
+            const ratingButtons = document.querySelectorAll('.rating-btn');
+            
+            ratingButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    const value = this.getAttribute('data-value');
+                    
+                    // Remover classe ativa de todos os botões da mesma categoria
+                    const sameRatingButtons = document.querySelectorAll(`[data-rating="${rating}"]`);
+                    sameRatingButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Adicionar classe ativa ao botão clicado
+                    this.classList.add('active');
+                    
+                    // Atualizar campo oculto
+                    document.getElementById(rating + 'Level').value = value;
+                });
+            });
+        }
+
+        // Carregar exercícios baseado no dia selecionado
+        function loadExercises() {
+            const selectedDay = document.getElementById('workoutDay').value;
             const container = document.getElementById('exerciseContainer');
-            if (!workoutExercises[selectedDay]) {
-                container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 20px;"><em>Nenhum exercício definido para este dia.</em></p>';
+            
+            if (!selectedDay || !workoutExercises[selectedDay]) {
+                container.innerHTML = '<p style="color: #6c757d; text-align: center; padding: 20px;"><em>Selecione o dia de treino acima para carregar os exercícios</em></p>';
                 return;
             }
 
             const exercises = workoutExercises[selectedDay];
-            let html = `<div class="workout-day">Treino de ${getDayName(selectedDay)}</div>`;
+            let html = `<div class="workout-day">Treino de ${getDayName(selectedDay)}</div>`; 
             
             exercises.forEach((exercise, index) => {
                 html += createExerciseBlock(exercise, index);
@@ -827,12 +1144,22 @@
             const reps = setsArray[1];
             
             let setsHtml = '';
-            for (let i = 1; i <= numSets; i++) {
+            // Handle cases where 'sets' might not be a simple 'NxM' format (e.g., '20min', '3x60s')
+            if (!isNaN(numSets) && reps) { // Standard sets x reps
+                for (let i = 1; i <= numSets; i++) {
+                    setsHtml += `
+                        <div class="set-input-group">
+                            <div class="set-label">Série ${i}</div>
+                            <input type="number" class="set-input" placeholder="Peso" name="exercise_${index}_set_${i}_weight">
+                            <input type="number" class="set-input" placeholder="Reps" name="exercise_${index}_set_${i}_reps">
+                        </div>
+                    `;
+                }
+            } else { // For descriptive sets like "20min", "45s work / 15s rest"
                 setsHtml += `
-                    <div class="set-input-group">
-                        <div class="set-label">Série ${i}</div>
-                        <input type="number" class="set-input" placeholder="Peso" name="exercise_${index}_set_${i}_weight">
-                        <input type="number" class="set-input" placeholder="Reps" name="exercise_${index}_set_${i}_reps">
+                    <div class="set-input-group" style="grid-column: span 2;">
+                        <div class="set-label">${exercise.sets}</div>
+                        <input type="text" class="set-input" placeholder="Notas" name="exercise_${index}_set_1_notes">
                     </div>
                 `;
             }
@@ -840,124 +1167,107 @@
             return `
                 <div class="exercise-block" id="exercise_${index}">
                     <div class="exercise-name">
-                        <span>${exercise.name}</span>
-                        <span id="status_${index}" class="exercise-status status-pending">Pendente</span>
+                        <span>${exercise.name} (${exercise.sets} @ ${exercise.currentWeight})</span>
+                        <span class="exercise-status status-pending" id="status_${index}">Pendente</span>
                     </div>
-                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">
-                        Séries: ${exercise.sets} | Peso de Referência: ${exercise.currentWeight}
-                    </p>
                     <div class="sets-grid">
                         ${setsHtml}
                     </div>
                     <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(${index})">Iniciar Exercício</button>
+                        <button type="button" class="btn btn-start" onclick="startExercise(${index})">Iniciar</button>
+                        <button type="button" class="btn btn-pain" onclick="openPainModal(${index})">Dor/Desconforto</button>
                         <button type="button" class="btn btn-complete" onclick="completeExercise(${index})">Concluir Exercício</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(${index}, '${exercise.name}')">Sentiu Dor?</button>
                     </div>
-                    <div id="exerciseFeedback_${index}" class="feedback-panel"></div>
                 </div>
             `;
         }
 
-        function startExercise(index) {
-            document.getElementById(`status_${index}`).innerText = "Ativo";
-            document.getElementById(`status_${index}`).className = "exercise-status status-active";
+        // Funções para controle de exercícios (start, complete, pain)
+        function startExercise(exerciseIndex) {
+            document.getElementById(`status_${exerciseIndex}`).innerText = 'Ativo';
+            document.getElementById(`status_${exerciseIndex}`).className = 'exercise-status status-active';
         }
 
-        function completeExercise(index) {
-            document.getElementById(`status_${index}`).innerText = "Concluído";
-            document.getElementById(`status_${index}`).className = "exercise-status status-completed";
+        function completeExercise(exerciseIndex) {
+            document.getElementById(`status_${exerciseIndex}`).innerText = 'Concluído';
+            document.getElementById(`status_${exerciseIndex}`).className = 'exercise-status status-completed';
+            alert(`Exercício ${workoutExercises[document.getElementById('workoutDay').value][exerciseIndex].name} concluído!`);
         }
 
-        // Modal de Dor
-        function openPainModal(exerciseIndex, exerciseName) {
-            currentExercise = workoutExercises[document.getElementById('workoutDay').value][exerciseIndex];
-            document.getElementById('modalTitle').innerText = `🩺 Avaliação de Desconforto para ${exerciseName}`;
-            document.getElementById('modalExercise').innerText = `Exercício: ${exerciseName}`;
+        function openPainModal(exerciseIndex) {
+            currentExercise = exerciseIndex;
+            const exercise = workoutExercises[document.getElementById('workoutDay').value][currentExercise];
             
+            document.getElementById('modalTitle').innerText = `🩺 Avaliação de Desconforto - ${exercise.name}`;
+            document.getElementById('modalExercise').innerText = `( ${exercise.sets} @ ${exercise.currentWeight} )`;
+
             const painOptionsContainer = document.getElementById('painOptions');
-            painOptionsContainer.innerHTML = ''; // Limpar opções anteriores
+            painOptionsContainer.innerHTML = '';
+            
+            // Adicionar opções de dor 'boa'
+            exercise.painTypes.good.forEach(pain => {
+                painOptionsContainer.innerHTML += `
+                    <div class="pain-option good-pain" onclick="selectPainType('good', this)">
+                        <div class="pain-title">${pain.title}</div>
+                        <div class="pain-description">${pain.desc}</div>
+                    </div>
+                `;
+            });
 
-            if (currentExercise.painTypes) {
-                // Good Pain
-                if (currentExercise.painTypes.good) {
-                    currentExercise.painTypes.good.forEach(pain => {
-                        painOptionsContainer.innerHTML += `
-                            <div class="pain-option good-pain" onclick="selectPainType(true, '${pain.title.replace(/'/g, "\\'")}', '${pain.feedback.replace(/'/g, "\\'")}', '')">
-                                <div class="pain-title">${pain.title}</div>
-                                <div class="pain-description">${pain.desc}</div>
-                            </div>
-                        `;
-                    });
-                }
-                // Bad Pain
-                if (currentExercise.painTypes.bad) {
-                    currentExercise.painTypes.bad.forEach(pain => {
-                        painOptionsContainer.innerHTML += `
-                            <div class="pain-option bad-pain" onclick="selectPainType(false, '${pain.title.replace(/'/g, "\\'")}', '${pain.feedback.replace(/'/g, "\\'")}', '${(pain.correction || '').replace(/'/g, "\\'")}')">
-                                <div class="pain-title">${pain.title}</div>
-                                <div class="pain-description">${pain.desc}</div>
-                            </div>
-                        `;
-                    });
-                }
-            } else {
-                painOptionsContainer.innerHTML = '<p>Nenhuma opção de dor configurada para este exercício.</p>';
-            }
-
-            document.getElementById('feedbackPanel').style.display = 'none';
+            // Adicionar opções de dor 'ruim'
+            exercise.painTypes.bad.forEach(pain => {
+                painOptionsContainer.innerHTML += `
+                    <div class="pain-option bad-pain" onclick="selectPainType('bad', this)">
+                        <div class="pain-title">${pain.title}</div>
+                        <div class="pain-description">${pain.desc}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('feedbackPanel').style.display = 'none'; // Esconder feedback anterior
             document.getElementById('painModal').style.display = 'flex';
         }
 
         function closePainModal() {
             document.getElementById('painModal').style.display = 'none';
-            document.getElementById('feedbackPanel').style.display = 'none'; // Reset feedback panel
         }
 
-        function selectPainType(isGood, title, feedback, correction) {
+        function selectPainType(type, element) {
+            const exercise = workoutExercises[document.getElementById('workoutDay').value][currentExercise];
             const feedbackPanel = document.getElementById('feedbackPanel');
             const feedbackTitle = document.getElementById('feedbackTitle');
             const feedbackMessage = document.getElementById('feedbackMessage');
             const feedbackActions = document.getElementById('feedbackActions');
-
-            feedbackTitle.innerText = isGood ? "✅ Bom Sinal!" : "⚠️ Atenção Necessária!";
-            feedbackMessage.innerText = feedback;
-            feedbackActions.innerHTML = ''; // Clear previous actions
-
-            feedbackPanel.classList.remove('feedback-good', 'feedback-bad');
-            feedbackPanel.classList.add(isGood ? 'feedback-good' : 'feedback-bad');
-
-            if (correction) {
-                feedbackActions.innerHTML = `<div class="correction-text"><strong>Correção Sugerida:</strong>\n${correction}</div>`;
-            }
             
-            feedbackPanel.style.display = 'block';
+            // Remover seleção anterior
+            document.querySelectorAll('.pain-option').forEach(el => el.style.backgroundColor = '');
+
+            // Destacar seleção atual
+            element.style.backgroundColor = type === 'good' ? '#e0ffe8' : '#ffe0e0';
+
+            const painSelected = exercise.painTypes[type].find(p => p.title === element.querySelector('.pain-title').innerText);
+
+            if (painSelected) {
+                feedbackTitle.innerText = type === 'good' ? '✅ Bom Sinal!' : '⚠️ Atenção Necessária!';
+                feedbackMessage.innerText = painSelected.feedback;
+                feedbackActions.innerHTML = ''; // Limpar ações anteriores
+
+                if (painSelected.correction) {
+                    feedbackActions.innerHTML = `<div class="correction-text">**Correções Sugeridas:**\n${painSelected.correction}</div>`;
+                    feedbackPanel.classList.remove('feedback-good');
+                    feedbackPanel.classList.add('feedback-bad');
+                } else {
+                    feedbackPanel.classList.remove('feedback-bad');
+                    feedbackPanel.classList.add('feedback-good');
+                }
+                feedbackPanel.style.display = 'block';
+            }
         }
 
-        // Rating Scale logic (for energy and satisfaction)
-        document.querySelectorAll('.rating-scale').forEach(scale => {
-            scale.addEventListener('click', function(event) {
-                if (event.target.classList.contains('rating-btn')) {
-                    const ratingType = event.target.dataset.rating;
-                    const value = event.target.dataset.value;
-                    
-                    // Remove active class from all buttons in this scale
-                    this.querySelectorAll('.rating-btn').forEach(btn => btn.classList.remove('active'));
-                    // Add active class to the clicked button
-                    event.target.classList.add('active');
-                    
-                    // Update the hidden input field
-                    document.getElementById(`${ratingType}Level`).value = value;
-                }
-            });
-        });
-
-        // Função para salvar o treino completo e gerar o resumo
+        // Salvar todos os dados do formulário
         function saveWorkout() {
-            const form = document.getElementById('workoutForm');
-            const formData = new FormData(form);
-
-            workoutData = {};
+            const formData = new FormData(document.getElementById('workoutForm'));
+            
             workoutData.general = {
                 date: formData.get('date'),
                 workoutDay: formData.get('workoutDay'),
@@ -970,19 +1280,21 @@
                 sleep: formData.get('sleep')
             };
 
+            // Coletar dados dos exercícios
             workoutData.exercises = [];
-            const selectedDay = formData.get('workoutDay');
-            if (workoutExercises[selectedDay]) {
-                workoutExercises[selectedDay].forEach((exercise, index) => {
-                    const exerciseBlockData = {
-                        name: exercise.name,
-                        setsPlanned: exercise.sets,
-                        currentWeightReference: exercise.currentWeight,
-                        status: document.getElementById(`status_${index}`).innerText,
-                        sets: []
-                    };
+            const selectedDay = document.getElementById('workoutDay').value;
+            const exercisesInDOM = document.querySelectorAll('.exercise-block');
 
-                    const numSets = parseInt(exercise.sets.split('x')[0]);
+            exercisesInDOM.forEach((block, index) => {
+                const exercise = workoutExercises[selectedDay][index];
+                const exerciseBlockData = {
+                    name: exercise.name,
+                    status: document.getElementById(`status_${index}`).innerText,
+                    sets: []
+                };
+
+                const numSets = parseInt(exercise.sets.split('x')[0]);
+                if (!isNaN(numSets)) { // Standard sets x reps
                     for (let i = 1; i <= numSets; i++) {
                         const weight = formData.get(`exercise_${index}_set_${i}_weight`);
                         const reps = formData.get(`exercise_${index}_set_${i}_reps`);
@@ -992,9 +1304,15 @@
                             reps: reps ? parseInt(reps) : null
                         });
                     }
-                    workoutData.exercises.push(exerciseBlockData);
-                });
-            }
+                } else { // For descriptive sets, just store notes
+                     const notes = formData.get(`exercise_${index}_set_1_notes`);
+                     exerciseBlockData.sets.push({
+                        set: 1, // Treat as one descriptive set
+                        notes: notes
+                    });
+                }
+                workoutData.exercises.push(exerciseBlockData);
+            });
 
             // Coletar avaliação pós-treino
             workoutData.postWorkout = {
@@ -1006,134 +1324,13 @@
             workoutData.notes = formData.get('generalNotes');
 
             console.log("Dados do Treino Salvos:", workoutData);
-            alert("Treino salvo com sucesso! Veja os dados no console do navegador (F12) e no Resumo do Treino.");
-            
-            generateWorkoutSummary(); // Generate and display summary
-            openTab(null, 'WorkoutSummary'); // Switch to summary tab
+            alert("Treino salvo com sucesso! Veja os dados no console do navegador (F12).");
+
+            // Aqui você enviaria 'workoutData' para um servidor ou salvaria localmente
+            // Exemplo de como salvar no localStorage (para fins de demonstração)
+            // localStorage.setItem('lastWorkoutData', JSON.stringify(workoutData));
         }
 
-        function generateWorkoutSummary() {
-            const summaryOutput = document.getElementById('summaryOutput');
-            if (Object.keys(workoutData).length === 0) {
-                summaryOutput.innerText = 'Nenhum treino salvo ainda. Por favor, preencha o formulário e salve.';
-                return;
-            }
-
-            let summaryText = `
-### Resumo do Treino - ${workoutData.general.date}
----
-**Informações Gerais:**
-Data: ${workoutData.general.date}
-Dia de Treino: ${getDayName(workoutData.general.workoutDay)}
-Hora de Início: ${workoutData.general.startTime || 'Não informado'}
-Hora de Término: ${workoutData.general.endTime || 'Não informado'}
-
-**Estado Pré-Treino:**
-Nível de Energia: ${workoutData.preWorkout.energyLevel || 'Não informado'}/10
-Horas de Sono: ${workoutData.preWorkout.sleep || 'Não informado'}h
-
-**Exercícios Realizados:**
-`;
-
-            if (workoutData.exercises && workoutData.exercises.length > 0) {
-                workoutData.exercises.forEach(ex => {
-                    summaryText += `
-- **${ex.name}** (Séries Planejadas: ${ex.setsPlanned}, Peso Ref.: ${ex.currentWeightReference})
-  Status: ${ex.status}
-`;
-                    ex.sets.forEach(set => {
-                        summaryText += `    Série ${set.set}: Peso ${set.weight || '-'}kg, Reps ${set.reps || '-'}\n`;
-                    });
-                });
-            } else {
-                summaryText += "Nenhum exercício registrado para este treino.\n";
-            }
-
-            summaryText += `
-**Avaliação Final:**
-Satisfação com Performance: ${workoutData.postWorkout.satisfactionLevel || 'Não informado'}/10
-Progressões Alcançadas: ${workoutData.postWorkout.progressions || 'Nenhuma progressão registrada.'}
-
-**Observações Gerais:**
-${workoutData.notes || 'Nenhuma observação adicional.'}
-`;
-            summaryOutput.innerText = summaryText;
-        }
-
-        // Tab functionality
-        function openTab(evt, tabName) {
-            let i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tab-button");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            if (evt) { // If called by a click event
-                evt.currentTarget.className += " active";
-            } else { // If called programmatically (e.g., after saving workout)
-                // Find the correct button and add 'active' class
-                const buttons = document.getElementsByClassName('tab-button');
-                for (let j = 0; j < buttons.length; j++) {
-                    if (buttons[j].innerText.includes(tabName === 'WorkoutForm' ? 'Preencher Treino' : 'Resumo do Treino')) {
-                        buttons[j].classList.add('active');
-                        break;
-                    }
-                }
-            }
-        }
-
-        // Placeholder for PDF download function
-        function downloadPDF() {
-            const summaryElement = document.getElementById('summaryOutput');
-            const filename = `Resumo_Treino_${workoutData.general.date || 'SemData'}.pdf`;
-
-            // IMPORTANT: This part requires a library like jsPDF or html2canvas
-            // For example, using html2canvas and jsPDF:
-            /*
-            html2canvas(summaryElement, { scale: 2 }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jspdf.jsPDF({
-                    orientation: 'p',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                const imgWidth = 210; 
-                const pageHeight = 295; 
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-                let heightLeft = imgHeight;
-                let position = 0;
-
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-                pdf.save(filename);
-            }).catch(error => {
-                console.error("Erro ao gerar PDF:", error);
-                alert("Ocorreu um erro ao gerar o PDF. Verifique o console para detalhes.");
-            });
-            */
-            
-            // If you only want text in the PDF (simpler, but loses styling):
-            if (typeof jspdf !== 'undefined' && jspdf.jsPDF) {
-                const doc = new jspdf.jsPDF();
-                const text = summaryElement.innerText;
-                const splitText = doc.splitTextToSize(text, 180); // 180mm width
-                doc.text(splitText, 10, 10);
-                doc.save(filename);
-            } else {
-                alert("Para baixar o PDF, você precisa incluir a biblioteca jsPDF ou html2canvas/jspdf. Por favor, adicione <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'></script> (e opcionalmente html2canvas) na seção <head> do seu código.");
-            }
-        }
     </script>
 </body>
 </html>
