@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Acompanhamento - Treino Otimizado V2.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .form-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            border: 2px solid #f1f3f4;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: "💪";
+            font-size: 1.2rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 0.95rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .exercise-block {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            position: relative;
+        }
+        
+        .exercise-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .exercise-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-pending { background: #ffeaa7; color: #d63031; }
+        .status-active { background: #74b9ff; color: white; }
+        .status-completed { background: #00b894; color: white; }
+        
+        .sets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .set-input-group {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .set-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .set-input {
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        
+        .exercise-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+        }
+        
+        .btn-complete {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+        }
+        
+        .btn-pain {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .pain-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .pain-modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            border: none;
+            background: none;
+        }
+        
+        .pain-options {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .pain-option {
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+        
+        .pain-option:hover {
+            border-color: #667eea;
+            background: white;
+        }
+        
+        .pain-option.good-pain {
+            border-color: #00b894;
+            background: #f0fff4;
+        }
+        
+        .pain-option.bad-pain {
+            border-color: #e17055;
+            background: #fff5f5;
+        }
+        
+        .pain-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .pain-description {
+            font-size: 0.9rem;
+            color: #636e72;
+        }
+        
+        .feedback-panel {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+            display: none;
+        }
+        
+        .feedback-good {
+            border-left-color: #00b894;
+            background: #f0fff4;
+        }
+        
+        .feedback-bad {
+            border-left-color: #e17055;
+            background: #fff5f5;
+        }
+        
+        .workout-day {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .rating-scale {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .rating-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .rating-btn:hover, .rating-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .exercise-controls {
+                flex-direction: column;
+            }
+            
+            .pain-modal-content {
+                margin: 20px;
+                max-width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ Formulário de Acompanhamento</h1>
+            <p>Plano de Treino Otimizado V2.0 - Monitoramento em Tempo Real</p>
+        </div>
+        
+        <div class="form-content">
+            <form id="workoutForm">
+                
+                <!-- INFORMAÇÕES GERAIS -->
+                <div class="section">
+                    <div class="section-title">📊 Informações Gerais da Sessão</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="date">Data do Treino:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workoutDay">Dia de Treino:</label>
+                            <select id="workoutDay" name="workoutDay" required onchange="loadExercises()">
+                                <option value="">Selecione...</option>
+                                <option value="segunda">Segunda - Peito/Tríceps</option>
+                                <option value="terca">Terça - Costas/Bíceps</option>
+                                <option value="quarta">Quarta - Recovery Ativo</option>
+                                <option value="quinta">Quinta - Pernas Completas</option>
+                                <option value="sexta">Sexta - Ombros/Trapézios</option>
+                                <option value="sabado">Sábado - Braços Especialização</option>
+                                <option value="domingo">Domingo - Conditioning</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="startTime">Hora de Início:</label>
+                            <input type="time" id="startTime" name="startTime">
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime">Hora de Término:</label>
+                            <input type="time" id="endTime" name="endTime">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONDIÇÕES PRÉ-TREINO -->
+                <div class="section">
+                    <div class="section-title">⚡ Estado Pré-Treino</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nível de Energia (1-10):</label>
+                            <div class="rating-scale">
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="4">4</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-rating="energy" data-value="10">10</button>
+                            </div>
+                            <input type="hidden" name="energyLevel" id="energyLevel">
+                        </div>
+                        <div class="form-group">
+                            <label for="sleep">Horas de Sono:</label>
+                            <input type="number" id="sleep" name="sleep" min="0" max="12" step="0.5" placeholder="Ex: 7.5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXERCÍCIOS DO TREINO -->
+                <div class="section" id="exerciseSection">
+                    <div class="section-title">💪 Exercícios - Monitoramento em Tempo Real</div>
+                    <div id="exerciseContainer">
+                        <p style="color: #6c757d; text-align: center; padding: 20px;">
+                            <em>Selecione o dia de treino acima para carregar os exercícios</em>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- AVALIAÇÃO PÓS-TREINO -->
+                <div class="section">
+                    <div class="section-title">📈 Avaliação Final</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Satisfação com Performance (1-10):</label>
+                            <div class="rating-scale">
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="4">4</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="10">10</button>
+                            </div>
+                            <input type="hidden" name="satisfactionLevel" id="satisfactionLevel">
+                        </div>
+                        <div class="form-group">
+                            <label for="progressions">Progressões Alcançadas:</label>
+                            <textarea id="progressions" name="progressions" rows="3" 
+                                      placeholder="Ex: Aumentei 2.5kg no supino, consegui fazer 8 reps..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OBSERVAÇÕES GERAIS -->
+                <div class="section">
+                    <div class="section-title">📝 Observações Gerais</div>
+                    <div class="form-group">
+                        <label for="generalNotes">Notas Adicionais:</label>
+                        <textarea id="generalNotes" name="generalNotes" rows="4" 
+                                  placeholder="Qualquer observação adicional sobre o treino..."></textarea>
+                    </div>
+                </div>
+
+                <!-- BOTÕES DE AÇÃO -->
+                <div style="text-align: center; margin-top: 40px;">
+                    <button type="button" class="btn btn-complete" onclick="saveWorkout()">💾 Salvar Treino Completo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE AVALIAÇÃO DE DOR -->
+    <div id="painModal" class="pain-modal">
+        <div class="pain-modal-content">
+            <button class="close-modal" onclick="closePainModal()">&times;</button>
+            <h2 id="modalTitle">🩺 Avaliação de Desconforto</h2>
+            <p id="modalExercise" style="color: #666; margin-bottom: 20px;"></p>
+            
+            <div class="pain-options" id="painOptions">
+                <!-- As opções serão carregadas dinamicamente baseadas no exercício -->
+            </div>
+            
+            <div id="feedbackPanel" class="feedback-panel">
+                <h4 id="feedbackTitle"></h4>
+                <p id="feedbackMessage"></p>
+                <div id="feedbackActions"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-complete" onclick="closePainModal()">Continuar Treino</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos exercícios por dia com informações de dor
+        const workoutExercises = {
+            segunda: [
+                {
+                    name: "Barbell Bench Press", 
+                    sets: "4x6-8", 
+                    currentWeight: "35-40kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão no peitoral", desc: "Sensação de trabalho muscular no peito", feedback: "Perfeito! Esta tensão indica que está a ativar corretamente o peitoral. Continue com a técnica atual." },
+                            { title: "Leve queimação nos músculos", desc: "Sensação de fadiga muscular progressiva", feedback: "Excelente! A queimação muscular é sinal de que está a trabalhar na intensidade correta." }
+                        ],
+                        bad: [
+                            { title: "Dor aguda no ombro", desc: "Dor intensa ou em forma de pontada no ombro", feedback: "PARE IMEDIATAMENTE! Verifique a pegada - deve estar ligeiramente mais larga que os ombros. Desça a barra de forma controlada apenas até ao peito.", correction: "• Ajuste a pegada\n• Mantenha omoplatas retraídas\n• Não desça demasiado a barra" },
+                            { title: "Dor no punho", desc: "Desconforto ou dor nos punhos", feedback: "Ajuste necessário! A pegada pode estar incorreta.", correction: "• Mantenha punhos neutros\n• Distribua o peso na palma da mão\n• Use munhequeiras se necessário" },
+                            { title: "Dor na zona lombar", desc: "Tensão excessiva ou dor nas costas", feedback: "Atenção à postura! Pode estar a arquear demasiado as costas.", correction: "• Mantenha pés no chão\n• Core contraído\n• Ligeiro arco natural nas costas" }
+                        ]
+                    }
+                },
+                {
+                    name: "Dumbbell Incline Press", 
+                    sets: "4x8-10", 
+                    currentWeight: "15-17.5kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão na parte superior do peito", desc: "Sensação de trabalho no peitoral superior", feedback: "Perfeito! O incline press está a trabalhar corretamente o peitoral superior." },
+                            { title: "Sensação de 'pump'", desc: "Sensação de músculo 'inchado' no peito", feedback: "Excelente! O pump é sinal de boa irrigação sanguínea e trabalho muscular eficaz." }
+                        ],
+                        bad: [
+                            { title: "Dor no ombro anterior", desc: "Dor na frente do ombro durante o movimento", feedback: "CUIDADO! Pode estar a descer demasiado os halteres.", correction: "• Desça apenas até sentir alongamento no peito\n• Mantenha cotovelos ligeiramente para dentro\n• Não force a amplitude" },
+                            { title: "Tensão excessiva no pescoço", desc: "Rigidez ou dor no pescoço", feedback: "Ajuste a posição da cabeça!", correction: "• Mantenha cabeça encostada ao banco\n• Olhar direcionado ao teto\n• Relaxe ombros e pescoço" }
+                        ]
+                    }
+                },
+                {
+                    name: "Machine Bench Press", 
+                    sets: "4x10-12", 
+                    currentWeight: "32kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão uniforme no peitoral", desc: "Trabalho equilibrado em todo o peito", feedback: "Ótimo! A máquina proporciona um trabalho seguro e eficaz." }
+                        ],
+                        bad: [
+                            { title: "Dor na articulação do ombro", desc: "Desconforto articular durante o movimento", feedback: "Verifique o posicionamento!", correction: "• Ajuste altura do assento\n• Mantenha omoplatas encostadas\n• Não estenda completamente os braços" }
+                        ]
+                    }
+                },
+                {
+                    name: "Dips", 
+                    sets: "3x8-12", 
+                    currentWeight: "Bodyweight",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão no peitoral e tríceps", desc: "Trabalho muscular em peito e tríceps", feedback: "Perfeito! Os dips são excelentes para desenvolver força funcional." }
+                        ],
+                        bad: [
+                            { title: "Dor aguda no ombro", desc: "Dor intensa na articulação do ombro", feedback: "PARE! Pode estar a descer demasiado.", correction: "• Desça apenas até 90° nos cotovelos\n• Mantenha corpo ligeiramente inclinado\n• Use assistência se necessário" },
+                            { title: "Dor no esterno", desc: "Desconforto no centro do peito/esterno", feedback: "Atenção à amplitude!", correction: "• Reduza a descida\n• Foque no controle do movimento\n• Mantenha tensão constante" }
+                        ]
+                    }
+                },
+                {
+                    name: "Dumbbell Fly", 
+                    sets: "3x12-15", 
+                    currentWeight: "12.5kg",
+                    painTypes: {
+                        good: [
+                            { title: "Alongamento no peitoral", desc: "Sensação de estiramento controlado no peito", feedback: "Excelente! O fly proporciona um excelente alongamento sob tensão." }
+                        ],
+                        bad: [
+                            { title: "Dor aguda no peitoral", desc: "Dor intensa durante o alongamento", feedback: "REDUZA a amplitude!", correction: "• Não desça tanto os halteres\n• Mantenha ligeira flexão nos cotovelos\n• Controle a descida" },
+                            { title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Técnica incorreta!", correction: "• Mantenha omoplatas retraídas\n• Não permita rotação dos ombros\n• Use peso mais leve" }
+                        ]
+                    }
+                },
+                {
+                    name: "Close-Grip Bench Press", 
+                    sets: "3x8-10", 
+                    currentWeight: "25-30kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão intensa nos tríceps", desc: "Trabalho muscular focado nos tríceps", feedback: "Perfeito! A pegada fechada está a ativar principalmente os tríceps." }
+                        ],
+                        bad: [
+                            { title: "Dor nos punhos", desc: "Desconforto ou dor nos punhos", feedback: "Ajuste a pegada!", correction: "• Pegada não deve ser muito fechada\n• Mantenha punhos neutros\n• Largura dos ombros ou ligeiramente menor" }
+                        ]
+                    }
+                },
+                {
+                    name: "Cable Tricep Pushdown", 
+                    sets: "3x10-12", 
+                    currentWeight: "14kg",
+                    painTypes: {
+                        good: [
+                            { title: "Queimação nos tríceps", desc: "Sensação de fadiga nos tríceps", feedback: "Excelente! Mantenha cotovelos fixos para máxima ativação." }
+                        ],
+                        bad: [
+                            { title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Verifique a técnica!", correction: "• Mantenha cotovelos junto ao corpo\n• Não estenda completamente\n• Movimento controlado" }
+                        ]
+                    }
+                },
+                {
+                    name: "Cable Rope Overhead Extension", 
+                    sets: "3x10-12", 
+                    currentWeight: "12-16kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão na cabeça longa do tríceps", desc: "Trabalho na parte posterior do braço", feedback: "Ótimo! Este exercício trabalha eficazmente toda a extensão do tríceps." }
+                        ],
+                        bad: [
+                            { title: "Dor no ombro posterior", desc: "Desconforto na parte de trás do ombro", feedback: "Atenção à posição!", correction: "• Mantenha cotovelos estáveis\n• Não force a amplitude\n• Core bem contraído" }
+                        ]
+                    }
+                }
+            ],
+            terca: [
+                {
+                    name: "Deadlifts", 
+                    sets: "4x6-8", 
+                    currentWeight: "40-60kg",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão nos isquiotibiais e glúteos", desc: "Trabalho muscular na cadeia posterior", feedback: "Perfeito! O deadlift está a ativar corretamente a cadeia posterior." },
+                            { title: "Sensação de força no core", desc: "Tensão abdominal durante o movimento", feedback: "Excelente! O core estabilizado é essencial para um deadlift seguro." }
+                        ],
+                        bad: [
+                            { title: "Dor aguda na zona lombar", desc: "Dor intensa na parte baixa das costas", feedback: "PARE IMEDIATAMENTE! Postura incorreta!", correction: "• Mantenha costas neutras\n• Peito para fora\n• Inicie o movimento com os quadris\n• Reduza o peso" },
+                            { title: "Dor nos joelhos", desc: "Desconforto na articulação dos joelhos", feedback: "Atenção à técnica!", correction: "• Joelhos alinhados com os pés\n• Não permita que joelhos caiam para dentro\n• Mantenha peso nos calcanhares" }
+                        ]
+                    }
+                },
+                {
+                    name: "Pull-ups/Assisted", 
+                    sets: "4x6-10", 
+                    currentWeight: "Bodyweight/Assisted",
+                    painTypes: {
+                        good: [
+                            { title: "Tensão no latíssimo", desc: "Trabalho muscular nas costas", feedback: "Ótimo! Foque em 'puxar com as costas' e não apenas com os braços." }
+                        ],
+                        bad: [
+                            { title: "Dor no ombro", desc: "Desconforto na articulação do ombro", feedback: "Cuidado com a amplitude!", correction: "• Não desça completamente\n• Mantenha omoplatas ativas\n• Evite balanço do corpo" }
+                        ]
+                    }
+                }
+                // Adic
