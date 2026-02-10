@@ -139,4 +139,1486 @@
             gap: 8px;
         }
         
-        .recipe-card​​​​​​​​​​​​​​​​
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .recipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .recipe-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .recipe-origin {
+            font-size: 12px;
+            color: #9b59b6;
+            font-weight: 500;
+        }
+        
+        .recipe-cost {
+            text-align: right;
+        }
+        
+        .cost-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .cost-dose {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .recipe-info {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .recipe-info span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .category {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .category h3 {
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        
+        .item-details {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .badge-urgent {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .badge-ok {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .badge-safe {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-consume {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .purchase-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .purchase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .purchase-date {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .purchase-store {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .purchase-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .purchase-items {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        
+        .purchase-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #666;
+        }
+        
+        .nav-item.active {
+            color: #667eea;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            font-size: 20px;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+        }
+        
+        .product-preview {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .product-preview h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .product-preview p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .price-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 12px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn-submit {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        #reader {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .scanner-info {
+            text-align: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // =======================
+        // BASE DE DADOS PRODUTOS HOLANDA (PORTUGUÊS)
+        // =======================
+        const PRODUTOS_HOLANDA = {
+            "8710400233251": { nome: "Peito de Frango AH", loja: "Albert Heijn", preco: 4.99, categoria: "Proteína", quantidade: "300g" },
+            "20917791": { nome: "Ovos Lidl 10 un", loja: "Lidl", preco: 2.99, categoria: "Proteína", quantidade: "10 unidades" },
+            "8710400018995": { nome: "Arroz Branco AH", loja: "Albert Heijn", preco: 1.29, categoria: "Hidratos", quantidade: "1kg" },
+            "8710400583684": { nome: "Feijão Castanho AH", loja: "Albert Heijn", preco: 0.89, categoria: "Leguminosas", quantidade: "400g" },
+            "8718452169412": { nome: "Esparguete Jumbo", loja: "Jumbo", preco: 0.75, categoria: "Hidratos", quantidade: "500g" },
+            "8719743404786": { nome: "Ovos AH 6 un", loja: "Albert Heijn", preco: 2.45, categoria: "Proteína", quantidade: "6 unidades" },
+            "8712566483402": { nome: "Frango Gyros AH", loja: "Albert Heijn", preco: 5.49, categoria: "Proteína", quantidade: "400g" },
+            "8710400594758": { nome: "Grão de Bico AH", loja: "Albert Heijn", preco: 0.95, categoria: "Leguminosas", quantidade: "400g" },
+            "8710400019008": { nome: "Arroz Integral AH", loja: "Albert Heijn", preco: 1.49, categoria: "Hidratos", quantidade: "1kg" },
+            "8718452203208": { nome: "Atum Natural Jumbo", loja: "Jumbo", preco: 1.25, categoria: "Proteína", quantidade: "160g" }
+        };
+
+        // =======================
+        // BASE DE DADOS DE RECEITAS
+        // =======================
+        const RECEITAS_BASE = [
+            {
+                id: 1,
+                nome: "Feijão Moldavo Simples",
+                origem: "Moldava",
+                ingredientes: [
+                    { nome: "Feijão", quantidade: 400, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 2, unidade: "colheres" },
+                    { nome: "Sal", quantidade: "a gosto" }
+                ],
+                doses: 3,
+                tempo: 5,
+                duracao_frigo: 3,
+                custo_estimado: 1.50,
+                instrucoes: [
+                    "Abrir a lata de feijão e escorrer",
+                    "Cortar a cebola em pedaços pequenos",
+                    "Misturar feijão + cebola + óleo + sal",
+                    "Pode comer frio ou morno"
+                ],
+                tags: ["minimalista", "moldava", "frio"]
+            },
+            {
+                id: 2,
+                nome: "Frango com Arroz",
+                origem: "Base",
+                ingredientes: [
+                    { nome: "Frango", quantidade: 300, unidade: "g" },
+                    { nome: "Arroz", quantidade: 200, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 3, unidade: "colheres" }
+                ],
+                doses: 4,
+                tempo: 30,
+                duracao_frigo: 3,
+                custo_estimado: 4.00,
+                instrucoes: [
+                    "Cortar o frango em cubos",
+                    "Refogar a cebola no óleo",
+                    "Adicionar o frango e cozinhar",
+                    "Cozinhar o arroz separadamente",
+                    "Misturar tudo"
+                ],
+                tags: ["panela_grande", "proteína"]
+            },
+            {
+                id: 3,
+                nome: "Ovos Mexidos",
+                origem: "Emergência",
+                ingredientes: [
+                    { nome: "Ovos", quantidade: 3, unidade: "unidades" },
+                    { nome: "Óleo", quantidade: 1, unidade: "colher" }
+                ],
+                doses: 1,
+                tempo: 5,
+                duracao_frigo: 0,
+                custo_estimado: 0.75,
+                instrucoes: [
+                    "Bater os ovos",
+                    "Aquecer óleo na frigideira",
+                    "Adicionar os ovos e mexer",
+                    "Servir imediatamente"
+                ],
+                tags: ["rápido", "emergência", "proteína"]
+            },
+            {
+                id: 4,
+                nome: "Arroz com Ovos",
+                origem: "Base",
+                ingredientes: [
+                    { nome: "Arroz", quantidade: 200, unidade: "g" },
+                    { nome: "Ovos", quantidade: 3, unidade: "unidades" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 2, unidade: "colheres" }
+                ],
+                doses: 3,
+                tempo: 20,
+                duracao_frigo: 2,
+                custo_estimado: 2.00,
+                instrucoes: [
+                    "Cozinhar o arroz",
+                    "Refogar a cebola",
+                    "Adicionar os ovos batidos",
+                    "Misturar com o arroz"
+                ],
+                tags: ["simples", "proteína", "barato"]
+            },
+            {
+                id: 5,
+                nome: "Grão com Atum",
+                origem: "Portuguesa",
+                ingredientes: [
+                    { nome: "Grão", quantidade: 400, unidade: "g" },
+                    { nome: "Atum", quantidade: 120, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Azeite", quantidade: 3, unidade: "colheres" }
+                ],
+                doses: 3,
+                tempo: 5,
+                duracao_frigo: 2,
+                custo_estimado: 2.50,
+                instrucoes: [
+                    "Escorrer o grão e o atum",
+                    "Cortar a cebola em rodelas finas",
+                    "Misturar tudo com azeite",
+                    "Temperar com sal"
+                ],
+                tags: ["minimalista", "frio", "portuguesa"]
+            }
+        ];
+
+        // =======================
+        // FUNÇÕES DE CÁLCULO
+        // =======================
+        function calcularPrioridade(item) {
+            const agora = new Date();
+            const diasDesdeEntrada = Math.floor((agora - new Date(item.data_entrada)) / (1000 * 60 * 60 * 24));
+            
+            if (item.estado === "cozinhado") {
+                if (diasDesdeEntrada >= 3) return { nivel: 1, texto: "Consumir JÁ", badge: "urgent" };
+                if (diasDesdeEntrada === 2) return { nivel: 2, texto: "Hoje/amanhã", badge: "warning" };
+                return { nivel: 3, texto: "OK", badge: "ok" };
+            }
+            
+            if (item.estado === "aberto") {
+                if (diasDesdeEntrada >= 3) return { nivel: 2, texto: "Consumir breve", badge: "warning" };
+                return { nivel: 3, texto: "OK", badge: "ok" };
+            }
+            
+            if (item.estado === "cru") {
+                if (diasDesdeEntrada >= 4) return { nivel: 2, texto: "Cozinhar já", badge: "warning" };
+                return { nivel: 4, texto: "OK", badge: "ok" };
+            }
+            
+            return { nivel: 5, texto: "Seguro", badge: "safe" };
+        }
+
+        function encontrarMelhorReceita(items, receitas) {
+            if (items.length === 0) {
+                return receitas.find(r => r.tags.includes("minimalista")) || receitas[0];
+            }
+            
+            const ingredientesDisponiveis = items.map(i => 
+                i.nome.toLowerCase()
+                    .replace(/\s+ah$/, '')
+                    .replace(/\s+jumbo$/, '')
+                    .replace(/\s+lidl$/, '')
+                    .trim()
+            );
+            
+            const receitasComScore = receitas.map(receita => {
+                let matches = 0;
+                
+                receita.ingredientes.forEach(ingReceita => {
+                    const palavrasReceita = ingReceita.nome.toLowerCase().split(' ');
+                    const ingredientePrincipal = palavrasReceita[0];
+                    
+                    const temIngrediente = ingredientesDisponiveis.some(disp => {
+                        return disp.includes(ingredientePrincipal) || 
+                               ingredientePrincipal.includes(disp.split(' ')[0]);
+                    });
+                    
+                    if (temIngrediente) matches++;
+                });
+                
+                return {
+                    receita,
+                    score: matches / receita.ingredientes.length,
+                    matches
+                };
+            });
+            
+            receitasComScore.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return a.receita.custo_estimado - b.receita.custo_estimado;
+            });
+            
+            if (receitasComScore[0].matches === 0) {
+                return receitas.reduce((mais_barata, r) => 
+                    r.custo_estimado < mais_barata.custo_estimado ? r : mais_barata
+                );
+            }
+            
+            return receitasComScore[0].receita;
+        }
+
+        function gerarSugestao(items, receitas) {
+            const comidaPronta = items.filter(i => i.estado === "cozinhado" && calcularPrioridade(i).nivel >= 3);
+            const itensUrgentes = items.filter(i => calcularPrioridade(i).nivel <= 2);
+            
+            if (comidaPronta.length > 0) {
+                return {
+                    tipo: "no-cook",
+                    titulo: "✅ Não cozinhar hoje",
+                    mensagem: `Tens ${comidaPronta.length} refeição/ões pronta(s).`,
+                    items: comidaPronta,
+                    receita: null
+                };
+            }
+            
+            if (itensUrgentes.length > 0) {
+                const receitaSugerida = encontrarMelhorReceita(items, receitas);
+                
+                return {
+                    tipo: "urgent",
+                    titulo: "🔴 Cozinhar hoje",
+                    mensagem: `${itensUrgentes.length} item(ns) a estragar.`,
+                    items: itensUrgentes,
+                    receita: receitaSugerida
+                };
+            }
+            
+            const temProteina = items.some(i => i.categoria === "Proteína" && i.estado === "cru");
+            if (temProteina) {
+                const receitaSugerida = encontrarMelhorReceita(items, receitas);
+                
+                return {
+                    tipo: "warning",
+                    titulo: "⚠️ Sem comida pronta",
+                    mensagem: "Tens ingredientes frescos disponíveis.",
+                    receita: receitaSugerida
+                };
+            }
+            
+            return {
+                tipo: "ok",
+                titulo: "😌 Inventário baixo",
+                mensagem: "Considera fazer compras em breve.",
+                receita: null
+            };
+        }
+
+        function calcularGastos(items) {
+            const agora = new Date();
+            const semanaAtras = new Date(agora.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const mesAtras = new Date(agora.getTime() - 30 * 24 * 60 * 60 * 1000);
+            
+            const itemsSemana = items.filter(i => new Date(i.data_entrada) >= semanaAtras);
+            const itemsMes = items.filter(i => new Date(i.data_entrada) >= mesAtras);
+            
+            const gastoSemana = itemsSemana.reduce((sum, i) => sum + (parseFloat(i.preco) || 0), 0);
+            const gastoMes = itemsMes.reduce((sum, i) => sum + (parseFloat(i.preco) || 0), 0);
+            
+            return {
+                semana: { total: gastoSemana, items: itemsSemana.length },
+                mes: { total: gastoMes, items: itemsMes.length }
+            };
+        }
+
+        function agruparCompras(items) {
+            const comprasPorData = {};
+            
+            items.forEach(item => {
+                const data = new Date(item.data_entrada).toLocaleDateString('pt-PT');
+                if (!comprasPorData[data]) {
+                    comprasPorData[data] = {
+                        data: item.data_entrada,
+                        loja: item.loja,
+                        items: [],
+                        total: 0
+                    };
+                }
+                comprasPorData[data].items.push(item);
+                comprasPorData[data].total += parseFloat(item.preco) || 0;
+            });
+            
+            return Object.values(comprasPorData).sort((a, b) => 
+                new Date(b.data) - new Date(a.data)
+            );
+        }
+
+        // =======================
+        // COMPONENTE PRINCIPAL
+        // =======================
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [items, setItems] = useState(() => {
+                const saved = localStorage.getItem('poupanca-holanda-items');
+                return saved ? JSON.parse(saved).map(item => ({
+                    ...item,
+                    data_entrada: new Date(item.data_entrada)
+                })) : [];
+            });
+            
+            const [productDatabase, setProductDatabase] = useState(() => {
+                const saved = localStorage.getItem('poupanca-holanda-products');
+                return saved ? JSON.parse(saved) : PRODUTOS_HOLANDA;
+            });
+            
+            const [showSuggestion, setShowSuggestion] = useState(false);
+            const [showScanModal, setShowScanModal] = useState(false);
+            const [showConfirmModal, setShowConfirmModal] = useState(false);
+            const [showManualModal, setShowManualModal] = useState(false);
+            const [showConsumeModal, setShowConsumeModal] = useState(false);
+            const [showRecipeModal, setShowRecipeModal] = useState(false);
+            const [selectedRecipe, setSelectedRecipe] = useState(null);
+            const [selectedItem, setSelectedItem] = useState(null);
+            const [scannedProduct, setScannedProduct] = useState(null);
+            const [scanning, setScanning] = useState(false);
+            const scannerRef = useRef(null);
+            
+            const [consumeAmount, setConsumeAmount] = useState("");
+            
+            const [manualProduct, setManualProduct] = useState({
+                codigo_barras: "",
+                nome: "",
+                categoria: "Proteína",
+                quantidade: "",
+                estado: "cru",
+                preco: "",
+                loja: ""
+            });
+            
+            useEffect(() => {
+                localStorage.setItem('poupanca-holanda-items', JSON.stringify(items));
+            }, [items]);
+            
+            useEffect(() => {
+                localStorage.setItem('poupanca-holanda-products', JSON.stringify(productDatabase));
+            }, [productDatabase]);
+            
+            const categorias = {
+                "Proteína": "🥩",
+                "Hidratos": "🍚",
+                "Leguminosas": "🫘",
+                "Vegetais": "🥬",
+                "Extras": "🧂"
+            };
+            
+            const gastos = calcularGastos(items);
+            const compras = agruparCompras(items);
+            const custoTotal = items.reduce((sum, item) => sum + (parseFloat(item.preco) || 0), 0);
+            const sugestao = gerarSugestao(items, RECEITAS_BASE);
+            
+            const handleConsumeItem = (item) => {
+                setSelectedItem(item);
+                setConsumeAmount("");
+                setShowConsumeModal(true);
+            };
+            
+            const handleConfirmConsume = () => {
+                if (!consumeAmount) {
+                    alert("Indica quanto consumiste");
+                    return;
+                }
+                
+                const novaQuantidade = `${consumeAmount} ${selectedItem.quantidade.split(' ').slice(1).join(' ')}`;
+                
+                const updatedItems = items.map(i => 
+                    i.id === selectedItem.id 
+                        ? { ...i, quantidade: novaQuantidade }
+                        : i
+                );
+                
+                setItems(updatedItems);
+                setShowConsumeModal(false);
+                setSelectedItem(null);
+                setConsumeAmount("");
+            };
+            
+            const handleScanSuccess = (barcode) => {
+                if (scannerRef.current) {
+                    scannerRef.current.stop();
+                }
+                setScanning(false);
+                setShowScanModal(false);
+                
+                const produtoPessoal = items.find(i => i.codigo_barras === barcode);
+                if (produtoPessoal) {
+                    setScannedProduct({
+                        ...produtoPessoal,
+                        fonte: "pessoal"
+                    });
+                    setShowConfirmModal(true);
+                    return;
+                }
+                
+                const produtoHolanda = productDatabase[barcode];
+                if (produtoHolanda) {
+                    setScannedProduct({
+                        codigo_barras: barcode,
+                        ...produtoHolanda,
+                        estado: "cru",
+                        fonte: "holanda"
+                    });
+                    setShowConfirmModal(true);
+                    return;
+                }
+                
+                setManualProduct({
+                    codigo_barras: barcode,
+                    nome: "",
+                    categoria: "Proteína",
+                    quantidade: "",
+                    estado: "cru",
+                    preco: "",
+                    loja: ""
+                });
+                setShowManualModal(true);
+            };
+            
+            const handleConfirmProduct = (customPrice = null) => {
+                const novoItem = {
+                    id: Date.now(),
+                    codigo_barras: scannedProduct.codigo_barras,
+                    nome: scannedProduct.nome,
+                    categoria: scannedProduct.categoria,
+                    quantidade: scannedProduct.quantidade,
+                    estado: scannedProduct.estado,
+                    preco: customPrice !== null ? customPrice : scannedProduct.preco,
+                    loja: scannedProduct.loja,
+                    data_entrada: new Date()
+                };
+                
+                setItems([...items, novoItem]);
+                
+                if (scannedProduct.fonte === "holanda" || customPrice !== null) {
+                    const novoDB = {
+                        ...productDatabase,
+                        [scannedProduct.codigo_barras]: {
+                            nome: scannedProduct.nome,
+                            loja: scannedProduct.loja,
+                            preco: customPrice !== null ? customPrice : scannedProduct.preco,
+                            categoria: scannedProduct.categoria,
+                            quantidade: scannedProduct.quantidade
+                        }
+                    };
+                    setProductDatabase(novoDB);
+                }
+                
+                setShowConfirmModal(false);
+                setScannedProduct(null);
+            };
+            
+            const handleManualAdd = () => {
+                if (!manualProduct.nome || !manualProduct.preco) {
+                    alert("Preenche pelo menos o nome e o preço");
+                    return;
+                }
+                
+                const novoItem = {
+                    id: Date.now(),
+                    ...manualProduct,
+                    preco: parseFloat(manualProduct.preco),
+                    data_entrada: new Date()
+                };
+                
+                setItems([...items, novoItem]);
+                
+                if (manualProduct.codigo_barras) {
+                    const novoDB = {
+                        ...productDatabase,
+                        [manualProduct.codigo_barras]: {
+                            nome: manualProduct.nome,
+                            loja: manualProduct.loja,
+                            preco: parseFloat(manualProduct.preco),
+                            categoria: manualProduct.categoria,
+                            quantidade: manualProduct.quantidade
+                        }
+                    };
+                    setProductDatabase(novoDB);
+                }
+                
+                setManualProduct({
+                    codigo_barras: "",
+                    nome: "",
+                    categoria: "Proteína",
+                    quantidade: "",
+                    estado: "cru",
+                    preco: "",
+                    loja: ""
+                });
+                setShowManualModal(false);
+            };
+            
+            const handleDeleteItem = (id) => {
+                if (confirm("Remover este item completamente?")) {
+                    setItems(items.filter(i => i.id !== id));
+                }
+            };
+            
+            const startScanner = () => {
+                setScanning(true);
+                setTimeout(() => {
+                    const html5QrCode = new Html5Qrcode("reader");
+                    html5QrCode.start(
+                        { facingMode: "environment" },
+                        { fps: 10, qrbox: 250 },
+                        (decodedText) => {
+                            handleScanSuccess(decodedText);
+                        },
+                        (error) => {
+                            // Ignorar
+                        }
+                    ).catch(err => {
+                        alert("Erro ao aceder à câmara");
+                        setScanning(false);
+                    });
+                    
+                    scannerRef.current = html5QrCode;
+                }, 100);
+            };
+            
+            const stopScanner = () => {
+                if (scannerRef.current) {
+                    scannerRef.current.stop();
+                    setScanning(false);
+                }
+                setShowScanModal(false);
+            };
+            
+            useEffect(() => {
+                return () => {
+                    if (scannerRef.current) {
+                        scannerRef.current.stop();
+                    }
+                };
+            }, []);
+            
+            const renderHome = () => (
+                <>
+                    <div className="stats">
+                        <div className="stat-card">
+                            <div className="stat-value">€{custoTotal.toFixed(2)}</div>
+                            <div className="stat-label">Em stock</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-value">{items.length}</div>
+                            <div className="stat-label">Produtos</div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        className="btn-primary"
+                        onClick={() => setShowSuggestion(!showSuggestion)}
+                    >
+                        <span>🤔</span>
+                        <span>{showSuggestion ? "Esconder" : "O que cozinho hoje?"}</span>
+                    </button>
+                    
+                    {showSuggestion && (
+                        <div className={`suggestion-box ${sugestao.tipo}`}>
+                            <h2>{sugestao.titulo}</h2>
+                            <p style={{marginBottom: '12px', fontSize: '14px'}}>{sugestao.mensagem}</p>
+                            
+                            {sugestao.items && sugestao.items.length > 0 && (
+                                <ul style={{marginLeft: '20px', marginBottom: '12px', fontSize: '14px'}}>
+                                    {sugestao.items.map(item => (
+                                        <li key={item.id}>{item.nome} ({item.quantidade})</li>
+                                    ))}
+                                </ul>
+                            )}
+                            
+                            {sugestao.receita && (
+                                <div className="recipe-card" style={{marginTop: '12px', cursor: 'pointer'}}
+                                     onClick={() => {
+                                         setSelectedRecipe(sugestao.receita);
+                                         setShowRecipeModal(true);
+                                     }}>
+                                    <div className="recipe-header">
+                                        <div>
+                                            <div className="recipe-title">{sugestao.receita.nome}</div>
+                                            <div className="recipe-origin">{sugestao.receita.origem}</div>
+                                        </div>
+                                        <div className="recipe-cost">
+                                            <div className="cost-total">€{sugestao.receita.custo_estimado.toFixed(2)}</div>
+                                            <div className="cost-dose">€{(sugestao.receita.custo_estimado / sugestao.receita.doses).toFixed(2)}/dose</div>
+                                        </div>
+                                    </div>
+                                    <div className="recipe-info">
+                                        <span>⏱️ {sugestao.receita.tempo} min</span>
+                                        <span>🍽️ {sugestao.receita.doses} doses</span>
+                                        <span>❄️ {sugestao.receita.duracao_frigo} dias</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    
+                    <button 
+                        className="btn-primary btn-scan"
+                        onClick={() => setShowScanModal(true)}
+                    >
+                        <span>📷</span>
+                        <span>Scan código de barras</span>
+                    </button>
+                    
+                    {items.length === 0 && (
+                        <div style={{textAlign: 'center', padding: '40px 20px', color: '#666'}}>
+                            <div style={{fontSize: '48px', marginBottom: '16px'}}>🛒</div>
+                            <p>Ainda não tens produtos.</p>
+                            <p style={{fontSize: '14px', marginTop: '8px'}}>Usa o scanner para começar!</p>
+                        </div>
+                    )}
+                    
+                    {Object.entries(categorias).map(([categoria, icon]) => {
+                        const itensCategoria = items.filter(i => i.categoria === categoria);
+                        if (itensCategoria.length === 0) return null;
+                        
+                        return (
+                            <div key={categoria} className="category">
+                                <h3>
+                                    <span>{icon}</span>
+                                    <span>{categoria}</span>
+                                </h3>
+                                {itensCategoria.map(item => {
+                                    const prioridade = calcularPrioridade(item);
+                                    return (
+                                        <div key={item.id} className="item">
+                                            <div className="item-info">
+                                                <div className="item-name">{item.nome}</div>
+                                                <div className="item-details">
+                                                    {item.quantidade} • {item.estado} • €{item.preco} • {item.loja}
+                                                </div>
+                                            </div>
+                                            <div className="item-actions">
+                                                <span className={`badge badge-${prioridade.badge}`}>
+                                                    {prioridade.texto}
+                                                </span>
+                                                <button 
+                                                    className="btn-consume"
+                                                    onClick={() => handleConsumeItem(item)}
+                                                >
+                                                    📉
+                                                </button>
+                                                <button 
+                                                    className="btn-delete"
+                                                    onClick={() => handleDeleteItem(item.id)}
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
+                </>
+            );
+            
+            const renderReceitas = () => (
+                <>
+                    <div style={{marginBottom: '16px'}}>
+                        <h2 style={{fontSize: '20px', marginBottom: '12px'}}>Receitas Disponíveis</h2>
+                        <p style={{fontSize: '14px', color: '#666'}}>Clica para ver detalhes</p>
+                    </div>
+                    
+                    {RECEITAS_BASE.map(receita => (
+                        <div key={receita.id} className="recipe-card" 
+                             onClick={() => {
+                                 setSelectedRecipe(receita);
+                                 setShowRecipeModal(true);
+                             }}
+                             style={{cursor: 'pointer'}}>
+                            <div className="recipe-header">
+                                <div>
+                                    <div className="recipe-title">{receita.nome}</div>
+                                    <div className="recipe-origin">{receita.origem}</div>
+                                </div>
+                                <div className="recipe-cost">
+                                    <div className="cost-total">€{receita.custo_estimado.toFixed(2)}</div>
+                                    <div className="cost-dose">€{(receita.custo_estimado / receita.doses).toFixed(2)}/dose</div>
+                                </div>
+                            </div>
+                            <div className="recipe-info">
+                                <span>⏱️ {receita.tempo} min</span>
+                                <span>🍽️ {receita.doses} doses</span>
+                                <span>❄️ {receita.duracao_frigo} dias</span>
+                            </div>
+                        </div>
+                    ))}
+                </>
+            );
+            
+            const renderGastos = () => (
+                <>
+                    <h2 style={{fontSize: '20px', marginBottom: '16px'}}>💰 Gastos</h2>
+                    
+                    <div className="stats">
+                        <div className="stat-card">
+                            <div className="stat-label">Esta Semana</div>
+                            <div className="stat-value">€{gastos.semana.total.toFixed(2)}</div>
+                            <div className="stat-label">{gastos.semana.items} produtos</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Este Mês</div>
+                            <div className="stat-value">€{gastos.mes.total.toFixed(2)}</div>
+                            <div className="stat-label">{gastos.mes.items} produtos</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style={{fontSize: '16px', marginTop: '24px', marginBottom: '12px'}}>📦 Últimas Compras</h3>
+                    
+                    {compras.length === 0 ? (
+                        <div style={{textAlign: 'center', padding: '40px 20px', color: '#666'}}>
+                            <p>Ainda não há compras.</p>
+                        </div>
+                    ) : (
+                        compras.map((compra, idx) => (
+                            <div key={idx} className="purchase-card">
+                                <div className="purchase-header">
+                                    <div>
+                                        <div className="purchase-date">
+                                            🛒 {new Date(compra.data).toLocaleDateString('pt-PT', { 
+                                                day: 'numeric', 
+                                                month: 'short' 
+                                            })}
+                                        </div>
+                                        <div className="purchase-store">{compra.loja}</div>
+                                    </div>
+                                    <div className="purchase-total">€{compra.total.toFixed(2)}</div>
+                                </div>
+                                <div className="purchase-items">
+                                    {compra.items.map(item => (
+                                        <div key={item.id} className="purchase-item">
+                                            <span>• {item.nome}</span>
+                                            <span>€{item.preco}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </>
+            );
+            
+            return (
+                <>
+                    <div className="header">
+                        <h1>
+                            <span>🇳🇱</span>
+                            <span>Poupança Holanda</span>
+                        </h1>
+                        <p>Máxima poupança, zero desperdício</p>
+                    </div>
+                    
+                    <div className="container">
+                        {activeTab === 'home' && renderHome()}
+                        {activeTab === 'receitas' && renderReceitas()}
+                        {activeTab === 'gastos' && renderGastos()}
+                    </div>
+                    
+                    <div className="bottom-nav">
+                        <button 
+                            className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('home')}
+                        >
+                            <div className="nav-icon">🏠</div>
+                            <div className="nav-label">Início</div>
+                        </button>
+                        <button 
+                            className={`nav-item ${activeTab === 'receitas' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('receitas')}
+                        >
+                            <div className="nav-icon">📖</div>
+                            <div className="nav-label">Receitas</div>
+                        </button>
+                        <button 
+                            className={`nav-item ${activeTab === 'gastos' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('gastos')}
+                        >
+                            <div className="nav-icon">💰</div>
+                            <div className="nav-label">Gastos</div>
+                        </button>
+                    </div>
+                    
+                    {/* Modal Scanner */}
+                    {showScanModal && (
+                        <div className="modal" onClick={stopScanner}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Scan Código de Barras</h2>
+                                    <button className="btn-close" onClick={stopScanner}>×</button>
+                                </div>
+                                
+                                <div id="reader"></div>
+                                
+                                {!scanning && (
+                                    <button 
+                                        className="btn-submit"
+                                        style={{width: '100%', marginTop: '16px'}}
+                                        onClick={startScanner}
+                                    >
+                                        Iniciar Scanner
+                                    </button>
+                                )}
+                                
+                                <div className="scanner-info">
+                                    Aponta a câmara para o código de barras
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Confirmação Produto */}
+                    {showConfirmModal && scannedProduct && (
+                        <div className="modal" onClick={() => setShowConfirmModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Produto Encontrado</h2>
+                                    <button className="btn-close" onClick={() => setShowConfirmModal(false)}>×</button>
+                                </div>
+                                
+                                {scannedProduct.fonte === "pessoal" && (
+                                    <div className="info-badge">
+                                        ✅ Já compraste antes
+                                    </div>
+                                )}
+                                
+                                {scannedProduct.fonte === "holanda" && (
+                                    <div className="info-badge">
+                                        🇳🇱 Base de dados NL
+                                    </div>
+                                )}
+                                
+                                <div className="product-preview">
+                                    <h3>{scannedProduct.nome}</h3>
+                                    <p>🏪 {scannedProduct.loja}</p>
+                                    <p>📦 {scannedProduct.quantidade}</p>
+                                    <p>🏷️ {scannedProduct.categoria}</p>
+                                    <div className="price-display">€{scannedProduct.preco}</div>
+                                </div>
+                                
+                                <p style={{fontSize: '14px', color: '#666', marginBottom: '16px', textAlign: 'center'}}>
+                                    Preço ainda é €{scannedProduct.preco}?
+                                </p>
+                                
+                                <div className="btn-row">
+                                    <button 
+                                        className="btn-secondary"
+                                        onClick={() => {
+                                            const novoPreco = prompt("Qual é o preço correto?", scannedProduct.preco);
+                                            if (novoPreco) {
+                                                handleConfirmProduct(parseFloat(novoPreco));
+                                            }
+                                        }}
+                                    >
+                                        Mudar Preço
+                                    </button>
+                                    <button 
+                                        className="btn-submit"
+                                        onClick={() => handleConfirmProduct()}
+                                    >
+                                        ✅ Confirmar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Produto Manual */}
+                    {showManualModal && (
+                        <div className="modal" onClick={() => setShowManualModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Produto Novo</h2>
+                                    <button className="btn-close" onClick={() => setShowManualModal(false)}>×</button>
+                                </div>
+                                
+                                <div className="info-badge">
+                                    ℹ️ Produto não encontrado
+                                </div>
+                                
+                                {manualProduct.codigo_barras && (
+                                    <p style={{fontSize: '13px', color: '#666', marginBottom: '16px'}}>
+                                        Código: {manualProduct.codigo_barras}
+                                    </p>
+                                )}
+                                
+                                <div className="form-group">
+                                    <label>Nome *</label>
+                                    <input 
+                                        type="text"
+                                        value={manualProduct.nome}
+                                        onChange={e => setManualProduct({...manualProduct, nome: e.target.value})}
+                                        placeholder="Ex: Peito de frango"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Categoria</label>
+                                    <select 
+                                        value={manualProduct.categoria}
+                                        onChange={e => setManualProduct({...manualProduct, categoria: e.target.value})}
+                                    >
+                                        {Object.keys(categorias).map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Quantidade</label>
+                                    <input 
+                                        type="text"
+                                        value={manualProduct.quantidade}
+                                        onChange={e => setManualProduct({...manualProduct, quantidade: e.target.value})}
+                                        placeholder="Ex: 500g, 6 unidades"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Preço (€) *</label>
+                                    <input 
+                                        type="number"
+                                        step="0.01"
+                                        value={manualProduct.preco}
+                                        onChange={e => setManualProduct({...manualProduct, preco: e.target.value})}
+                                        placeholder="Ex: 3.99"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Loja</label>
+                                    <input 
+                                        type="text"
+                                        value={manualProduct.loja}
+                                        onChange={e => setManualProduct({...manualProduct, loja: e.target.value})}
+                                        placeholder="Ex: Albert Heijn, Lidl"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Estado</label>
+                                    <select 
+                                        value={manualProduct.estado}
+                                        onChange={e => setManualProduct({...manualProduct, estado: e.target.value})}
+                                    >
+                                        <option value="cru">Cru</option>
+                                        <option value="cozinhado">Cozinhado</option>
+                                        <option value="aberto">Aberto</option>
+                                        <option value="seco">Seco</option>
+                                    </select>
+                                </div>
+                                
+                                <div className="btn-row">
+                                    <button 
+                                        className="btn-secondary"
+                                        onClick={() => setShowManualModal(false)}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button 
+                                        className="btn-submit"
+                                        onClick={handleManualAdd}
+                                    >
+                                        Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Consumir Parcial */}
+                    {showConsumeModal && selectedItem && (
+                        <div className="modal" onClick={() => setShowConsumeModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Consumir Parcialmente</h2>
+                                    <button className="btn-close" onClick={() => setShowConsumeModal(false)}>×</button>
+                                </div>
+                                
+                                <div className="product-preview">
+                                    <h3>{selectedItem.nome}</h3>
+                                    <p>Quantidade atual: <strong>{selectedItem.quantidade}</strong></p>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Quanto sobra?</label>
+                                    <input 
+                                        type="text"
+                                        value={consumeAmount}
+                                        onChange={e => setConsumeAmount(e.target.value)}
+                                        placeholder={`Ex: ${selectedItem.quantidade.split(' ')[0]}`}
+                                    />
+                                    <p style={{fontSize: '12px', color: '#666', marginTop: '8px'}}>
+                                        Indica só o número (ex: 250 se sobram 250g)
+                                    </p>
+                                </div>
+                                
+                                <div className="btn-row">
+                                    <button 
+                                        className="btn-secondary"
+                                        onClick={() => setShowConsumeModal(false)}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button 
+                                        className="btn-submit"
+                                        onClick={handleConfirmConsume}
+                                    >
+                                        Atualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Receita */}
+                    {showRecipeModal && selectedRecipe && (
+                        <div className="modal" onClick={() => setShowRecipeModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>{selectedRecipe.nome}</h2>
+                                    <button className="btn-close" onClick={() => setShowRecipeModal(false)}>×</button>
+                                </div>
+                                
+                                <div style={{marginBottom: '16px'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '12px'}}>
+                                        <div>
+                                            <div style={{fontSize: '13px', color: '#666'}}>Origem</div>
+                                            <div style={{fontWeight: '500', color: '#9b59b6'}}>{selectedRecipe.origem}</div>
+                                        </div>
+                                        <div style={{textAlign: 'right'}}>
+                                            <div style={{fontSize: '13px', color: '#666'}}>Custo Total</div>
+                                            <div style={{fontSize: '20px', fontWeight: 'bold', color: '#27ae60'}}>
+                                                €{selectedRecipe.custo_estimado.toFixed(2)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="recipe-info">
+                                        <span>⏱️ {selectedRecipe.tempo} min</span>
+                                        <span>🍽️ {selectedRecipe.doses} doses</span>
+                                        <span>❄️ {selectedRecipe.duracao_frigo} dias</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Ingredientes</label>
+                                    <ul style={{marginLeft: '20px', fontSize: '14px', lineHeight: '1.8'}}>
+                                        {selectedRecipe.ingredientes.map((ing, idx) => (
+                                            <li key={idx}>
+                                                {ing.nome} — {ing.quantidade} {ing.unidade}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Instruções</label>
+                                    <ol style={{marginLeft: '20px', fontSize: '14px', lineHeight: '1.8'}}>
+                                        {selectedRecipe.instrucoes.map((inst, idx) => (
+                                            <li key={idx}>{inst}</li>
+                                        ))}
+                                    </ol>
+                                </div>
+                                
+                                <button 
+                                    className="btn-submit"
+                                    style={{width: '100%', marginTop: '12px'}}
+                                    onClick={() => setShowRecipeModal(false)}
+                                >
+                                    Fechar
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
