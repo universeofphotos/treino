@@ -1,188 +1,169 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Poupança & Meal Prep</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poupança Holanda</title>
 
-<link rel="manifest" href="manifest.json" />
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
 
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
 
 <style>
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  background: #f6f7f8;
-}
-header {
-  background: #111;
-  color: #fff;
-  padding: 16px;
-  font-size: 18px;
-  font-weight: 600;
-}
-.container {
-  padding: 16px;
-}
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 12px;
-}
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-button {
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-.btn-main { background:#111;color:#fff }
-.btn-secondary { background:#eee }
-.btn-danger { background:#ffdddd }
-.btn-row { display:flex; gap:8px; margin-top:12px }
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.modal-content {
-  background:#fff;
-  padding:16px;
-  border-radius:12px;
-  width:90%;
-  max-width:420px;
-}
-.form-group { margin-bottom:12px }
-input, select {
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
-small { color:#666 }
+body{margin:0;font-family:-apple-system;background:#0f172a;color:#e5e7eb}
+.container{max-width:600px;margin:auto;padding:16px}
+.card{background:#111827;border-radius:12px;padding:16px;margin-bottom:12px}
+button{border:none;border-radius:8px;padding:12px;font-weight:600}
+.primary{background:#22c55e;color:white;width:100%}
+.scan{background:#6366f1;color:white;width:100%}
+.item{display:flex;justify-content:space-between;margin-top:8px}
+.badge{padding:4px 8px;border-radius:6px;font-size:12px}
+.ok{background:#16a34a}
+.warn{background:#d97706}
+.urgent{background:#dc2626}
+.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center}
+.modal-box{background:#020617;padding:20px;border-radius:12px;width:100%;max-width:400px}
+input,select{width:100%;padding:10px;margin-top:6px;background:#020617;border:1px solid #334155;color:white;border-radius:8px}
+#scanner{width:100%}
 </style>
 </head>
-
 <body>
-<header>🥘 Poupança & Meal Prep</header>
 <div id="root"></div>
 
 <script type="text/babel">
 
-function App() {
-  const [items, setItems] = React.useState(
-    JSON.parse(localStorage.getItem("items")) || []
-  );
-  const [showAdd, setShowAdd] = React.useState(false);
-  const [newItem, setNewItem] = React.useState({
-    nome: "", categoria: "Proteína", quantidade: "", estado: "cru"
-  });
+const {useState,useEffect,useRef}=React;
 
-  React.useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
-  }, [items]);
-
-  function addItem() {
-    if (!newItem.nome) return;
-    setItems([...items, { ...newItem, id: Date.now() }]);
-    setNewItem({ nome:"", categoria:"Proteína", quantidade:"", estado:"cru" });
-    setShowAdd(false);
-  }
-
-  function consumeItem(id) {
-    setItems(items.filter(i => i.id !== id));
-  }
-
-  const categorias = ["Proteína","Hidratos","Leguminosas","Vegetais","Extras"];
-
-  return (
-    <div className="container">
-
-      <button className="btn-main" onClick={() => setShowAdd(true)}>
-        ➕ Adicionar alimento
-      </button>
-
-      {categorias.map(cat => (
-        <div key={cat} className="card">
-          <h3>{cat}</h3>
-          {items.filter(i => i.categoria === cat).length === 0 && (
-            <small>Nenhum item</small>
-          )}
-          {items.filter(i => i.categoria === cat).map(i => (
-            <div key={i.id} className="item">
-              <div>
-                <b>{i.nome}</b><br/>
-                <small>{i.quantidade} · {i.estado}</small>
-              </div>
-              <button className="btn-danger" onClick={() => consumeItem(i.id)}>
-                Consumido
-              </button>
-            </div>
-          ))}
-        </div>
-      ))}
-
-      {showAdd && (
-        <div className="modal" onClick={() => setShowAdd(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Novo alimento</h2>
-
-            <div className="form-group">
-              <input placeholder="Nome"
-                value={newItem.nome}
-                onChange={e => setNewItem({...newItem, nome:e.target.value})}/>
-            </div>
-
-            <div className="form-group">
-              <select value={newItem.categoria}
-                onChange={e => setNewItem({...newItem, categoria:e.target.value})}>
-                {categorias.map(c => <option key={c}>{c}</option>)}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <input placeholder="Quantidade (ex: 500g, 3 un.)"
-                value={newItem.quantidade}
-                onChange={e => setNewItem({...newItem, quantidade:e.target.value})}/>
-            </div>
-
-            <div className="form-group">
-              <select value={newItem.estado}
-                onChange={e => setNewItem({...newItem, estado:e.target.value})}>
-                <option value="cru">Cru</option>
-                <option value="cozinhado">Cozinhado</option>
-                <option value="aberto">Aberto</option>
-              </select>
-            </div>
-
-            <div className="btn-row">
-              <button className="btn-secondary" onClick={()=>setShowAdd(false)}>Cancelar</button>
-              <button className="btn-main" onClick={addItem}>Guardar</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-    </div>
-  );
+function prioridade(item){
+ const dias=Math.floor((Date.now()-new Date(item.data))/(86400000));
+ if(item.estado==="cozinhado" && dias>=3)return{t:"URGENTE",c:"urgent"}
+ if(dias>=2)return{t:"Breve",c:"warn"}
+ return{t:"OK",c:"ok"}
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+function App(){
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+const [items,setItems]=useState(()=>JSON.parse(localStorage.getItem("items")||"[]"));
+const [scanOpen,setScanOpen]=useState(false);
+const [formOpen,setFormOpen]=useState(false);
+const [barcode,setBarcode]=useState("");
+const scannerRef=useRef(null);
+
+const [form,setForm]=useState({
+ nome:"",
+ preco:"",
+ quantidade:"",
+ categoria:"Proteína",
+ estado:"cru",
+ loja:""
+});
+
+useEffect(()=>localStorage.setItem("items",JSON.stringify(items)),[items]);
+
+function startScanner(){
+ Quagga.init({
+  inputStream:{type:"LiveStream",target:"#scanner",constraints:{facingMode:"environment"}},
+  decoder:{readers:["ean_reader","code_128_reader"]}
+ },err=>{
+  if(!err){
+   Quagga.start();
+   Quagga.onDetected(d=>{
+    const code=d.codeResult.code;
+    Quagga.stop();
+    setScanOpen(false);
+    setBarcode(code);
+    setFormOpen(true);
+   });
+  }
+ });
+}
+
+function addItem(){
+ setItems([...items,{
+  id:Date.now(),
+  codigo:barcode,
+  ...form,
+  preco:parseFloat(form.preco),
+  data:new Date()
+ }]);
+ setFormOpen(false);
+ setForm({nome:"",preco:"",quantidade:"",categoria:"Proteína",estado:"cru",loja:""});
+}
+
+function consumir(id){
+ setItems(items.filter(i=>i.id!==id));
+}
+
+return(
+<div className="container">
+
+<div className="card">
+<h2>Poupança Holanda</h2>
+<button className="scan" onClick={()=>{setScanOpen(true);setTimeout(startScanner,200)}}>Scan código</button>
+</div>
+
+<div className="card">
+<h3>Inventário</h3>
+{items.map(i=>{
+ const p=prioridade(i);
+ return(
+ <div key={i.id} className="item">
+  <div>
+   <div>{i.nome}</div>
+   <small>{i.quantidade} • €{i.preco}</small>
+  </div>
+  <div>
+   <span className={`badge ${p.c}`}>{p.t}</span>
+   <button onClick={()=>consumir(i.id)}>X</button>
+  </div>
+ </div>
+ );
+})}
+</div>
+
+{scanOpen&&(
+<div className="modal" onClick={()=>setScanOpen(false)}>
+ <div className="modal-box" onClick={e=>e.stopPropagation()}>
+  <h3>Scanner</h3>
+  <div id="scanner"></div>
+ </div>
+</div>
+)}
+
+{formOpen&&(
+<div className="modal" onClick={()=>setFormOpen(false)}>
+ <div className="modal-box" onClick={e=>e.stopPropagation()}>
+ <h3>Novo Produto ({barcode})</h3>
+
+ <label>Nome</label>
+ <input value={form.nome} onChange={e=>setForm({...form,nome:e.target.value})}/>
+
+ <label>Quantidade</label>
+ <input value={form.quantidade} onChange={e=>setForm({...form,quantidade:e.target.value})}/>
+
+ <label>Preço</label>
+ <input value={form.preco} onChange={e=>setForm({...form,preco:e.target.value})}/>
+
+ <label>Loja</label>
+ <input value={form.loja} onChange={e=>setForm({...form,loja:e.target.value})}/>
+
+ <button className="primary" onClick={addItem}>Guardar</button>
+ </div>
+</div>
+)}
+
+</div>
+)
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+
+if("serviceWorker" in navigator){
+ navigator.serviceWorker.register("sw.js");
 }
 
 </script>
