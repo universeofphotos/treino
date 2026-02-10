@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Acompanhamento - Treino Otimizado V2.0</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Poupança Holanda">
+    <title>Poupança na Holanda</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -12,1227 +24,1167 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            padding: 0;
+            padding-bottom: 80px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 600px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 20px;
         }
         
         .header {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 24px 20px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
         
         .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .form-content {
-            padding: 40px;
-        }
-        
-        .section {
-            margin-bottom: 40px;
-            border: 2px solid #f1f3f4;
-            border-radius: 12px;
-            padding: 25px;
-            transition: all 0.3s ease;
-        }
-        
-        .section:hover {
-            border-color: #667eea;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-        }
-        
-        .section-title {
-            color: #2c3e50;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            font-size: 24px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .section-title::before {
-            content: "💪";
-            font-size: 1.2rem;
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
         }
         
-        .form-grid {
+        .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .form-group {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
         }
         
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #34495e;
-            font-size: 0.95rem;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e8ed;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #fafbfc;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
+        .stat-card {
             background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .exercise-block {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-            position: relative;
-        }
-        
-        .exercise-name {
+        .stat-value {
+            font-size: 24px;
             font-weight: bold;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-scan {
+            background: #9b59b6;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+        }
+        
+        .suggestion-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .suggestion-box.no-cook {
+            border-left: 4px solid #27ae60;
+        }
+        
+        .suggestion-box.warning {
+            border-left: 4px solid #f39c12;
+        }
+        
+        .suggestion-box.urgent {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .suggestion-box h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .recipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .recipe-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .recipe-origin {
+            font-size: 12px;
+            color: #9b59b6;
+            font-weight: 500;
+        }
+        
+        .recipe-cost {
+            text-align: right;
+        }
+        
+        .cost-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .cost-dose {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .recipe-info {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .recipe-info span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .category {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .category h3 {
+            font-size: 15px;
             color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .exercise-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .item-info {
+            flex: 1;
         }
         
-        .status-pending { background: #ffeaa7; color: #d63031; }
-        .status-active { background: #74b9ff; color: white; }
-        .status-completed { background: #00b894; color: white; }
-        
-        .sets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+        .item-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 14px;
         }
         
-        .set-input-group {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-        }
-        
-        .set-label {
-            font-size: 0.8rem;
+        .item-details {
+            font-size: 12px;
             color: #666;
-            margin-bottom: 5px;
         }
         
-        .set-input {
-            width: 100%;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            padding: 5px;
-            text-align: center;
-            font-size: 0.9rem;
-            margin-bottom: 3px;
-        }
-        
-        .exercise-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
+        }
+        
+        .badge-urgent {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .badge-ok {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .badge-safe {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            color: #666;
         }
         
-        .btn-start {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
+        .nav-item.active {
+            color: #667eea;
         }
         
-        .btn-complete {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
+        .nav-icon {
+            font-size: 24px;
         }
         
-        .btn-pain {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
         }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .pain-modal {
-            display: none;
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
         }
         
-        .pain-modal-content {
+        .modal-content {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 800px;
-            max-height: 90vh;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            position: relative;
         }
         
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            font-size: 20px;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 28px;
             cursor: pointer;
             color: #666;
-            border: none;
-            background: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
         }
         
-        .pain-options {
-            display: grid;
-            gap: 15px;
-            margin-top: 20px;
+        .form-group {
+            margin-bottom: 16px;
         }
         
-        .pain-option {
-            border: 2px solid #e1e8ed;
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fafbfc;
-        }
-        
-        .pain-option:hover {
-            border-color: #667eea;
-            background: white;
-        }
-        
-        .pain-option.good-pain {
-            border-color: #00b894;
-            background: #f0fff4;
-        }
-        
-        .pain-option.bad-pain {
-            border-color: #e17055;
-            background: #fff5f5;
-        }
-        
-        .pain-title {
-            font-weight: bold;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
             color: #2c3e50;
-            margin-bottom: 5px;
         }
         
-        .pain-description {
-            font-size: 0.9rem;
-            color: #636e72;
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
         }
         
-        .feedback-panel {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 0 8px 8px 0;
-            display: none;
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
         }
         
-        .feedback-good {
-            border-left-color: #00b894;
-            background: #f0fff4;
-        }
-        
-        .feedback-bad {
-            border-left-color: #e17055;
-            background: #fff5f5;
-        }
-        
-        .workout-day {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: white;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-        
-        .rating-scale {
+        .btn-row {
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 10px 0;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
         }
         
-        .rating-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #ddd;
-            border-radius: 50%;
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
             background: white;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            font-weight: 500;
         }
         
-        .rating-btn:hover, .rating-btn.active {
+        .btn-submit {
+            flex: 1;
+            padding: 12px;
+            border: none;
             background: #667eea;
             color: white;
-            border-color: #667eea;
-            transform: scale(1.1);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
         }
-
-        .correction-text {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            white-space: pre-line;
+        
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 8px;
         }
-
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .sets-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .exercise-controls {
-                flex-direction: column;
-            }
-            
-            .pain-modal-content {
-                margin: 20px;
-                max-width: calc(100% - 40px);
-            }
-            
-            .rating-scale {
-                justify-content: flex-start;
-            }
+        
+        #reader {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .scanner-info {
+            text-align: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #666;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏋️ Formulário de Acompanhamento</h1>
-            <p>Plano de Treino Otimizado V2.0 - Monitoramento em Tempo Real</p>
-        </div>
-        
-        <div class="form-content">
-            <form id="workoutForm">
-                
-                <div class="section">
-                    <div class="section-title">📊 Informações Gerais da Sessão</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="date">Data do Treino:</label>
-                            <input type="date" id="date" name="date" required="">
-                        </div>
-                        <div class="form-group">
-                            <label for="workoutDay">Dia de Treino:</label>
-                            <select id="workoutDay" name="workoutDay" required="">
-                                <option value="">Selecione...</option>
-                                <option value="segunda">Segunda - Peito/Tríceps</option>
-                                <option value="terca">Terça - Costas/Bíceps</option>
-                                <option value="quarta">Quarta - Recovery Ativo</option>
-                                <option value="quinta">Quinta - Pernas Completas</option>
-                                <option value="sexta">Sexta - Ombros/Trapézios</option>
-                                <option value="sabado">Sábado - Braços Especialização</option>
-                                <option value="domingo">Domingo - Conditioning</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="startTime">Hora de Início:</label>
-                            <input type="time" id="startTime" name="startTime">
-                        </div>
-                        <div class="form-group">
-                            <label for="endTime">Hora de Término:</label>
-                            <input type="time" id="endTime" name="endTime">
-                        </div>
-                    </div>
-                </div>
+    <div id="root"></div>
 
-                <div class="section">
-                    <div class="section-title">⚡ Estado Pré-Treino</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Nível de Energia (1-10):</label>
-                            <div class="rating-scale" id="energyRating">
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="1">1</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="2">2</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="3">3</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="4">4</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="5">5</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="6">6</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="7">7</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="8">8</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="9">9</button>
-                                <button type="button" class="rating-btn" data-rating="energy" data-value="10">10</button>
-                            </div>
-                            <input type="hidden" name="energyLevel" id="energyLevel">
-                        </div>
-                        <div class="form-group">
-                            <label for="sleep">Horas de Sono:</label>
-                            <input type="number" id="sleep" name="sleep" min="0" max="12" step="0.5" placeholder="Ex: 7.5">
-                        </div>
-                    </div>
-                </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-                <div class="section" id="exerciseSection">
-                    <div class="section-title">💪 Exercícios - Monitoramento em Tempo Real</div>
-                    <div id="exerciseContainer"><div class="workout-day">Treino de Segunda-feira</div>
-                <div class="exercise-block" id="exercise_0">
-                    <div class="exercise-name">
-                        <span>Barbell Bench Press (4x6-8 @ 35-40kg (Prog. 42-47kg))</span>
-                        <span class="exercise-status status-pending" id="status_0">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_0_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_0_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_0_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_0_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_0_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_0_set_3_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 4</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_0_set_4_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_0_set_4_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(0)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(0)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(0)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_1">
-                    <div class="exercise-name">
-                        <span>Dumbbell Incline Press (4x8-10 @ 15kg (Prog. 17.5-20kg))</span>
-                        <span class="exercise-status status-pending" id="status_1">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_1_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_1_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_1_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_1_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_1_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_1_set_3_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 4</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_1_set_4_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_1_set_4_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(1)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(1)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(1)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_2">
-                    <div class="exercise-name">
-                        <span>Machine Bench Press (4x10-12 @ 32kg)</span>
-                        <span class="exercise-status status-pending" id="status_2">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_2_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_2_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_2_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_2_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_2_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_2_set_3_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 4</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_2_set_4_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_2_set_4_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(2)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(2)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(2)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_3">
-                    <div class="exercise-name">
-                        <span>Dips (3x8-12 @ Bodyweight)</span>
-                        <span class="exercise-status status-pending" id="status_3">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_3_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_3_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_3_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_3_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_3_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_3_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(3)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(3)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(3)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_4">
-                    <div class="exercise-name">
-                        <span>Dumbbell Fly (3x12-15 @ 12.5kg)</span>
-                        <span class="exercise-status status-pending" id="status_4">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_4_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_4_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_4_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_4_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_4_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_4_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(4)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(4)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(4)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_5">
-                    <div class="exercise-name">
-                        <span>Close-Grip Bench Press (3x8-10 @ Varia (compound tríceps))</span>
-                        <span class="exercise-status status-pending" id="status_5">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_5_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_5_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_5_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_5_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_5_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_5_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(5)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(5)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(5)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_6">
-                    <div class="exercise-name">
-                        <span>Cable Tricep Pushdown (3x10-12 @ 14kg (base))</span>
-                        <span class="exercise-status status-pending" id="status_6">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_6_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_6_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_6_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_6_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_6_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_6_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(6)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(6)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(6)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_7">
-                    <div class="exercise-name">
-                        <span>Cable Rope Overhead Extension (3x10-12 (12kgx12, 14kgx10, 16kgx8) @ 12kg (prog.))</span>
-                        <span class="exercise-status status-pending" id="status_7">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_7_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_7_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_7_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_7_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_7_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_7_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(7)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(7)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(7)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_8">
-                    <div class="exercise-name">
-                        <span>Machine Ab Crunch (3x15-20 @ 30kg)</span>
-                        <span class="exercise-status status-pending" id="status_8">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_8_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_8_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_8_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_8_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_8_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_8_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(8)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(8)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(8)">Concluir Exercício</button>
-                    </div>
-                </div>
-            
-                <div class="exercise-block" id="exercise_9">
-                    <div class="exercise-name">
-                        <span>Plank (3x60s @ Bodyweight)</span>
-                        <span class="exercise-status status-pending" id="status_9">Pendente</span>
-                    </div>
-                    <div class="sets-grid">
-                        
-                        <div class="set-input-group">
-                            <div class="set-label">Série 1</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_9_set_1_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_9_set_1_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 2</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_9_set_2_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_9_set_2_reps">
-                        </div>
-                    
-                        <div class="set-input-group">
-                            <div class="set-label">Série 3</div>
-                            <input type="number" class="set-input" placeholder="Peso" name="exercise_9_set_3_weight">
-                            <input type="number" class="set-input" placeholder="Reps" name="exercise_9_set_3_reps">
-                        </div>
-                    
-                    </div>
-                    <div class="exercise-controls">
-                        <button type="button" class="btn btn-start" onclick="startExercise(9)">Iniciar</button>
-                        <button type="button" class="btn btn-pain" onclick="openPainModal(9)">Dor/Desconforto</button>
-                        <button type="button" class="btn btn-complete" onclick="completeExercise(9)">Concluir Exercício</button>
-                    </div>
-                </div>
-            </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-title">📈 Avaliação Final</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Satisfação com Performance (1-10):</label>
-                            <div class="rating-scale" id="satisfactionRating">
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="1">1</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="2">2</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="3">3</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="4">4</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="5">5</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="6">6</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="7">7</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="8">8</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="9">9</button>
-                                <button type="button" class="rating-btn" data-rating="satisfaction" data-value="10">10</button>
-                            </div>
-                            <input type="hidden" name="satisfactionLevel" id="satisfactionLevel">
-                        </div>
-                        <div class="form-group">
-                            <label for="progressions">Progressões Alcançadas:</label>
-                            <textarea id="progressions" name="progressions" rows="3" placeholder="Ex: Aumentei 2.5kg no supino, consegui fazer 8 reps..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-title">📝 Observações Gerais</div>
-                    <div class="form-group">
-                        <label for="generalNotes">Notas Adicionais:</label>
-                        <textarea id="generalNotes" name="generalNotes" rows="4" placeholder="Qualquer observação adicional sobre o treino..."></textarea>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
-                    <button type="button" class="btn btn-complete" onclick="saveWorkout()">💾 Salvar Treino Completo</button>
-                    <button type="button" class="btn btn-start" onclick="downloadPdf()">⬇️ Baixar PDF</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="painModal" class="pain-modal">
-        <div class="pain-modal-content">
-            <button class="close-modal" onclick="closePainModal()">×</button>
-            <h2 id="modalTitle">🩺 Avaliação de Desconforto</h2>
-            <p id="modalExercise" style="color: #666; margin-bottom: 20px;"></p>
-            
-            <div class="pain-options" id="painOptions">
-                </div>
-            
-            <div id="feedbackPanel" class="feedback-panel">
-                <h4 id="feedbackTitle"></h4>
-                <p id="feedbackMessage"></p>
-                <div id="feedbackActions"></div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn btn-complete" onclick="closePainModal()">Continuar Treino</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Variáveis globais
-        let currentExercise = null;
-        let workoutData = {};
-
-        // Dados completos dos exercícios por dia
-        const workoutExercises = {
-            segunda: [
-                {
-                    name: "Barbell Bench Press",
-                    sets: "4x6-8",
-                    currentWeight: "35-40kg (Prog. 42-47kg)",
-                    painTypes: {
-                        good: [
-                            { title: "Tensão no peitoral", desc: "Sensação de trabalho muscular no peito", feedback: "Perfeito! Esta tensão indica que está a ativar corretamente o peitoral. Continue com a técnica atual." },
-                            { title: "Leve queimação nos músculos", desc: "Sensação de fadiga muscular progressiva", feedback: "Excelente! A queimação muscular é sinal de que está a trabalhar na intensidade correta." }
-                        ],
-                        bad: [
-                            { title: "Dor aguda no ombro", desc: "Dor intensa ou em forma de pontada no ombro", feedback: "PARE IMEDIATAMENTE! Verifique a pegada - deve estar ligeiramente mais larga que os ombros. Desça a barra de forma controlada apenas até ao peito.", correction: "• Ajuste a pegada\n• Mantenha omoplatas retraídas\n• Não desça demasiado a barra" },
-                            { title: "Dor no punho", desc: "Desconforto ou dor nos punhos", feedback: "Ajuste necessário! A pegada pode estar incorreta.", correction: "• Mantenha punhos neutros\n• Distribua o peso na palma da mão\n• Use munhequeiras se necessário" },
-                            { title: "Dor na zona lombar", desc: "Tensão excessiva ou dor nas costas", feedback: "Atenção à postura! Pode estar a arquear demasiado as costas.", correction: "• Mantenha pés no chão\n• Core contraído\n• Ligeiro arco natural nas costas" }
-                        ]
-                    }
-                },
-                {
-                    name: "Dumbbell Incline Press",
-                    sets: "4x8-10",
-                    currentWeight: "15kg (Prog. 17.5-20kg)",
-                    painTypes: {
-                        good: [
-                            { title: "Tensão na parte superior do peito", desc: "Sensação de trabalho no peitoral superior", feedback: "Perfeito! O incline press está a trabalhar corretamente o peitoral superior." },
-                            { title: "Sensação de 'pump'", desc: "Sensação de músculo 'inchado' no peito", feedback: "Excelente! O pump é sinal de boa irrigação sanguínea e trabalho muscular eficaz." }
-                        ],
-                        bad: [
-                            { title: "Dor no ombro anterior", desc: "Dor na frente do ombro durante o movimento", feedback: "CUIDADO! Pode estar a descer demasiado os halteres.", correction: "• Desça apenas até sentir alongamento no peito\n• Mantenha cotovelos ligeiramente para dentro\n• Não force a amplitude" },
-                            { title: "Tensão excessiva no pescoço", desc: "Rigidez ou dor no pescoço", feedback: "Ajuste a posição da cabeça!", correction: "• Mantenha cabeça encostada ao banco\n• Olhar direcionado ao teto\n• Relaxe ombros e pescoço" }
-                        ]
-                    }
-                },
-                {
-                    name: "Machine Bench Press",
-                    sets: "4x10-12",
-                    currentWeight: "32kg",
-                    painTypes: {
-                        good: [{ title: "Tensão uniforme no peitoral", desc: "Trabalho equilibrado em todo o peito", feedback: "Ótimo! A máquina proporciona um trabalho seguro e eficaz." }],
-                        bad: [{ title: "Dor na articulação do ombro", desc: "Desconforto articular durante o movimento", feedback: "Verifique o posicionamento!", correction: "• Ajuste altura do assento\n• Mantenha omoplatas encostadas\n• Não estenda completamente os braços" }]
-                    }
-                },
-                {
-                    name: "Dips",
-                    sets: "3x8-12",
-                    currentWeight: "Bodyweight",
-                    painTypes: {
-                        good: [{ title: "Tensão no peitoral e tríceps", desc: "Trabalho muscular em peito e tríceps", feedback: "Perfeito! Os dips são excelentes para desenvolver força funcional." }],
-                        bad: [{ title: "Dor aguda no ombro", desc: "Dor intensa na articulação do ombro", feedback: "PARE! Pode estar a descer demasiado.", correction: "• Desça apenas até 90° nos cotovelos\n• Mantenha corpo ligeiramente inclinado\n• Use assistência se necessário" }]
-                    }
-                },
-                {
-                    name: "Dumbbell Fly",
-                    sets: "3x12-15",
-                    currentWeight: "12.5kg",
-                    painTypes: {
-                        good: [{ title: "Squeeze no peito", desc: "Contração máxima no topo do movimento", feedback: "Excelente! Foco na contração é fundamental para o Fly." }],
-                        bad: [{ title: "Dor no ombro/articulação", desc: "Desconforto na articulação durante o alongamento", feedback: "Cuidado com a amplitude!", correction: "• Não desça os halteres demasiado\n• Mantenha cotovelos ligeiramente flexionados" }]
-                    }
-                },
-                {
-                    name: "Close-Grip Bench Press",
-                    sets: "3x8-10",
-                    currentWeight: "Varia (compound tríceps)",
-                    painTypes: {
-                        good: [{ title: "Tensão forte no tríceps", desc: "Foco na ativação do tríceps", feedback: "Ótimo! Excelente para isolar o tríceps." }],
-                        bad: [{ title: "Dor no punho/cotovelo", desc: "Desconforto nas articulações do braço", feedback: "Ajuste a pegada/amplitude!", correction: "• Mantenha punhos neutros\n• Não tranque os cotovelos no topo\n• Use um peso controlado" }]
-                    }
-                },
-                {
-                    name: "Cable Tricep Pushdown",
-                    sets: "3x10-12",
-                    currentWeight: "14kg (base)",
-                    painTypes: {
-                        good: [{ title: "Pump no tríceps", desc: "Sensação de inchaço muscular", feedback: "Perfeito! Indicativo de bom volume de trabalho." }],
-                        bad: [{ title: "Dor no cotovelo", desc: "Desconforto na articulação do cotovelo", feedback: "Pode estar a usar demasiado peso ou técnica incorreta.", correction: "• Reduza o peso\n• Mantenha cotovelos fixos\n• Não estenda completamente os braços" }]
-                    }
-                },
-                {
-                    name: "Cable Rope Overhead Extension",
-                    sets: "3x10-12 (12kgx12, 14kgx10, 16kgx8)",
-                    currentWeight: "12kg (prog.)",
-                    painTypes: {
-                        good: [{ title: "Queimação no tríceps", desc: "Fadiga progressiva no tríceps", feedback: "Ótimo para o desenvolvimento da cabeça longa do tríceps." }],
-                        bad: [{ title: "Dor no ombro (elevação)", desc: "Desconforto ao levantar o braço", feedback: "Cuidado com a posição do cotovelo!", correction: "• Mantenha os cotovelos mais próximos da cabeça\n• Use um peso que permita controle total" }]
-                    }
-                },
-                {
-                    name: "Machine Ab Crunch",
-                    sets: "3x15-20",
-                    currentWeight: "30kg",
-                    painTypes: {
-                        good: [{ title: "Queimação abdominal", desc: "Sensação de trabalho no core", feedback: "Excelente! Continue a focar na contração." }],
-                        bad: [{ title: "Dor no pescoço/lombar", desc: "Tensão ou dor fora dos abdominais", feedback: "Ajuste a postura!", correction: "• Mantenha o pescoço neutro\n• Concentre a força no abdómen\n• Não force a flexão da coluna" }]
-                    }
-                },
-                {
-                    name: "Plank",
-                    sets: "3x60s",
-                    currentWeight: "Bodyweight",
-                    painTypes: {
-                        good: [{ title: "Tensão abdominal", desc: "Contração sustentada no core", feedback: "Perfeito! Sinal de boa ativação do core." }],
-                        bad: [{ title: "Dor lombar", desc: "Curvatura excessiva da lombar", feedback: "Ajuste a posição!", correction: "• Mantenha o corpo reto\n• Contraia glúteos e abdominais\n• Não deixe o quadril cair" }]
-                    }
-                }
-            ],
-            terca: [
-                {
-                    name: "Deadlifts",
-                    sets: "4x6-8",
-                    currentWeight: "40kg (Prog. 50-60kg)",
-                    painTypes: {
-                        good: [{ title: "Tensão nos Isquiotibiais e Glúteos", desc: "Sensação de alongamento e trabalho na parte posterior da coxa e glúteos", feedback: "Ótimo! Isso indica boa ativação da cadeia posterior, fundamental para o Deadlift." }],
-                        bad: [{ title: "Dor na Lombar (aguda)", desc: "Dor pontual e intensa na parte inferior das costas", feedback: "PARE IMEDIATAMENTE! A dor lombar aguda pode ser um sinal de má forma ou sobrecarga. Concentre-se em manter a coluna neutra.", correction: "• Mantenha as costas retas, não curve\n• Comece o movimento pelo quadril (quadril para trás)\n• Mantenha o core bem contraído" }]
-                    }
-                },
-                {
-                    name: "Pull-ups (ou Lat Pulldown)",
-                    sets: "4x8-12",
-                    currentWeight: "Bodyweight (Prog. +2.5-5kg) / 45kg",
-                    painTypes: {
-                        good: [{ title: "Queimação nas Costas e Bíceps", desc: "Sensação de fadiga nos músculos das costas e nos bíceps", feedback: "Excelente! Isso indica que você está trabalhando os grupos musculares corretos de forma eficaz." }],
-                        bad: [{ title: "Dor nos Ombros", desc: "Desconforto ou dor na articulação dos ombros", feedback: "Atenção à amplitude e forma! Pode estar a sobrecarregar os ombros.", correction: "• Não desça completamente na fase excêntrica\n• Mantenha os ombros 'para baixo e para trás'\n• Se usar máquina, ajuste o assento para uma boa posição" }]
-                    }
-                },
-                {
-                    name: "Seated Cable Row",
-                    sets: "3x10-12",
-                    currentWeight: "35kg",
-                    painTypes: {
-                        good: [{ title: "Contração forte nas Costas (meio)", desc: "Sensação de esmagamento no meio das costas ao puxar", feedback: "Perfeito! Foco na contração escapular é chave para este exercício." }],
-                        bad: [{ title: "Tensão no Pescoço/Trapézio", desc: "Rigidez ou dor na região do pescoço e trapézio", feedback: "Relaxe o pescoço! Pode estar a encolher os ombros.", correction: "• Mantenha ombros relaxados, longe das orelhas\n• Foque na puxada com as costas, não com os braços/pescoço" }]
-                    }
-                },
-                {
-                    name: "Face Pull",
-                    sets: "3x15-20",
-                    currentWeight: "15kg",
-                    painTypes: {
-                        good: [{ title: "Ativação da Parte Superior das Costas e Rotação Externa", desc: "Sensação de trabalho nos ombros posteriores e na parte superior das costas", feedback: "Ótimo! Essencial para a saúde do ombro e postura." }],
-                        bad: [{ title: "Dor na Articulação do Ombro", desc: "Desconforto articular ao puxar a corda", feedback: "Verifique a pegada e a rotação!", correction: "• Use pegada neutra ou supinada na corda\n• Não force a rotação, movimento controlado" }]
-                    }
-                },
-                {
-                    name: "Barbell Curl",
-                    sets: "3x8-10",
-                    currentWeight: "20kg (Prog. 22.5kg)",
-                    painTypes: {
-                        good: [{ title: "Pump nos Bíceps", desc: "Sensação de inchaço e plenitude nos bíceps", feedback: "Excelente! Indica bom recrutamento muscular e volume de trabalho." }],
-                        bad: [{ title: "Dor no Cotovelo/Punho", desc: "Desconforto ou dor nas articulações do cotovelo ou punho", feedback: "Ajuste a pegada e o peso!", correction: "• Mantenha punhos neutros (sem dobrar)\n• Não balance o corpo para levantar o peso\n• Considere usar barra EZ para menos estresse" }]
-                    }
-                },
-                {
-                    name: "Dumbbell Hammer Curl",
-                    sets: "3x10-12",
-                    currentWeight: "10kg (Prog. 12.5kg)",
-                    painTypes: {
-                        good: [{ title: "Queimação no Braquial/Antebraço", desc: "Fadiga nos músculos do braço e antebraço", feedback: "Perfeito! Ótimo para o desenvolvimento da espessura do braço." }],
-                        bad: [{ title: "Dor no Ombro", desc: "Desconforto ao levantar os halteres", feedback: "Pode estar a usar demasiado impulso ou peso.", correction: "• Mantenha ombros fixos, sem balançar\n• Controle o movimento de subida e descida" }]
-                    }
-                },
-                {
-                    name: "Hyperextensions (Back Extensions)",
-                    sets: "3x12-15",
-                    currentWeight: "Bodyweight",
-                    painTypes: {
-                        good: [{ title: "Tensão na Lombar e Glúteos", desc: "Sensação de trabalho na parte inferior das costas e nádegas", feedback: "Ótimo para fortalecer a cadeia posterior de forma segura." }],
-                        bad: [{ title: "Dor na Lombar (compressão)", desc: "Sensação de pressão ou dor aguda na lombar", feedback: "NÃO HIPERESTENDA! Concentre-se no movimento do quadril.", correction: "• Não estenda a coluna para além da linha reta do corpo\n• Mantenha o movimento controlado e lento\n• Contraia glúteos no topo" }]
-                    }
-                }
-            ]
-            // ... (continuar com os outros dias de treino se existirem)
-        };
-
-        // Funções de controle de estado e modal de dor (mantidas do seu código original)
-        function startExercise(index) {
-            document.getElementById(`status_${index}`).innerText = 'Em Progresso';
-            document.getElementById(`status_${index}`).className = 'exercise-status status-active';
-        }
-
-        function completeExercise(index) {
-            document.getElementById(`status_${index}`).innerText = 'Concluído';
-            document.getElementById(`status_${index}`).className = 'exercise-status status-completed';
-        }
-
-        function openPainModal(index) {
-            currentExercise = index;
-            const exerciseName = document.querySelector(`#exercise_${index} .exercise-name span:first-child`).innerText;
-            const workoutDay = document.getElementById('workoutDay').value;
-            const exerciseData = workoutExercises[workoutDay][index];
-
-            document.getElementById('modalTitle').innerText = `🩺 Avaliação de Desconforto - ${exerciseData.name}`;
-            document.getElementById('modalExercise').innerText = `Exercício: ${exerciseData.name}`;
-
-            const painOptionsDiv = document.getElementById('painOptions');
-            painOptionsDiv.innerHTML = ''; // Limpar opções anteriores
-
-            if (exerciseData && exerciseData.painTypes) {
-                // Good Pain
-                if (exerciseData.painTypes.good) {
-                    exerciseData.painTypes.good.forEach(pain => {
-                        const option = document.createElement('div');
-                        option.className = 'pain-option good-pain';
-                        option.innerHTML = `
-                            <div class="pain-title">${pain.title}</div>
-                            <div class="pain-description">${pain.desc}</div>
-                        `;
-                        option.onclick = () => showFeedback(pain.feedback, 'good', pain.correction);
-                        painOptionsDiv.appendChild(option);
-                    });
-                }
-                // Bad Pain
-                if (exerciseData.painTypes.bad) {
-                    exerciseData.painTypes.bad.forEach(pain => {
-                        const option = document.createElement('div');
-                        option.className = 'pain-option bad-pain';
-                        option.innerHTML = `
-                            <div class="pain-title">${pain.title}</div>
-                            <div class="pain-description">${pain.desc}</div>
-                        `;
-                        option.onclick = () => showFeedback(pain.feedback, 'bad', pain.correction);
-                        painOptionsDiv.appendChild(option);
-                    });
-                }
-            } else {
-                painOptionsDiv.innerHTML = '<p>Nenhuma opção de dor disponível para este exercício.</p>';
+        // =======================
+        // BASE DE DADOS DE RECEITAS
+        // =======================
+        const RECEITAS_BASE = [
+            {
+                id: 1,
+                nome: "Feijão Moldavo Simples",
+                origem: "Moldava",
+                ingredientes: [
+                    { nome: "Feijão cozido (lata)", quantidade: 400, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 2, unidade: "colheres" },
+                    { nome: "Sal", quantidade: "a gosto" }
+                ],
+                doses: 3,
+                tempo: 5,
+                duracao_frigo: 3,
+                custo_estimado: 1.50,
+                instrucoes: [
+                    "Abrir a lata de feijão e escorrer",
+                    "Cortar a cebola em pedaços pequenos",
+                    "Misturar feijão + cebola + óleo + sal",
+                    "Pode comer frio ou morno"
+                ],
+                tags: ["minimalista", "moldava", "frio"]
+            },
+            {
+                id: 2,
+                nome: "Frango com Arroz",
+                origem: "Base",
+                ingredientes: [
+                    { nome: "Peito de frango", quantidade: 300, unidade: "g" },
+                    { nome: "Arroz", quantidade: 200, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 3, unidade: "colheres" },
+                    { nome: "Sal", quantidade: "a gosto" }
+                ],
+                doses: 4,
+                tempo: 30,
+                duracao_frigo: 3,
+                custo_estimado: 4.00,
+                instrucoes: [
+                    "Cortar o frango em cubos",
+                    "Refogar a cebola no óleo",
+                    "Adicionar o frango e cozinhar",
+                    "Cozinhar o arroz separadamente",
+                    "Misturar tudo"
+                ],
+                tags: ["panela_grande", "proteína"]
+            },
+            {
+                id: 3,
+                nome: "Ovos Mexidos",
+                origem: "Emergência",
+                ingredientes: [
+                    { nome: "Ovos", quantidade: 3, unidade: "unidades" },
+                    { nome: "Óleo", quantidade: 1, unidade: "colher" },
+                    { nome: "Sal", quantidade: "a gosto" }
+                ],
+                doses: 1,
+                tempo: 5,
+                duracao_frigo: 0,
+                custo_estimado: 0.75,
+                instrucoes: [
+                    "Bater os ovos num recipiente",
+                    "Aquecer óleo na frigideira",
+                    "Adicionar os ovos e mexer",
+                    "Servir imediatamente"
+                ],
+                tags: ["rápido", "emergência", "proteína"]
+            },
+            {
+                id: 4,
+                nome: "Massa com Tomate e Frango",
+                origem: "Base",
+                ingredientes: [
+                    { nome: "Massa", quantidade: 250, unidade: "g" },
+                    { nome: "Tomate pelado (lata)", quantidade: 400, unidade: "g" },
+                    { nome: "Frango picado", quantidade: 200, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Óleo", quantidade: 2, unidade: "colheres" }
+                ],
+                doses: 4,
+                tempo: 25,
+                duracao_frigo: 3,
+                custo_estimado: 3.50,
+                instrucoes: [
+                    "Cozinhar a massa conforme instruções",
+                    "Refogar cebola e frango",
+                    "Adicionar tomate e temperar",
+                    "Misturar com a massa"
+                ],
+                tags: ["panela_grande"]
+            },
+            {
+                id: 5,
+                nome: "Grão com Cebola e Atum",
+                origem: "Portuguesa",
+                ingredientes: [
+                    { nome: "Grão cozido (lata)", quantidade: 400, unidade: "g" },
+                    { nome: "Atum (lata)", quantidade: 120, unidade: "g" },
+                    { nome: "Cebola", quantidade: 1, unidade: "unidade" },
+                    { nome: "Azeite", quantidade: 3, unidade: "colheres" },
+                    { nome: "Sal", quantidade: "a gosto" }
+                ],
+                doses: 3,
+                tempo: 5,
+                duracao_frigo: 2,
+                custo_estimado: 2.50,
+                instrucoes: [
+                    "Escorrer o grão e o atum",
+                    "Cortar a cebola em rodelas finas",
+                    "Misturar tudo com azeite",
+                    "Temperar com sal"
+                ],
+                tags: ["minimalista", "frio", "portuguesa"]
             }
+        ];
 
-            document.getElementById('painModal').style.display = 'flex';
-        }
-
-        function closePainModal() {
-            document.getElementById('painModal').style.display = 'none';
-            document.getElementById('feedbackPanel').style.display = 'none'; // Esconder o painel de feedback
-        }
-
-        function showFeedback(message, type, correction = null) {
-            const feedbackPanel = document.getElementById('feedbackPanel');
-            const feedbackTitle = document.getElementById('feedbackTitle');
-            const feedbackMessage = document.getElementById('feedbackMessage');
-            const feedbackActions = document.getElementById('feedbackActions');
-
-            feedbackTitle.innerText = type === 'good' ? '✅ Feedback Positivo' : '⚠️ Atenção Necessária';
-            feedbackMessage.innerText = message;
-            feedbackActions.innerHTML = ''; // Clear previous actions
-
-            if (correction) {
-                const correctionText = document.createElement('div');
-                correctionText.className = 'correction-text';
-                correctionText.innerText = `Sugestões de Correção:\n${correction}`;
-                feedbackActions.appendChild(correctionText);
+        // =======================
+        // DADOS INICIAIS
+        // =======================
+        const INITIAL_ITEMS = [
+            {
+                id: 1,
+                nome: "Peito de frango",
+                categoria: "Proteína",
+                quantidade: "300g",
+                estado: "cru",
+                preco: 3.99,
+                loja: "Albert Heijn",
+                data_entrada: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 2,
+                nome: "Ovos",
+                categoria: "Proteína",
+                quantidade: "6 unidades",
+                estado: "cru",
+                preco: 2.49,
+                loja: "Lidl",
+                data_entrada: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 3,
+                nome: "Feijão cozido (lata)",
+                categoria: "Leguminosas",
+                quantidade: "400g",
+                estado: "aberto",
+                preco: 0.79,
+                loja: "Jumbo",
+                data_entrada: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 4,
+                nome: "Arroz",
+                categoria: "Hidratos",
+                quantidade: "500g",
+                estado: "seco",
+                preco: 1.29,
+                loja: "Lidl",
+                data_entrada: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+            },
+            {
+                id: 5,
+                nome: "Cebola",
+                categoria: "Vegetais",
+                quantidade: "3 unidades",
+                estado: "cru",
+                preco: 0.99,
+                loja: "Albert Heijn",
+                data_entrada: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
             }
+        ];
 
-            feedbackPanel.className = `feedback-panel feedback-${type}`;
-            feedbackPanel.style.display = 'block';
+        // =======================
+        // FUNÇÕES DE CÁLCULO
+        // =======================
+        function calcularPrioridade(item) {
+            const agora = new Date();
+            const diasDesdeEntrada = Math.floor((agora - new Date(item.data_entrada)) / (1000 * 60 * 60 * 24));
+            
+            if (item.estado === "cozinhado") {
+                if (diasDesdeEntrada >= 3) return { nivel: 1, texto: "Consumir JÁ", badge: "urgent" };
+                if (diasDesdeEntrada === 2) return { nivel: 2, texto: "Hoje/amanhã", badge: "warning" };
+                return { nivel: 3, texto: "OK", badge: "ok" };
+            }
+            
+            if (item.estado === "aberto") {
+                if (diasDesdeEntrada >= 3) return { nivel: 2, texto: "Consumir breve", badge: "warning" };
+                return { nivel: 3, texto: "OK", badge: "ok" };
+            }
+            
+            if (item.estado === "cru") {
+                if (diasDesdeEntrada >= 4) return { nivel: 2, texto: "Cozinhar já", badge: "warning" };
+                return { nivel: 4, texto: "OK", badge: "ok" };
+            }
+            
+            return { nivel: 5, texto: "Seguro", badge: "safe" };
         }
 
-
-        // Lógica para os botões de avaliação (energia, satisfação)
-        document.querySelectorAll('.rating-scale .rating-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const ratingType = this.dataset.rating; // 'energy' or 'satisfaction'
-                const value = this.dataset.value;
-
-                // Remover 'active' de todos os botões do mesmo tipo
-                document.querySelectorAll(`.rating-scale[id="${ratingType}Rating"] .rating-btn`).forEach(btn => {
-                    btn.classList.remove('active');
-                });
-
-                // Adicionar 'active' ao botão clicado
-                this.classList.add('active');
-
-                // Atualizar o input hidden correspondente
-                document.getElementById(`${ratingType}Level`).value = value;
-            });
-        });
-
-        // Função para salvar o treino (mantida do seu código original)
-        function saveWorkout() {
-            const formData = new FormData(document.getElementById('workoutForm'));
-            workoutData = {};
-
-            // Coletar informações gerais
-            workoutData.general = {
-                date: formData.get('date'),
-                workoutDay: formData.get('workoutDay'),
-                startTime: formData.get('startTime'),
-                endTime: formData.get('endTime')
-            };
-
-            // Coletar estado pré-treino
-            workoutData.preWorkout = {
-                energyLevel: formData.get('energyLevel'),
-                sleep: formData.get('sleep')
-            };
-
-            // Coletar dados dos exercícios
-            workoutData.exercises = [];
-            const exerciseBlocks = document.querySelectorAll('.exercise-block');
-            exerciseBlocks.forEach((block, index) => {
-                const exerciseName = block.querySelector('.exercise-name span:first-child').innerText;
-                const exerciseStatus = block.querySelector('.exercise-status').innerText;
-                
-                const exerciseBlockData = {
-                    name: exerciseName,
-                    status: exerciseStatus,
-                    sets: []
+        function gerarSugestao(items, receitas) {
+            const comidaPronta = items.filter(i => i.estado === "cozinhado" && calcularPrioridade(i).nivel >= 3);
+            const itensUrgentes = items.filter(i => calcularPrioridade(i).nivel <= 2);
+            
+            if (comidaPronta.length > 0) {
+                return {
+                    tipo: "no-cook",
+                    titulo: "✅ Não cozinhar hoje",
+                    mensagem: `Tens ${comidaPronta.length} refeição/ões pronta(s).`,
+                    items: comidaPronta,
+                    receita: null
                 };
+            }
+            
+            if (itensUrgentes.length > 0) {
+                const receitaSugerida = receitas.find(r => 
+                    r.tags.includes("panela_grande")
+                ) || receitas[0];
+                
+                return {
+                    tipo: "urgent",
+                    titulo: "🔴 Cozinhar hoje",
+                    mensagem: `${itensUrgentes.length} item(ns) a estragar.`,
+                    items: itensUrgentes,
+                    receita: receitaSugerida
+                };
+            }
+            
+            const temProteina = items.some(i => i.categoria === "Proteína" && i.estado === "cru");
+            if (temProteina) {
+                const receitaSugerida = receitas.find(r => 
+                    r.tags.includes("panela_grande")
+                ) || receitas[1];
+                
+                return {
+                    tipo: "warning",
+                    titulo: "⚠️ Sem comida pronta",
+                    mensagem: "Tens ingredientes frescos disponíveis.",
+                    receita: receitaSugerida
+                };
+            }
+            
+            return {
+                tipo: "ok",
+                titulo: "😌 Inventário baixo",
+                mensagem: "Considera fazer compras em breve.",
+                receita: null
+            };
+        }
 
-                // Verificar se é um exercício com séries de peso/reps ou descritivo
-                const firstSetWeightInput = formData.get(`exercise_${index}_set_1_weight`);
-                if (firstSetWeightInput !== null) { // Assume if first weight input exists, it's a reps/weight exercise
-                    // Coletar séries de peso/reps
-                    for (let i = 1; ; i++) {
-                        const weight = formData.get(`exercise_${index}_set_${i}_weight`);
-                        const reps = formData.get(`exercise_${index}_set_${i}_reps`);
-                        if (weight === null && reps === null) break; // No more sets
-
-                        exerciseBlockData.sets.push({
-                            set: i,
-                            weight: weight ? parseFloat(weight) : null,
-                            reps: reps ? parseInt(reps) : null
-                        });
-                    }
-                } else { // For descriptive sets, just store notes
-                     const notes = formData.get(`exercise_${index}_set_1_notes`);
-                     exerciseBlockData.sets.push({
-                        set: 1, // Treat as one descriptive set
-                        notes: notes
-                    });
-                }
-                workoutData.exercises.push(exerciseBlockData);
+        // =======================
+        // COMPONENTE PRINCIPAL
+        // =======================
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [items, setItems] = useState(() => {
+                const saved = localStorage.getItem('poupanca-holanda-items');
+                return saved ? JSON.parse(saved).map(item => ({
+                    ...item,
+                    data_entrada: new Date(item.data_entrada)
+                })) : INITIAL_ITEMS;
             });
-
-            // Coletar avaliação pós-treino
-            workoutData.postWorkout = {
-                satisfactionLevel: formData.get('satisfactionLevel'),
-                progressions: formData.get('progressions')
+            const [showSuggestion, setShowSuggestion] = useState(false);
+            const [showAddModal, setShowAddModal] = useState(false);
+            const [showScanModal, setShowScanModal] = useState(false);
+            const [showRecipeModal, setShowRecipeModal] = useState(false);
+            const [selectedRecipe, setSelectedRecipe] = useState(null);
+            const [newItem, setNewItem] = useState({
+                nome: "",
+                categoria: "Proteína",
+                quantidade: "",
+                estado: "cru",
+                preco: "",
+                loja: ""
+            });
+            const [scanning, setScanning] = useState(false);
+            const scannerRef = useRef(null);
+            
+            useEffect(() => {
+                localStorage.setItem('poupanca-holanda-items', JSON.stringify(items));
+            }, [items]);
+            
+            const categorias = {
+                "Proteína": "🥩",
+                "Hidratos": "🍚",
+                "Leguminosas": "🫘",
+                "Vegetais": "🥬",
+                "Extras": "🧂"
             };
-
-            // Coletar observações gerais
-            workoutData.notes = formData.get('generalNotes');
-
-            console.log("Dados do Treino Salvos:", workoutData);
-            alert("Treino salvo com sucesso! Veja os dados no console do navegador (F12).");
-
-            // Aqui você enviaria 'workoutData' para um servidor ou salvaria localmente
-            // Exemplo de como salvar no localStorage (para fins de demonstração)
-            // localStorage.setItem('lastWorkoutData', JSON.stringify(workoutData));
+            
+            const custoTotal = items.reduce((sum, item) => sum + (parseFloat(item.preco) || 0), 0);
+            const custoSemanal = custoTotal; // Simplificado por agora
+            
+            const sugestao = gerarSugestao(items, RECEITAS_BASE);
+            
+            const handleAddItem = () => {
+                if (!newItem.nome || !newItem.quantidade) return;
+                
+                const novoItem = {
+                    id: Date.now(),
+                    ...newItem,
+                    preco: parseFloat(newItem.preco) || 0,
+                    data_entrada: new Date()
+                };
+                
+                setItems([...items, novoItem]);
+                setNewItem({ nome: "", categoria: "Proteína", quantidade: "", estado: "cru", preco: "", loja: "" });
+                setShowAddModal(false);
+            };
+            
+            const handleDeleteItem = (id) => {
+                if (confirm("Remover este item?")) {
+                    setItems(items.filter(i => i.id !== id));
+                }
+            };
+            
+            const startScanner = () => {
+                setScanning(true);
+                setTimeout(() => {
+                    const html5QrCode = new Html5Qrcode("reader");
+                    html5QrCode.start(
+                        { facingMode: "environment" },
+                        { fps: 10, qrbox: 250 },
+                        (decodedText) => {
+                            html5QrCode.stop();
+                            setScanning(false);
+                            alert(`Código lido: ${decodedText}\n\nFuncionalidade completa em desenvolvimento.`);
+                            setShowScanModal(false);
+                        },
+                        (error) => {
+                            // Erros de scan são normais, ignora
+                        }
+                    ).catch(err => {
+                        alert("Erro ao aceder à câmara. Verifica as permissões.");
+                        setScanning(false);
+                    });
+                    
+                    scannerRef.current = html5QrCode;
+                }, 100);
+            };
+            
+            const stopScanner = () => {
+                if (scannerRef.current) {
+                    scannerRef.current.stop();
+                    setScanning(false);
+                }
+                setShowScanModal(false);
+            };
+            
+            useEffect(() => {
+                return () => {
+                    if (scannerRef.current) {
+                        scannerRef.current.stop();
+                    }
+                };
+            }, []);
+            
+            const renderHome = () => (
+                <>
+                    <div className="stats">
+                        <div className="stat-card">
+                            <div className="stat-value">€{custoTotal.toFixed(2)}</div>
+                            <div className="stat-label">Em stock</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-value">{items.length}</div>
+                            <div className="stat-label">Produtos</div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        className="btn-primary"
+                        onClick={() => setShowSuggestion(!showSuggestion)}
+                    >
+                        <span>🤔</span>
+                        <span>{showSuggestion ? "Esconder" : "O que cozinho hoje?"}</span>
+                    </button>
+                    
+                    {showSuggestion && (
+                        <div className={`suggestion-box ${sugestao.tipo}`}>
+                            <h2>{sugestao.titulo}</h2>
+                            <p style={{marginBottom: '12px', fontSize: '14px'}}>{sugestao.mensagem}</p>
+                            
+                            {sugestao.items && sugestao.items.length > 0 && (
+                                <ul style={{marginLeft: '20px', marginBottom: '12px', fontSize: '14px'}}>
+                                    {sugestao.items.map(item => (
+                                        <li key={item.id}>{item.nome} ({item.quantidade})</li>
+                                    ))}
+                                </ul>
+                            )}
+                            
+                            {sugestao.receita && (
+                                <div className="recipe-card" style={{marginTop: '12px', cursor: 'pointer'}}
+                                     onClick={() => {
+                                         setSelectedRecipe(sugestao.receita);
+                                         setShowRecipeModal(true);
+                                     }}>
+                                    <div className="recipe-header">
+                                        <div>
+                                            <div className="recipe-title">{sugestao.receita.nome}</div>
+                                            <div className="recipe-origin">{sugestao.receita.origem}</div>
+                                        </div>
+                                        <div className="recipe-cost">
+                                            <div className="cost-total">€{sugestao.receita.custo_estimado.toFixed(2)}</div>
+                                            <div className="cost-dose">€{(sugestao.receita.custo_estimado / sugestao.receita.doses).toFixed(2)}/dose</div>
+                                        </div>
+                                    </div>
+                                    <div className="recipe-info">
+                                        <span>⏱️ {sugestao.receita.tempo} min</span>
+                                        <span>🍽️ {sugestao.receita.doses} doses</span>
+                                        <span>❄️ {sugestao.receita.duracao_frigo} dias</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    
+                    <button 
+                        className="btn-primary btn-scan"
+                        onClick={() => setShowScanModal(true)}
+                    >
+                        <span>📷</span>
+                        <span>Scan código de barras</span>
+                    </button>
+                    
+                    {Object.entries(categorias).map(([categoria, icon]) => {
+                        const itensCategoria = items.filter(i => i.categoria === categoria);
+                        if (itensCategoria.length === 0) return null;
+                        
+                        return (
+                            <div key={categoria} className="category">
+                                <h3>
+                                    <span>{icon}</span>
+                                    <span>{categoria}</span>
+                                </h3>
+                                {itensCategoria.map(item => {
+                                    const prioridade = calcularPrioridade(item);
+                                    return (
+                                        <div key={item.id} className="item">
+                                            <div className="item-info">
+                                                <div className="item-name">{item.nome}</div>
+                                                <div className="item-details">
+                                                    {item.quantidade} • {item.estado} • €{item.preco} • {item.loja}
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                                <span className={`badge badge-${prioridade.badge}`}>
+                                                    {prioridade.texto}
+                                                </span>
+                                                <button 
+                                                    className="btn-delete"
+                                                    onClick={() => handleDeleteItem(item.id)}
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
+                </>
+            );
+            
+            const renderReceitas = () => (
+                <>
+                    <div style={{marginBottom: '16px'}}>
+                        <h2 style={{fontSize: '20px', marginBottom: '12px'}}>Receitas Disponíveis</h2>
+                        <p style={{fontSize: '14px', color: '#666'}}>Clica numa receita para ver os detalhes</p>
+                    </div>
+                    
+                    {RECEITAS_BASE.map(receita => (
+                        <div key={receita.id} className="recipe-card" 
+                             onClick={() => {
+                                 setSelectedRecipe(receita);
+                                 setShowRecipeModal(true);
+                             }}
+                             style={{cursor: 'pointer'}}>
+                            <div className="recipe-header">
+                                <div>
+                                    <div className="recipe-title">{receita.nome}</div>
+                                    <div className="recipe-origin">{receita.origem}</div>
+                                </div>
+                                <div className="recipe-cost">
+                                    <div className="cost-total">€{receita.custo_estimado.toFixed(2)}</div>
+                                    <div className="cost-dose">€{(receita.custo_estimado / receita.doses).toFixed(2)}/dose</div>
+                                </div>
+                            </div>
+                            <div className="recipe-info">
+                                <span>⏱️ {receita.tempo} min</span>
+                                <span>🍽️ {receita.doses} doses</span>
+                                <span>❄️ {receita.duracao_frigo} dias</span>
+                            </div>
+                            <div style={{marginTop: '8px', fontSize: '12px', color: '#666'}}>
+                                {receita.tags.map(tag => (
+                                    <span key={tag} style={{
+                                        display: 'inline-block',
+                                        background: '#f0f0f0',
+                                        padding: '2px 8px',
+                                        borderRadius: '4px',
+                                        marginRight: '4px'
+                                    }}>
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </>
+            );
+            
+            return (
+                <>
+                    <div className="header">
+                        <h1>
+                            <span>🇳🇱</span>
+                            <span>Poupança Holanda</span>
+                        </h1>
+                        <p>Máxima poupança, zero desperdício</p>
+                    </div>
+                    
+                    <div className="container">
+                        {activeTab === 'home' && renderHome()}
+                        {activeTab === 'receitas' && renderReceitas()}
+                    </div>
+                    
+                    <div className="bottom-nav">
+                        <button 
+                            className={`nav-item ${activeTab === 'home' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('home')}
+                        >
+                            <div className="nav-icon">🏠</div>
+                            <div className="nav-label">Início</div>
+                        </button>
+                        <button 
+                            className={`nav-item ${activeTab === 'receitas' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('receitas')}
+                        >
+                            <div className="nav-icon">📖</div>
+                            <div className="nav-label">Receitas</div>
+                        </button>
+                        <button 
+                            className="nav-item"
+                            onClick={() => setShowAddModal(true)}
+                        >
+                            <div className="nav-icon">➕</div>
+                            <div className="nav-label">Adicionar</div>
+                        </button>
+                    </div>
+                    
+                    {/* Modal Adicionar */}
+                    {showAddModal && (
+                        <div className="modal" onClick={() => setShowAddModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Adicionar Produto</h2>
+                                    <button className="btn-close" onClick={() => setShowAddModal(false)}>×</button>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Nome</label>
+                                    <input 
+                                        type="text"
+                                        value={newItem.nome}
+                                        onChange={e => setNewItem({...newItem, nome: e.target.value})}
+                                        placeholder="Ex: Peito de frango"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Categoria</label>
+                                    <select 
+                                        value={newItem.categoria}
+                                        onChange={e => setNewItem({...newItem, categoria: e.target.value})}
+                                    >
+                                        {Object.keys(categorias).map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Quantidade</label>
+                                    <input 
+                                        type="text"
+                                        value={newItem.quantidade}
+                                        onChange={e => setNewItem({...newItem, quantidade: e.target.value})}
+                                        placeholder="Ex: 500g, 3 unidades"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Estado</label>
+                                    <select 
+                                        value={newItem.estado}
+                                        onChange={e => setNewItem({...newItem, estado: e.target.value})}
+                                    >
+                                        <option value="cru">Cru</option>
+                                        <option value="cozinhado">Cozinhado</option>
+                                        <option value="aberto">Aberto</option>
+                                        <option value="seco">Seco</option>
+                                    </select>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Preço (€)</label>
+                                    <input 
+                                        type="number"
+                                        step="0.01"
+                                        value={newItem.preco}
+                                        onChange={e => setNewItem({...newItem, preco: e.target.value})}
+                                        placeholder="Ex: 3.99"
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Loja</label>
+                                    <input 
+                                        type="text"
+                                        value={newItem.loja}
+                                        onChange={e => setNewItem({...newItem, loja: e.target.value})}
+                                        placeholder="Ex: Albert Heijn, Lidl"
+                                    />
+                                </div>
+                                
+                                <div className="btn-row">
+                                    <button 
+                                        className="btn-secondary"
+                                        onClick={() => setShowAddModal(false)}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button 
+                                        className="btn-submit"
+                                        onClick={handleAddItem}
+                                    >
+                                        Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Scanner */}
+                    {showScanModal && (
+                        <div className="modal" onClick={stopScanner}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Scan Código de Barras</h2>
+                                    <button className="btn-close" onClick={stopScanner}>×</button>
+                                </div>
+                                
+                                <div id="reader"></div>
+                                
+                                {!scanning && (
+                                    <button 
+                                        className="btn-submit"
+                                        style={{width: '100%', marginTop: '16px'}}
+                                        onClick={startScanner}
+                                    >
+                                        Iniciar Scanner
+                                    </button>
+                                )}
+                                
+                                <div className="scanner-info">
+                                    Aponta a câmara para o código de barras do produto
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Modal Receita */}
+                    {showRecipeModal && selectedRecipe && (
+                        <div className="modal" onClick={() => setShowRecipeModal(false)}>
+                            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>{selectedRecipe.nome}</h2>
+                                    <button className="btn-close" onClick={() => setShowRecipeModal(false)}>×</button>
+                                </div>
+                                
+                                <div style={{marginBottom: '16px'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '12px'}}>
+                                        <div>
+                                            <div style={{fontSize: '13px', color: '#666'}}>Origem</div>
+                                            <div style={{fontWeight: '500', color: '#9b59b6'}}>{selectedRecipe.origem}</div>
+                                        </div>
+                                        <div style={{textAlign: 'right'}}>
+                                            <div style={{fontSize: '13px', color: '#666'}}>Custo Total</div>
+                                            <div style={{fontSize: '20px', fontWeight: 'bold', color: '#27ae60'}}>
+                                                €{selectedRecipe.custo_estimado.toFixed(2)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="recipe-info">
+                                        <span>⏱️ {selectedRecipe.tempo} min</span>
+                                        <span>🍽️ {selectedRecipe.doses} doses</span>
+                                        <span>❄️ {selectedRecipe.duracao_frigo} dias</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Ingredientes</label>
+                                    <ul style={{marginLeft: '20px', fontSize: '14px', lineHeight: '1.8'}}>
+                                        {selectedRecipe.ingredientes.map((ing, idx) => (
+                                            <li key={idx}>
+                                                {ing.nome} — {ing.quantidade} {ing.unidade}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label>Instruções</label>
+                                    <ol style={{marginLeft: '20px', fontSize: '14px', lineHeight: '1.8'}}>
+                                        {selectedRecipe.instrucoes.map((inst, idx) => (
+                                            <li key={idx}>{inst}</li>
+                                        ))}
+                                    </ol>
+                                </div>
+                                
+                                <button 
+                                    className="btn-submit"
+                                    style={{width: '100%', marginTop: '12px'}}
+                                    onClick={() => setShowRecipeModal(false)}
+                                >
+                                    Fechar
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </>
+            );
         }
 
-        // Nova função para baixar o PDF
-        function downloadPdf() {
-            const element = document.querySelector('.form-content'); // Seleciona o conteúdo do formulário para o PDF
-            const opt = {
-                margin: 1,
-                filename: 'resumo_treino.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, scrollY: 0 }, // scrollY: 0 para evitar quebra de página no meio
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save();
-        }
-
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-
-
-</body></html>
+    
+    <script>
+        // Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                console.log('Service worker not registered');
+            });
+        }
+    </script>
+</body>
+</html>
