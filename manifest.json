@@ -1,0 +1,16 @@
+{
+  "name": "Poupança Holanda",
+  "short_name": "Poupança",
+  "description": "App de gestão de comida e poupança na Holanda",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
