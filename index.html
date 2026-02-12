@@ -1,268 +1,257 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Poupança MealPrep</title>
-
-<link rel="manifest" href="manifest.json">
-
-<script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Control Pro</title>
 
 <style>
-body{background:#0f1115;color:#e6e6e6;font-family:-apple-system,Arial;margin:0;padding:14px}
-h2{margin-top:4px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.card{background:#1a1f27;border:1px solid #2a313c;padding:12px;margin:10px 0;border-radius:12px}
-button{padding:9px 10px;border-radius:8px;border:none;background:#2e7d32;color:white;font-weight:600}
-button.alt{background:#39424e}
-button.warn{background:#b00020}
-input,select{padding:8px;margin:5px 0;background:#11161c;color:#fff;border:1px solid #2a313c;border-radius:8px;width:100%}
-.small{font-size:12px;color:#9aa4b2}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#000a;display:flex;align-items:center;justify-content:center}
-.modal-content{background:#141922;padding:16px;border-radius:14px;width:92%;max-width:520px}
-.badge{background:#263241;padding:3px 6px;border-radius:6px;margin-left:6px;font-size:11px}
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:#fff;
+}
+header{
+    background:#1b1b1b;
+    padding:15px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+}
+.container{padding:15px;}
+
+button{
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+.primary{background:#00c853;color:#fff;}
+.secondary{background:#333;color:#fff;}
+.danger{background:#b71c1c;color:#fff;}
+
+.card{
+    background:#1b1b1b;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+input, select{
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+    border-radius:6px;
+    border:none;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+.modal-content{
+    background:#222;
+    padding:20px;
+    border-radius:10px;
+    width:90%;
+    max-width:400px;
+}
+.low-stock{
+    border:2px solid #b71c1c;
+}
 </style>
 </head>
-
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
+<header>🍲 Food Control Pro</header>
 
-const STORES=["Albert Heijn","Lidl","Action","Jumbo","Outro"]
+<div class="container">
 
-// Premissas financeiras (editáveis)
-const HOURS_PER_WEEK = 35
-const HOURLY_WAGE = 14
-const MEALS_PER_WEEK = 14
+<button class="primary" onclick="openAdd()">+ Produto</button>
+<button class="secondary" onclick="openMeal()">+ Refeição</button>
 
-function App(){
+<h3>📦 Inventário</h3>
+<div id="inventory"></div>
 
-const [items,setItems]=React.useState(JSON.parse(localStorage.getItem("items")||"[]"))
-const [showForm,setShowForm]=React.useState(false)
-const [showScanner,setShowScanner]=React.useState(false)
-const [newItem,setNewItem]=React.useState({name:"",price:"",qty:"",barcode:"",store:"Albert Heijn"})
-const [suggestions,setSuggestions]=React.useState([])
+<h3>📊 Dashboard</h3>
+<div id="dashboard"></div>
 
-React.useEffect(()=>{
- localStorage.setItem("items",JSON.stringify(items))
- computeSuggestions()
-},[items])
-
-function addItem(){
- if(!newItem.name) return
- const history = newItem.price ? [{price:newItem.price,store:newItem.store,date:new Date().toISOString()}] : []
- setItems([...items,{...newItem,id:Date.now(),history}])
- setNewItem({name:"",price:"",qty:"",barcode:"",store:"Albert Heijn"})
- setShowForm(false)
-}
-
-function consume(id){
- const q=prompt("Quanto consumiste?")
- if(!q) return
- setItems(items.map(i=> i.id===id ? {...i,qty:Math.max(0,(parseFloat(i.qty||0)-parseFloat(q)).toString())}:i))
-}
-
-function addPriceRecord(id){
- const price=prompt("Novo preço €")
- const store=prompt("Loja?")
- if(!price||!store) return
- setItems(items.map(i=> i.id===id ? {...i,price,store,history:[...(i.history||[]),{price,store,date:new Date().toISOString()}]}:i))
-}
-
-function startScanner(){
- setShowScanner(true)
- setTimeout(()=>{
- Quagga.init({
-  inputStream:{type:"LiveStream",target:document.querySelector('#scanner'),constraints:{facingMode:"environment"}},
-  decoder:{readers:["ean_reader","code_128_reader"]}
- },err=>{
-  if(!err){
-   Quagga.start()
-   Quagga.onDetected(data=>{
-    setNewItem(v=>({...v,barcode:data.codeResult.code}))
-    stopScanner()
-    setShowForm(true)
-   })
-  }
- })
- },300)
-}
-
-function stopScanner(){
- try{Quagga.stop()}catch(e){}
- setShowScanner(false)
-}
-
-// Financeiro
-function weeklyIncome(){
- return HOURS_PER_WEEK * HOURLY_WAGE
-}
-
-function weeklyFoodSpend(){
- return items.reduce((sum,i)=>sum+(parseFloat(i.price)||0),0)
-}
-
-function avgMealCost(){
- return (weeklyFoodSpend()/MEALS_PER_WEEK || 0).toFixed(2)
-}
-
-function workMinutesPerMeal(){
- const cost = parseFloat(avgMealCost())
- return Math.round((cost/HOURLY_WAGE)*60) || 0
-}
-
-function expensiveAlerts(){
- return items.filter(i=>{
-  if(!i.history || i.history.length<2) return false
-  const avg = i.history.reduce((s,h)=>s+parseFloat(h.price),0)/i.history.length
-  return parseFloat(i.price) > avg*1.15
- })
-}
-
-// Sugestões + custo por refeição (heurístico simples)
-function computeMealCost(recipeItems){
- let total=0
- recipeItems.forEach(name=>{
-  const it=items.find(i=>i.name.toLowerCase().includes(name))
-  if(it && it.price && it.qty){
-   total+= (parseFloat(it.price)/Math.max(parseFloat(it.qty)||1,1))
-  }
- })
- return total.toFixed(2)
-}
-
-function computeSuggestions(){
- const names=items.map(i=>i.name.toLowerCase())
- const s=[]
- if(names.some(n=>n.includes("feijão")) && names.some(n=>n.includes("cebola"))){
-  s.push({title:"Feijão com cebola e óleo", cost:computeMealCost(["feijão","cebola"])})
- }
- if(names.some(n=>n.includes("esparguete")) && names.some(n=>n.includes("frango"))){
-  s.push({title:"Esparguete com frango", cost:computeMealCost(["esparguete","frango"])})
- }
- if(names.some(n=>n.includes("ovo"))){
-  s.push({title:"Ovos mexidos", cost:computeMealCost(["ovo"])})
- }
- setSuggestions(s)
-}
-
-return(
-<div>
-
-<h2>Poupança MealPrep</h2>
-
-<div className="row">
-<button onClick={()=>setShowForm(true)}>Adicionar Manualmente</button>
-<button className="alt" onClick={startScanner}>Scan Código de Barras</button>
-</div>
-
-{/* Dashboard Financeiro */}
-<div className="card">
-<b>Dashboard Semanal</b>
-<div>💰 Rendimento semanal: € {weeklyIncome().toFixed(2)}</div>
-<div>🛒 Gasto alimentar atual: € {weeklyFoodSpend().toFixed(2)}</div>
-<div>🍽️ Custo médio por refeição: € {avgMealCost()}</div>
-<div>⏱️ Trabalho por refeição: {workMinutesPerMeal()} min</div>
-
-{expensiveAlerts().length>0 && (
-<div style={{marginTop:"6px",color:"#ff6b6b"}}>
-⚠️ Produtos acima do preço habitual:
-{expensiveAlerts().map(i=>(
- <div key={i.id}>{i.name} (€ {i.price})</div>
-))}
-</div>
-)}
-</div>
-
-{/* Inventário */}
-{items.map(i=>(
-<div className="card" key={i.id}>
-<b>{i.name}</b>
-<span className="badge">{i.store||"—"}</span>
-<br/>
-Qtd: {i.qty||"?"} | € {i.price||"?"}
-<div className="small">Código: {i.barcode||"—"}</div>
-<div className="row">
-<button onClick={()=>consume(i.id)}>Consumir</button>
-<button className="alt" onClick={()=>addPriceRecord(i.id)}>Atualizar Preço</button>
-</div>
-{i.history?.length>0 && (
-<div className="small">
-Últimos preços: {i.history.slice(-3).map(h=>`${h.price}€ ${h.store}`).join(" | ")}
-</div>
-)}
-</div>
-))}
-
-{/* Sugestões */}
-<div className="card">
-<b>Sugestões de Refeição (automático)</b>
-{suggestions.length===0 && <div className="small">Sem combinações ainda</div>}
-{suggestions.map((s,i)=>(
-<div key={i}>{s.title} — Custo estimado: € {s.cost}</div>
-))}
-</div>
-
-{/* Modal Form */}
-{showForm&&(
-<div className="modal">
-<div className="modal-content">
-<h3>Novo Produto</h3>
-
-<input placeholder="Nome"
-value={newItem.name}
-onChange={e=>setNewItem({...newItem,name:e.target.value})}/>
-
-<input placeholder="Preço €"
-value={newItem.price}
-onChange={e=>setNewItem({...newItem,price:e.target.value})}/>
-
-<input placeholder="Quantidade (ex: 500 g / 6 un)"
-value={newItem.qty}
-onChange={e=>setNewItem({...newItem,qty:e.target.value})}/>
-
-<select value={newItem.store} onChange={e=>setNewItem({...newItem,store:e.target.value})}>
-{STORES.map(s=><option key={s}>{s}</option>)}
-</select>
-
-<div className="small">Código: {newItem.barcode||"—"}</div>
-
-<div className="row">
-<button onClick={addItem}>Guardar</button>
-<button className="warn" onClick={()=>setShowForm(false)}>Cancelar</button>
-</div>
-</div>
-</div>
-)}
-
-{/* Modal Scanner */}
-{showScanner&&(
-<div className="modal">
-<div className="modal-content">
-<h3>Scanner</h3>
-<div id="scanner" style={{width:"100%",height:"260px",background:"#000"}}></div>
-<div className="row">
-<button className="warn" onClick={stopScanner}>Sair do Scanner</button>
-</div>
-<div className="small">Se não reconhecer, sai e adiciona manualmente.</div>
-</div>
-</div>
-)}
+<h3>📜 Histórico</h3>
+<div id="history"></div>
 
 </div>
-)
+
+<!-- Modal Produto -->
+<div class="modal" id="addModal">
+<div class="modal-content">
+<h3>Adicionar Produto</h3>
+<input id="name" placeholder="Nome">
+<input id="price" type="number" placeholder="Preço total €">
+<input id="quantity" type="number" placeholder="Quantidade total">
+<input id="unit" placeholder="Unidade (g, kg, un)">
+<button class="primary" onclick="saveItem()">Guardar</button>
+<button class="secondary" onclick="closeModal()">Cancelar</button>
+</div>
+</div>
+
+<!-- Modal Refeição -->
+<div class="modal" id="mealModal">
+<div class="modal-content">
+<h3>Registar Consumo</h3>
+<select id="mealItem"></select>
+<input id="useQuantity" type="number" placeholder="Quantidade usada">
+<button class="primary" onclick="addMeal()">Registar</button>
+<button class="secondary" onclick="closeModal()">Cancelar</button>
+</div>
+</div>
+
+<script>
+
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+let meals = JSON.parse(localStorage.getItem("meals")) || [];
+let salary = 1960;
+let budget = 80;
+
+function saveStorage(){
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+    localStorage.setItem("meals", JSON.stringify(meals));
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>)
-
-if('serviceWorker' in navigator){
- navigator.serviceWorker.register('service-worker.js')
+function openAdd(){document.getElementById("addModal").style.display="flex";}
+function openMeal(){
+    let select=document.getElementById("mealItem");
+    select.innerHTML="";
+    inventory.forEach((item,i)=>{
+        select.innerHTML+=`<option value="${i}">${item.name}</option>`;
+    });
+    document.getElementById("mealModal").style.display="flex";
 }
+function closeModal(){
+    document.getElementById("addModal").style.display="none";
+    document.getElementById("mealModal").style.display="none";
+}
+
+function saveItem(){
+    let name=nameInput.value;
+    let price=parseFloat(priceInput.value);
+    let quantity=parseFloat(quantityInput.value);
+    let unit=unitInput.value;
+
+    let pricePerUnit=price/quantity;
+
+    inventory.push({
+        name,
+        priceTotal:price,
+        quantityTotal:quantity,
+        quantityRemaining:quantity,
+        unit,
+        pricePerUnit
+    });
+
+    saveStorage();
+    renderInventory();
+    closeModal();
+}
+
+const nameInput=document.getElementById("name");
+const priceInput=document.getElementById("price");
+const quantityInput=document.getElementById("quantity");
+const unitInput=document.getElementById("unit");
+
+function addMeal(){
+    let index=document.getElementById("mealItem").value;
+    let useQuantity=parseFloat(document.getElementById("useQuantity").value);
+
+    let item=inventory[index];
+    let cost=useQuantity*item.pricePerUnit;
+
+    item.quantityRemaining-=useQuantity;
+
+    meals.push({
+        date:new Date().toISOString(),
+        product:item.name,
+        quantity:useQuantity,
+        cost
+    });
+
+    saveStorage();
+    renderInventory();
+    renderDashboard();
+    renderHistory();
+    closeModal();
+}
+
+function renderInventory(){
+    let div=document.getElementById("inventory");
+    div.innerHTML="";
+    inventory.forEach(item=>{
+        let low=item.quantityRemaining <= item.quantityTotal*0.2;
+        div.innerHTML+=`
+        <div class="card ${low?"low-stock":""}">
+        <b>${item.name}</b><br>
+        Restante: ${item.quantityRemaining.toFixed(2)} ${item.unit}<br>
+        €/unidade: €${item.pricePerUnit.toFixed(2)}
+        </div>`;
+    });
+}
+
+function renderDashboard(){
+
+    let now=new Date();
+    let month=now.getMonth();
+    let year=now.getFullYear();
+
+    let monthMeals=meals.filter(m=>{
+        let d=new Date(m.date);
+        return d.getMonth()===month && d.getFullYear()===year;
+    });
+
+    let total=monthMeals.reduce((a,b)=>a+b.cost,0);
+
+    let today=new Date().getDate();
+    let projection=(total/today)*30;
+
+    let weekStart=new Date();
+    weekStart.setDate(now.getDate()-7);
+
+    let weekTotal=meals.filter(m=>new Date(m.date)>=weekStart)
+                        .reduce((a,b)=>a+b.cost,0);
+
+    let percent=(total/salary)*100;
+
+    document.getElementById("dashboard").innerHTML=`
+    <div class="card">
+    💰 Este mês: €${total.toFixed(2)}<br>
+    📅 Esta semana: €${weekTotal.toFixed(2)}<br>
+    📈 Projeção mensal: €${projection.toFixed(2)}<br>
+    🎯 Orçamento: €${budget}<br>
+    📊 % salário: ${percent.toFixed(2)}%
+    </div>`;
+}
+
+function renderHistory(){
+    let div=document.getElementById("history");
+    div.innerHTML="";
+    meals.slice().reverse().forEach(m=>{
+        div.innerHTML+=`
+        <div class="card">
+        ${new Date(m.date).toLocaleDateString()}<br>
+        ${m.product} - ${m.quantity} <br>
+        €${m.cost.toFixed(2)}
+        </div>`;
+    });
+}
+
+renderInventory();
+renderDashboard();
+renderHistory();
 
 </script>
 </body>
