@@ -8,43 +8,58 @@
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    background:#0f0f0f;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+    background:#0c0c0c;
     color:#fff;
 }
+
 header{
-    background:#1b1b1b;
-    padding:15px;
+    padding:20px;
+    font-size:22px;
+    font-weight:600;
     text-align:center;
-    font-size:20px;
-    font-weight:bold;
+    background:linear-gradient(90deg,#00c853,#009624);
 }
+
 .container{padding:15px;}
 
-button{
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    margin:5px 0;
-    cursor:pointer;
+.section-title{
+    margin-top:25px;
+    font-size:18px;
+    font-weight:600;
+    opacity:0.8;
 }
-.primary{background:#00c853;color:#fff;}
-.secondary{background:#333;color:#fff;}
-.danger{background:#b71c1c;color:#fff;}
 
 .card{
-    background:#1b1b1b;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:10px;
+    background:#1a1a1a;
+    padding:15px;
+    border-radius:14px;
+    margin-bottom:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
-input, select{
-    width:100%;
-    padding:8px;
-    margin:5px 0;
-    border-radius:6px;
+button{
+    padding:10px 14px;
     border:none;
+    border-radius:10px;
+    margin:4px 0;
+    cursor:pointer;
+    font-weight:500;
+}
+
+.primary{background:#00c853;color:white;}
+.secondary{background:#2a2a2a;color:white;}
+.danger{background:#b00020;color:white;}
+.warning{background:#ff6d00;color:white;}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+    border-radius:8px;
+    border:none;
+    background:#2a2a2a;
+    color:white;
 }
 
 .modal{
@@ -56,15 +71,30 @@ input, select{
     justify-content:center;
     align-items:center;
 }
+
 .modal-content{
-    background:#222;
+    background:#1e1e1e;
     padding:20px;
-    border-radius:10px;
+    border-radius:16px;
     width:90%;
     max-width:400px;
 }
+
 .low-stock{
-    border:2px solid #b71c1c;
+    border:2px solid #ff6d00;
+}
+
+.progress-bar{
+    height:8px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress{
+    height:8px;
+    background:#00c853;
 }
 </style>
 </head>
@@ -77,26 +107,29 @@ input, select{
 <button class="primary" onclick="openAdd()">+ Produto</button>
 <button class="secondary" onclick="openMeal()">+ Refeição</button>
 
-<h3>📦 Inventário</h3>
+<div class="section-title">📦 Inventário</div>
 <div id="inventory"></div>
 
-<h3>📊 Dashboard</h3>
+<div class="section-title">🛒 Lista de Compras</div>
+<div id="shopping"></div>
+
+<div class="section-title">📊 Dashboard</div>
 <div id="dashboard"></div>
 
-<h3>📜 Histórico</h3>
+<div class="section-title">📜 Histórico</div>
 <div id="history"></div>
 
 </div>
 
 <!-- Modal Produto -->
-<div class="modal" id="addModal">
+<div class="modal" id="productModal">
 <div class="modal-content">
-<h3>Adicionar Produto</h3>
+<h3 id="modalTitle">Adicionar Produto</h3>
 <input id="name" placeholder="Nome">
 <input id="price" type="number" placeholder="Preço total €">
-<input id="quantity" type="number" placeholder="Quantidade total">
+<input id="quantity" type="number" placeholder="Quantidade">
 <input id="unit" placeholder="Unidade (g, kg, un)">
-<button class="primary" onclick="saveItem()">Guardar</button>
+<button class="primary" onclick="saveProduct()">Guardar</button>
 <button class="secondary" onclick="closeModal()">Cancelar</button>
 </div>
 </div>
@@ -118,141 +151,213 @@ let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 let meals = JSON.parse(localStorage.getItem("meals")) || [];
 let salary = 1960;
 let budget = 80;
+let editIndex = null;
 
 function saveStorage(){
     localStorage.setItem("inventory", JSON.stringify(inventory));
     localStorage.setItem("meals", JSON.stringify(meals));
 }
 
-function openAdd(){document.getElementById("addModal").style.display="flex";}
-function openMeal(){
-    let select=document.getElementById("mealItem");
-    select.innerHTML="";
-    inventory.forEach((item,i)=>{
-        select.innerHTML+=`<option value="${i}">${item.name}</option>`;
-    });
-    document.getElementById("mealModal").style.display="flex";
-}
-function closeModal(){
-    document.getElementById("addModal").style.display="none";
-    document.getElementById("mealModal").style.display="none";
+function openAdd(){
+    editIndex = null;
+    modalTitle.innerText="Adicionar Produto";
+    productModal.style.display="flex";
 }
 
-function saveItem(){
-    let name=nameInput.value;
-    let price=parseFloat(priceInput.value);
-    let quantity=parseFloat(quantityInput.value);
-    let unit=unitInput.value;
+function editProduct(index){
+    editIndex=index;
+    let item=inventory[index];
+    name.value=item.name;
+    price.value=item.pricePerUnit*item.quantityRemaining;
+    quantity.value=item.quantityRemaining;
+    unit.value=item.unit;
+    modalTitle.innerText="Editar Produto";
+    productModal.style.display="flex";
+}
 
-    let pricePerUnit=price/quantity;
+function saveProduct(){
+    let n=name.value.trim();
+    let p=parseFloat(price.value);
+    let q=parseFloat(quantity.value);
+    let u=unit.value;
 
-    inventory.push({
-        name,
-        priceTotal:price,
-        quantityTotal:quantity,
-        quantityRemaining:quantity,
-        unit,
-        pricePerUnit
-    });
+    if(!n||!p||!q)return;
+
+    let pricePerUnit=p/q;
+
+    if(editIndex!==null){
+        inventory[editIndex]={
+            name:n,
+            priceTotal:p,
+            quantityTotal:q,
+            quantityRemaining:q,
+            unit:u,
+            pricePerUnit
+        };
+    }else{
+        let existing=inventory.find(i=>i.name.toLowerCase()===n.toLowerCase());
+        if(existing){
+            let totalOldValue=existing.pricePerUnit*existing.quantityRemaining;
+            let totalNewValue=pricePerUnit*q;
+            let newQty=existing.quantityRemaining+q;
+            existing.pricePerUnit=(totalOldValue+totalNewValue)/newQty;
+            existing.quantityRemaining=newQty;
+            existing.quantityTotal+=q;
+        }else{
+            inventory.push({
+                name:n,
+                priceTotal:p,
+                quantityTotal:q,
+                quantityRemaining:q,
+                unit:u,
+                pricePerUnit
+            });
+        }
+    }
 
     saveStorage();
-    renderInventory();
+    renderAll();
     closeModal();
 }
 
-const nameInput=document.getElementById("name");
-const priceInput=document.getElementById("price");
-const quantityInput=document.getElementById("quantity");
-const unitInput=document.getElementById("unit");
+function deleteProduct(index){
+    if(confirm("Remover produto?")){
+        inventory.splice(index,1);
+        saveStorage();
+        renderAll();
+    }
+}
+
+function openMeal(){
+    mealItem.innerHTML="";
+    inventory.forEach((i,idx)=>{
+        mealItem.innerHTML+=`<option value="${idx}">${i.name}</option>`;
+    });
+    mealModal.style.display="flex";
+}
 
 function addMeal(){
-    let index=document.getElementById("mealItem").value;
-    let useQuantity=parseFloat(document.getElementById("useQuantity").value);
-
+    let index=mealItem.value;
+    let qty=parseFloat(useQuantity.value);
     let item=inventory[index];
-    let cost=useQuantity*item.pricePerUnit;
 
-    item.quantityRemaining-=useQuantity;
+    if(qty>item.quantityRemaining){
+        alert("Stock insuficiente");
+        return;
+    }
+
+    let cost=qty*item.pricePerUnit;
+    item.quantityRemaining-=qty;
 
     meals.push({
         date:new Date().toISOString(),
         product:item.name,
-        quantity:useQuantity,
+        quantity:qty,
         cost
     });
 
     saveStorage();
-    renderInventory();
-    renderDashboard();
-    renderHistory();
+    renderAll();
     closeModal();
 }
 
+function closeModal(){
+    productModal.style.display="none";
+    mealModal.style.display="none";
+    name.value="";price.value="";quantity.value="";unit.value="";
+}
+
 function renderInventory(){
-    let div=document.getElementById("inventory");
-    div.innerHTML="";
-    inventory.forEach(item=>{
-        let low=item.quantityRemaining <= item.quantityTotal*0.2;
-        div.innerHTML+=`
+    inventoryDiv.innerHTML="";
+    inventory.forEach((item,index)=>{
+        let percent=(item.quantityRemaining/item.quantityTotal)*100;
+        let low=percent<=20;
+        inventoryDiv.innerHTML+=`
         <div class="card ${low?"low-stock":""}">
         <b>${item.name}</b><br>
         Restante: ${item.quantityRemaining.toFixed(2)} ${item.unit}<br>
         €/unidade: €${item.pricePerUnit.toFixed(2)}
+        <div class="progress-bar">
+        <div class="progress" style="width:${percent}%"></div>
+        </div>
+        <button class="secondary" onclick="editProduct(${index})">Editar</button>
+        <button class="danger" onclick="deleteProduct(${index})">Remover</button>
+        </div>`;
+    });
+}
+
+function renderShopping(){
+    shopping.innerHTML="";
+    let lowItems=inventory.filter(i=>i.quantityRemaining<=i.quantityTotal*0.2);
+    if(lowItems.length===0){
+        shopping.innerHTML="<div class='card'>Tudo abastecido 👍</div>";
+        return;
+    }
+    lowItems.forEach(i=>{
+        shopping.innerHTML+=`
+        <div class="card warning">
+        ${i.name} está baixo
         </div>`;
     });
 }
 
 function renderDashboard(){
-
     let now=new Date();
-    let month=now.getMonth();
-    let year=now.getFullYear();
-
     let monthMeals=meals.filter(m=>{
         let d=new Date(m.date);
-        return d.getMonth()===month && d.getFullYear()===year;
+        return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
     });
 
     let total=monthMeals.reduce((a,b)=>a+b.cost,0);
-
-    let today=new Date().getDate();
-    let projection=(total/today)*30;
-
-    let weekStart=new Date();
-    weekStart.setDate(now.getDate()-7);
-
-    let weekTotal=meals.filter(m=>new Date(m.date)>=weekStart)
-                        .reduce((a,b)=>a+b.cost,0);
-
+    let today=now.getDate();
+    let projection=today>0?(total/today)*30:0;
     let percent=(total/salary)*100;
 
-    document.getElementById("dashboard").innerHTML=`
+    dashboard.innerHTML=`
     <div class="card">
     💰 Este mês: €${total.toFixed(2)}<br>
-    📅 Esta semana: €${weekTotal.toFixed(2)}<br>
-    📈 Projeção mensal: €${projection.toFixed(2)}<br>
+    📈 Projeção: €${projection.toFixed(2)}<br>
     🎯 Orçamento: €${budget}<br>
     📊 % salário: ${percent.toFixed(2)}%
     </div>`;
 }
 
 function renderHistory(){
-    let div=document.getElementById("history");
-    div.innerHTML="";
+    history.innerHTML="";
     meals.slice().reverse().forEach(m=>{
-        div.innerHTML+=`
+        history.innerHTML+=`
         <div class="card">
         ${new Date(m.date).toLocaleDateString()}<br>
-        ${m.product} - ${m.quantity} <br>
+        ${m.product} - ${m.quantity}<br>
         €${m.cost.toFixed(2)}
         </div>`;
     });
 }
 
-renderInventory();
-renderDashboard();
-renderHistory();
+function renderAll(){
+    renderInventory();
+    renderShopping();
+    renderDashboard();
+    renderHistory();
+}
+
+const inventoryDiv=document.getElementById("inventory");
+const shopping=document.getElementById("shopping");
+const dashboard=document.getElementById("dashboard");
+const history=document.getElementById("history");
+const productModal=document.getElementById("productModal");
+const mealModal=document.getElementById("mealModal");
+const name=document.getElementById("name");
+const price=document.getElementById("price");
+const quantity=document.getElementById("quantity");
+const unit=document.getElementById("unit");
+const mealItem=document.getElementById("mealItem");
+const useQuantity=document.getElementById("useQuantity");
+const modalTitle=document.getElementById("modalTitle");
+
+renderAll();
 
 </script>
+
 </body>
 </html>
